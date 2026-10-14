@@ -32,7 +32,7 @@ Only fixed official HTTPS API and auth destinations are used. Secret-bearing HTT
 
 The file credential store requires POSIX ownership and restrictive modes, refuses links and unsafe ancestors, serializes refresh across processes and writes by atomic rename. Credentials remain plaintext on disk and are not a system-keychain substitute. Windows needs a separately reviewed secure-store implementation.
 
-The stream has configurable request/event/output limits and is cancelled when the caller aborts or the plugin is disposed. Provider retry policy disables automatic replay. Temporary authentication failures do not erase healthy credentials; terminal refresh failures require sign-in again.
+The stream has configurable request/event/output limits and is cancelled when the caller aborts or the plugin is disposed. Host provider retry policy disables automatic replay. The adapter retries a clean premature EOF once, after 500 ms, only before any chunk is delivered to Harness; partial output, malformed streams, HTTP errors and cancellation are not retried by this path. A missing terminal event remains a STREAM_INTERRUPTED failure. Temporary authentication failures do not erase healthy credentials; terminal refresh failures require sign-in again.
 
 ## Known verification gaps
 

@@ -59,8 +59,8 @@ for(const [label,last,code] of [
   await assert.rejects(async()=>{for await(const chunk of adapter.stream(options()))seen.push(chunk);},{code});
   assert.equal(seen.some(x=>x.type==='finish'),false);
 });
-test('EOF without response.completed fails',async()=>{
-  const {adapter}=makeAdapter(events.slice(0,-1));await assert.rejects(()=>collect(adapter.stream(options())),{code:'PROTOCOL_ERROR'});
+test('EOF after output without response.completed fails without replay',async()=>{
+  const {adapter}=makeAdapter(events.slice(0,-1));await assert.rejects(()=>collect(adapter.stream(options())),{code:'STREAM_INTERRUPTED'});
 });
 test('HTTP errors preserve structured facts without leaking response tokens',async()=>{
   const adapter=new Adapter({session:{async accessToken(){return 'VERY_SECRET_TOKEN';}},fetchImpl:async()=>new Response(JSON.stringify({error:{code:'subscription_sharing_usage_limit_exceeded',message:'VERY_SECRET_TOKEN',param:'limit'}}),{status:429,headers:{'x-request-id':'req_123','retry-after':'2'}})});
@@ -188,4 +188,21 @@ test('metadata-only completed terminal preserves already completed output and re
 test('account-advertised image modalities survive list and resolution',async()=>{
  const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>Response.json({models:[{slug:'vision-model',display_name:'Vision',visibility:'list',input_modalities:['text','image']}]})});
  assert.deepEqual((await adapter.listModels(PROVIDER))[0].inputModalities,['text','image']);assert.deepEqual((await adapter.resolveModel(PROVIDER,'vision-model')).inputModalities,['text','image']);
+});
+
+test('clean EOF before any output retries once and preserves the successful finish',async()=>{
+ let calls=0;const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>++calls===1?response([{type:'response.created'}]):response([complete()])});
+ const chunks=await collect(adapter.stream(options()));assert.equal(calls,2);assert.equal(chunks.at(-1).reason.kind,'stop');assert.equal(chunks.filter(x=>x.type==='text-delta').length,1);
+});
+test('two empty responses end as interruption with safe HTTP request facts',async()=>{
+ let calls=0;const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>{calls++;return response([],{headers:{'x-request-id':'req_empty'}});}});
+ await assert.rejects(()=>collect(adapter.stream(options())),error=>error.code==='STREAM_INTERRUPTED'&&error.requestId==='req_empty'&&error.bodyKind==='sse_no_output');assert.equal(calls,2);
+});
+test('a partial tool block is never retried or accepted as complete',async()=>{
+ let calls=0;const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>{calls++;return response([{type:'response.output_item.added',output_index:0,item:{...toolItem(),arguments:'',status:'in_progress'}}]);}});
+ const chunks=[];await assert.rejects(async()=>{for await(const chunk of adapter.stream(options({tools:[tool]})))chunks.push(chunk);},{code:'STREAM_INTERRUPTED'});assert.equal(calls,1);assert.equal(chunks.some(c=>c.type==='finish'),false);
+});
+test('cancellation during empty-stream retry wait prevents a second request',async()=>{
+ let calls=0;const controller=new AbortController();const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>{calls++;setTimeout(()=>controller.abort(),30);return response([]);}});
+ await assert.rejects(()=>collect(adapter.stream(options({signal:controller.signal}))),{code:'ABORTED'});assert.equal(calls,1);
 });

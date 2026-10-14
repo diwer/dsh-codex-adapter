@@ -9,7 +9,7 @@
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add --ignore-scripts \
-  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.8.tgz
+  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.9.tgz
 ```
 
 1. 在 Harness 的插件清单确认 `dsh-codex-official-adapter` 已启用。
@@ -57,3 +57,5 @@ npm run test:desktop
 桌面插件设置提供“新会话默认使用 GPT（可关闭）”。开启且授权可用时设置 GPT 默认值；关闭恢复原默认模型，保留其他位置的手动默认修改。DeepSeek 与 GPT 的模型选择入口并存，已有会话不被强制切换。
 
 图片输入能力直接读取真实账户模型目录。支持图片的 GPT 模型通过 Harness 附件服务发送 Responses input_image；文本与图片顺序保留，默认单张最多 8 MiB、最多 20 张、编码后合计 20 MiB。已卸载的历史图片保留明确提示，不读取任意文件路径或远程图片 URL。
+
+无任何输出块的响应提前结束时，插件等待 500 ms 后最多重试一次；已输出文字、思考或工具块则不会自动重放。缺少 response.completed 始终判为中断，不伪造成功或回放状态。

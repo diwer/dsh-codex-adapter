@@ -1,3 +1,4 @@
+import {setTimeout as sleep} from 'node:timers/promises';
 import {prepareImages} from './images.mjs';
 import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
 import { buildRequest } from './request.mjs';
@@ -127,22 +128,29 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
         secret = headers.get('authorization').slice(7);
         headers.set('content-type','application/json');
         headers.set('accept','text/event-stream');
-        const response = await this.fetchImpl(`${API_ORIGIN}/responses`, {method:'POST', headers, body:JSON.stringify(body), signal, redirect:'error'});
-        if (!response.ok) throw providerError(response.status, await readJson(response, signal), response.headers);
-        const contentType=response.headers.get('content-type');
-        // The live ChatGPT-plan endpoint can omit Content-Type while sending SSE.
-        // Framing, event schemas and the completed terminal event remain mandatory.
-        if (contentType && !/^text\/event-stream(?:\s*;|$)/i.test(contentType)) throw protocol('The provider declared an unsupported response content type.');
-        const stream = new ResponseStream({model:options.model, toolNames:(options.tools ?? []).map(tool => tool.name), maxOutputChars:this.maxOutputChars, maxReplayBytes:this.maxReplayBytes, headers:response.headers});
-        for await (const frame of readSse(response.body, {signal, maxEventBytes:this.maxEventBytes})) {
-          for (const chunk of stream.accept(parseEvent(frame))) {
+        // A stateless request can be repeated only before any chunk reaches Harness.
+        // Keep the host retry policy disabled so partial tool work is never replayed.
+        for(let attempt=0;attempt<2;attempt++){
+          const response = await this.fetchImpl(`${API_ORIGIN}/responses`, {method:'POST', headers, body:JSON.stringify(body), signal, redirect:'error'});
+          if (!response.ok) throw providerError(response.status, await readJson(response, signal), response.headers);
+          const contentType=response.headers.get('content-type');
+          // The live ChatGPT-plan endpoint can omit Content-Type while sending SSE.
+          // Framing, event schemas and the completed terminal event remain mandatory.
+          if (contentType && !/^text\/event-stream(?:\s*;|$)/i.test(contentType)) throw protocol('The provider declared an unsupported response content type.');
+          const stream = new ResponseStream({model:options.model, toolNames:(options.tools ?? []).map(tool => tool.name), maxOutputChars:this.maxOutputChars, maxReplayBytes:this.maxReplayBytes, headers:response.headers});
+          let emitted=false;
+          for await (const frame of readSse(response.body, {signal, maxEventBytes:this.maxEventBytes})) {
+            for (const chunk of stream.accept(parseEvent(frame))) {
+              signal.throwIfAborted();
+              emitted=true;
+              yield chunk;
+            }
             signal.throwIfAborted();
-            yield chunk;
+            if (stream.completed) return;
           }
-          signal.throwIfAborted();
-          if (stream.completed) return;
+          if(!emitted&&attempt===0){await sleep(500,undefined,{signal});continue;}
+          throw new AdapterError('OpenAI 响应连接提前结束，未收到完整结束事件。请重试本轮；已收到的片段不视为完整回复。','STREAM_INTERRUPTED',{status:response.status,requestId:safeCode(response.headers.get('x-request-id')),bodyKind:emitted?'sse_partial_output':'sse_no_output'});
         }
-        throw protocol('The provider stream ended without response.completed.');
       } catch (error) { throw this.wrap(error, signal, secret); }
     }
   };

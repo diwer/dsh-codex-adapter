@@ -59,3 +59,7 @@ No user credentials were read or used, no real API calls were made beyond public
 ## 图片输入修复：0.1.0-alpha.8
 
 真实目录包含 input_modalities: [text, image]，旧代码误标为 text-only。现保留目录输入能力，通过实际桌面附件服务读取规范化图像，按 Responses input_image 转换图文。用户/工具的内容顺序保持；同图去重读取、已卸载图片提示、取消及实际数据大小边界均覆盖。真实 GPT-6.1-Sol 从用户截图读取完整英文句子 Received—I'm here and ready. What would you like to test?，stop 结束。完整桌面文本会话 test 已观察到正常回复和“已完成，用时 6 秒”；实际桌面 test 会话图片翻译已通过，界面显示“已完成，用时 10 秒”，重启后记录正常恢复。截图：outputs/desktop-gpt-image-success.png。默认开关验收按用户要求后置。
+
+## 提前结束恢复：0.1.0-alpha.9
+
+142 项离线测试、7 项实际桌面 ASAR/Electron 联调通过。覆盖无输出 EOF 有界重试后完成、两次 EOF 最终明确失败、工具块出现后不重放、不伪造完成事件、等待中取消不发第二次请求。用户原失败会话没有可用的原始线路记录，不能据此断定远端根因；同类只读 review 实际完成，三次模型请求都有 response.completed。
