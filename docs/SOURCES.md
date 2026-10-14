@@ -30,3 +30,7 @@ Pinned source revision: `d743267388641bc76f17c45ce8b4c231aed1d32c`.
 - [Application attribution](https://github.com/deepseek-ai/deepseek-harness/blob/d743267388641bc76f17c45ce8b4c231aed1d32c/packages/llm/llm/src/attribution.ts)
 
 Source was inspected read-only in a separate ignored reference directory. No upstream code was modified. Community plugins were identified for context but were not copied or installed, and their endpoint/credential practices are not treated as authority.
+
+## Installed desktop target
+
+Desktop adaptation was inspected against `/Applications/DeepSeek Harness.app` 0.2.0-rc.2 and its shipped ASAR modules, not inferred from the newer pinned upstream revision above. The package’s LLM/Cordis/Schemastery peers match the shipped versions. `npm run test:desktop` resolves those modules from the actual application and executes with its Electron Node 24.18.1.

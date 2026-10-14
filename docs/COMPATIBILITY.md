@@ -15,7 +15,7 @@ The core is dependency-injected for offline tests. The production plugin imports
 5. Authorized live inference: complete one harmless text request, a tool-call/result round trip, cancellation and a resumed long session. Check account limits explicitly. No automatic API-key fallback.
 6. Longer-session acceptance: use actual DSH context/compaction settings and account/model capacity. A synthetic long history is insufficient evidence.
 
-Stages 3–6 have not run. This version is not production-certified.
+Desktop update on 2026-10-14: stage 2 passed against the desktop app’s actual ASAR libraries and Electron (7 tests); stage 3 passed on the installed desktop 0.2.0-rc.2 Profile, including the enabled/running plugin entry and the ChatGPT subscription settings page. Stages 4–6 remain pending. This version is not production-certified.
 
 ## Supported and rejected fields
 
@@ -36,4 +36,4 @@ The stream has configurable request/event/output limits and is cancelled when th
 
 ## Known verification gaps
 
-No graphical login page, native image input, hosted tools, remote compaction call, remote multi-user service, live credential transfer, installer, publishing workflow or complete OS matrix is included. No unsupported API capability is silently fabricated.
+The desktop bundle includes a graphical subscription settings page and standard DSH bundle installation. Native image input, hosted tools, remote compaction call, remote multi-user service, live credential transfer, publishing workflow and a complete OS matrix remain outside scope. No unsupported API capability is silently fabricated.

@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "DeepSeek Harness adapter for the documented Sign in with ChatGPT Responses API flow; not an OpenAI-endorsed product",
   "type": "module",
   "private": true,
@@ -8,25 +8,46 @@
     "node": ">=22.19"
   },
   "exports": {
-    ".": "./src/plugin.mjs",
+    ".": "./src/desktop-plugin.mjs",
     "./core": "./src/adapter.mjs",
-    "./auth": "./src/auth/index.mjs"
+    "./auth": "./src/auth/index.mjs",
+    "./client": "./lib/client.js"
   },
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "check": "node scripts/check.mjs",
     "verify": "npm run check && npm test",
-    "test:runtime": "node --test test-runtime/*.test.mjs"
+    "test:runtime": "node --test test-runtime/*.test.mjs",
+    "test:desktop": "node scripts/test-desktop.mjs"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "4.0.5-alpha.1",
-    "@deepseek-ai/dsh-llm": "0.2.1-alpha.2",
-    "@deepseek-ai/schemastery": "3.18.5-alpha.1"
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "~3.18.4"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.5-alpha.1",
-    "@deepseek-ai/dsh": "0.2.1-alpha.2",
-    "@deepseek-ai/dsh-llm": "0.2.1-alpha.2",
-    "@deepseek-ai/schemastery": "3.18.5-alpha.1"
+    "@deepseek-ai/cordis": "4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "3.18.4"
+  },
+  "main": "./src/desktop-plugin.mjs",
+  "files": [
+    "src",
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "docs"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ],
+      "platform": "web"
+    }
   }
 }
