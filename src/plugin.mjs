@@ -25,5 +25,5 @@ export function apply(ctx, config) {
   const auth = createAuthClient({store});
   const adapter = new ChatGPTPlanAdapter({...config, session:auth.session(config.accountId)});
   ctx.llm.registerAdapter([PROVIDER], adapter);
-  ctx.on('dispose', () => adapter.dispose());
+  ctx.effect(() => () => adapter.dispose());
 }

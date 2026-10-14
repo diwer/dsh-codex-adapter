@@ -7,7 +7,7 @@ import path from 'node:path';
 import { FileCredentialStore } from '../src/auth/index.mjs';
 
 test('file transactions serialize competing OS processes without losing updates', async t => {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'dsh-auth-processes-'));
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'dsh-auth-processes-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const moduleUrl = new URL('../src/auth/index.mjs', import.meta.url).href;
   const script = `

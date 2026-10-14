@@ -5,3 +5,7 @@ coverage/
 .auth/
 .env
 .env.*
+
+work/
+outputs/
+.private/

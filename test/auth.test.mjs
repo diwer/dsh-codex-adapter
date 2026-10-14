@@ -279,7 +279,7 @@ test('already-aborted signals never start login or expose a token', async () => 
 });
 
 test('file store uses owner-only atomic files and serializes separate clients', async t => {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'dsh-auth-test-'));
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'dsh-auth-test-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const f = fixture({ store: new FileCredentialStore({ directory }) });
   const account = await signedIn(f);
@@ -294,7 +294,7 @@ test('file store uses owner-only atomic files and serializes separate clients', 
 });
 
 test('file store rejects permissive directories, permissive files, and symlinks', async t => {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'dsh-auth-perms-'));
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'dsh-auth-perms-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const store = new FileCredentialStore({ directory });
   await fs.chmod(directory, 0o755);
@@ -308,7 +308,7 @@ test('file store rejects permissive directories, permissive files, and symlinks'
 });
 
 test('file lock timeout does not steal another process lock', async t => {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'dsh-auth-lock-'));
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'dsh-auth-lock-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   const lock = path.join(directory, 'credentials.lock');
   await fs.writeFile(lock, 'fake-process', { mode: 0o600 });
