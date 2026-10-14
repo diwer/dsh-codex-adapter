@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "DeepSeek Harness adapter for the documented Sign in with ChatGPT Responses API flow; not an OpenAI-endorsed product",
   "type": "module",
   "private": true,

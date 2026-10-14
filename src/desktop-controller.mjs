@@ -1,4 +1,4 @@
-import {AuthError} from './auth/index.mjs';
+import {AuthError,LOGIN_TIMEOUT_MS} from './auth/index.mjs';
 
 /** Account selection belongs to this plugin's protected store, never to another client. */
 export class DesktopAccountController {
@@ -16,7 +16,7 @@ export class DesktopAccountController {
   async status(){
     const accounts=await this.auth.accounts();
     let selectedAccountId=null;try{selectedAccountId=await this.selectedAccount();}catch(error){if(!(error instanceof AuthError))throw error;}
-    return {provider:'openai-chatgpt-plan',phase:this.pending?'signing-in':this.lastError?'attention':selectedAccountId?'ready':'not-signed-in',selectedAccountId,error:this.lastError,authorizationUrl:this.pending?.activeUrl??null,
+    return {provider:'openai-chatgpt-plan',phase:this.pending?'signing-in':this.lastError?'attention':selectedAccountId?'ready':'not-signed-in',selectedAccountId,error:this.lastError,authorizationUrl:this.pending?.activeUrl??null,expiresAt:this.pending?.expiresAt??null,
       accounts:accounts.map(({accountId,email,signedIn,planUsageEnabled})=>({accountId,email,signedIn,planUsageEnabled}))};
   }
   async selectAccount(accountId){
@@ -30,25 +30,27 @@ export class DesktopAccountController {
     const controller=new AbortController();
     let resolveUrl,rejectUrl;
     const url=new Promise((resolve,reject)=>{resolveUrl=resolve;rejectUrl=reject;});
-    const pending={controller,url,task:null};this.pending=pending;
+    const pending={controller,url,task:null,expiresAt:Date.now()+LOGIN_TIMEOUT_MS};this.pending=pending;
     pending.task=(async()=>{
       try{
-        const account=await this.auth.login({signal:controller.signal,onAuthorize:value=>{
+        const account=await this.auth.login({signal:controller.signal,onAuthorize:(value,metadata)=>{
           const parsed=new URL(value);if(parsed.origin!=='https://auth.openai.com'||parsed.pathname!=='/api/accounts/authorize')throw new AuthError('invalid_options');
           pending.activeUrl=value;
+          if(Number.isFinite(metadata?.expiresAt))pending.expiresAt=metadata.expiresAt;
           resolveUrl(value);
         }});
         if(this.disposed||controller.signal.aborted)throw new AuthError('cancelled');
         await this.store.transaction(state=>{if(this.disposed||controller.signal.aborted)throw new AuthError('cancelled');state.selectedAccountId=account.accountId;});
       }catch(error){
         const safe=error instanceof AuthError?error:new AuthError('invalid_response');
-        if(!controller.signal.aborted)this.lastError={code:safe.code,message:safe.message};
+        if(!controller.signal.aborted)this.lastError={code:safe.code,message:safe.code==='expired_attempt'?'授权等待已超时，本机回调已关闭。请重新发起授权，不要刷新旧回调页面。':safe.message};
         rejectUrl(safe);
       }finally{if(this.pending===pending)this.pending=null;this.onChange();}
     })();
     return {url:await url};
   }
   async cancelLogin(){const pending=this.pending;if(pending){pending.controller.abort();await pending.task;}return this.status();}
+  async restartLogin(){await this.cancelLogin();return this.beginLogin();}
   async logout(accountId){await this.cancelLogin();const result=await this.auth.session(accountId).logout();this.lastError=null;this.onChange();return {remoteRevoked:result.remoteRevoked,...await this.status()};}
   async dispose(){this.disposed=true;const pending=this.pending;if(pending){pending.controller.abort();await pending.task;}}
 }

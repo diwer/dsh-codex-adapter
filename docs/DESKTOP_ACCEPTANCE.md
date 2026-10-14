@@ -39,3 +39,11 @@
 ## 证据文件
 
 `work/desktop-install.log`、`work/desktop-offline.log`、`work/desktop-runtime-npm.log`、`work/desktop-runtime-electron.log`、`work/desktop-syntax.log`。
+
+## 回调超时修复：0.1.0-alpha.3
+
+2026-10-14 16:11:36（北京时间）核对：旧回调端口 63211 没有监听；桌面 Host PID 2056 仍自 15:50:53 持续运行；插件显示登录尝试已结束。原因是原本 10 分钟的本机授权等待结束后关闭回调，浏览器随后返回旧端口。没有使用截图中的授权码，也没有将其记录到文件。
+
+桌面版默认授权等待改为 30 分钟，插件配置 authorizationTimeoutMs 可设为 1–60 分钟。监听、state 校验、对客户端公布的到期时间使用同一配置。界面增加倒计时、明确的超时解释和主动重新发起入口；过期链接会清除。重新发起先取消旧 listener，再生成独立的新 state/PKCE 及回调。
+
+验证：121 项离线测试、7 项实际桌面 ASAR/Electron 联调通过。新增测试证明超过 10 分钟仍可完成本地回调，30 分钟到期后监听关闭，过期后重新授权及主动替换旧 listener 正常。OpenAI 自身的登录会话及授权码有效期独立于本机等待。

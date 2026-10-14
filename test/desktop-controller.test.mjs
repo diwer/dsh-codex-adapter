@@ -6,7 +6,7 @@ const A='a'.repeat(43),B='b'.repeat(43);
 function fixture(accounts=[]){
   const store=new MemoryCredentialStore();let finish,reject,loginCalls=0,changes=0;
   const auth={accounts:async()=>accounts,session:id=>({accessToken:async()=>{assert.equal(id,A);return 'FAKE_ACCESS_TOKEN';},logout:async()=>{accounts.find(x=>x.accountId===id).signedIn=false;return {remoteRevoked:true};}}),login:async({signal,onAuthorize})=>{
-    loginCalls++;await onAuthorize('https://auth.openai.com/api/accounts/authorize?state=fake');
+    loginCalls++;await onAuthorize('https://auth.openai.com/api/accounts/authorize?state=fake'+loginCalls,{expiresAt:Date.now()+600000});
     return new Promise((resolve,fail)=>{finish=account=>{accounts.push(account);resolve(account);};reject=fail;signal.addEventListener('abort',()=>fail(new AuthError('cancelled')),{once:true});if(signal.aborted)fail(new AuthError('cancelled'));});
   }};
   const controller=new DesktopAccountController({auth,store,onChange:()=>changes++});
@@ -33,4 +33,14 @@ test('desktop multiple accounts require an explicit selection and reject unknown
 });
 test('desktop logout cannot remain ready with a stale selected account',async()=>{
   const f=fixture([{accountId:A,signedIn:true,planUsageEnabled:true}]);await f.controller.selectAccount(A);await f.controller.logout(A);assert.equal((await f.controller.status()).phase,'not-signed-in');
+});
+test('desktop expired authorization clears its link and explains callback closure',async()=>{
+  const f=fixture();await f.controller.beginLogin();const running=await f.controller.status();assert.ok(running.expiresAt>Date.now());
+  const task=f.controller.pending.task;f.reject(new AuthError('expired_attempt'));await task;
+  const expired=await f.controller.status();assert.equal(expired.authorizationUrl,null);assert.equal(expired.expiresAt,null);assert.equal(expired.error.code,'expired_attempt');assert.match(expired.error.message,/回调已关闭/);
+  await f.controller.restartLogin();assert.equal(f.loginCalls(),2);assert.equal((await f.controller.status()).phase,'signing-in');await f.controller.cancelLogin();
+});
+test('desktop explicit restart cancels the old attempt and provides a new URL',async()=>{
+  const f=fixture();const first=await f.controller.beginLogin();const old=f.controller.pending;const second=await f.controller.restartLogin();
+  assert.equal(old.controller.signal.aborted,true);assert.notEqual(first.url,second.url);assert.equal(f.loginCalls(),2);assert.equal((await f.controller.status()).authorizationUrl,second.url);await f.controller.dispose();
 });

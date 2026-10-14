@@ -10,6 +10,7 @@ export const name='dsh-codex-official-adapter';
 export const inject=['llm','connection'];
 export const Config=Schema.object({
   credentialDirectory:Schema.string().default(path.join(homedir(),'.dsh','plugin-data',name,'auth')),
+  authorizationTimeoutMs:Schema.number().step(1).min(60000).max(3600000).default(1800000),
   requestTimeoutMs:Schema.number().step(1).min(1).default(300000),
   maxEventBytes:Schema.number().step(1).min(1).default(8388608),
   maxOutputChars:Schema.number().step(1).min(1).default(33554432),
@@ -20,7 +21,7 @@ export const Config=Schema.object({
 /** Mounted in the desktop Profile with the desktop's authenticated Connection fence. */
 export function apply(ctx,config){
   const store=new FileCredentialStore({directory:config.credentialDirectory});
-  const auth=createAuthClient({store});
+  const auth=createAuthClient({store,authorizationTimeoutMs:config.authorizationTimeoutMs});
   const controller=new DesktopAccountController({auth,store,onChange:()=>ctx.emit('llm/adapters-updated')});
   const adapter=new ChatGPTPlanAdapter({...config,session:controller});
   const listModels=adapter.listModels.bind(adapter);
@@ -31,6 +32,7 @@ export function apply(ctx,config){
   const routes={
     status:{method:'GET',run:()=>controller.status()},
     login:{method:'POST',run:()=>controller.beginLogin()},
+    restart:{method:'POST',run:()=>controller.restartLogin()},
     cancel:{method:'POST',run:()=>controller.cancelLogin()},
     select:{method:'POST',run:body=>controller.selectAccount(body.accountId)},
     logout:{method:'POST',run:body=>controller.logout(body.accountId)},

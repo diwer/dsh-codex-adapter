@@ -1,11 +1,11 @@
 # Desktop checkpoint: 2026-10-14
 
 - Target: installed DeepSeek Harness desktop 0.2.0-rc.2, Electron Node 24.18.1, Cordis 4.0.4 and Schemastery 3.18.4.
-- Offline suite: **116 passed, 0 failed, 0 skipped**.
+- Offline suite: **121 passed, 0 failed, 0 skipped**.
 - npm rc.2 library integration: **7 passed, 0 failed, 0 skipped**.
 - Installed desktop ASAR library integration using the app’s Electron executable: **7 passed, 0 failed, 0 skipped**.
 - Syntax: 27 JavaScript modules plus the desktop client bundle checked separately.
-- Standard DSH package installation into the actual desktop Profile succeeded. Native desktop UI shows v0.1.0-alpha.2 enabled, its one component running, and Settings → ChatGPT subscription → Continue with ChatGPT.
+- Standard DSH package installation into the actual desktop Profile succeeded. Native desktop UI shows v0.1.0-alpha.3 enabled, its one component running, and Settings → ChatGPT subscription → Continue with ChatGPT.
 - Actual desktop button started its own OAuth callback listener. Authorization was opened in Chrome; user consent and live inference are pending.
 - No claim of real model, tool, resumed-session or compaction success is made.
 

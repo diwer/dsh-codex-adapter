@@ -9,14 +9,16 @@
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add --ignore-scripts \
-  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.2.tgz
+  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.3.tgz
 ```
 
 1. 在 Harness 的插件清单确认 `dsh-codex-official-adapter` 已启用。
 2. 打开“设置 → ChatGPT 订阅”，点击 **Continue with ChatGPT**。
-3. 复制授权链接并在 Chrome 打开；也可点击授权页链接使用系统浏览器。由本人完成 OpenAI 登录和权限审核，登录会话有效期为 10 分钟。
+3. 复制授权链接并在 Chrome 打开；也可点击授权页链接使用系统浏览器。由本人完成 OpenAI 登录和权限审核，本机授权等待默认 30 分钟，页面显示剩余时间。
 4. 授权成功后页面显示已登录，点击“刷新可用模型”。
 5. 在新建会话的模型选择器中，选择 **ChatGPT plan (Sign in with ChatGPT)** 下的实际账户模型。
+
+等待时间可通过插件配置 `authorizationTimeoutMs` 设置，单位为毫秒，范围为 1–60 分钟；默认 `1800000`（30 分钟）。回调监听和本地 state 校验使用同一时限。OpenAI 自身的登录会话及授权码有效期由 OpenAI 管理。
 
 这个 Provider 不替换现有 DeepSeek 默认模型。未登录时返回空模型列表；对已选模型发起请求仍会明确报错，绝不自动改用其他 Provider 或付费 API。
 

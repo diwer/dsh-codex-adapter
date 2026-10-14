@@ -30,7 +30,7 @@ function jwt(claims, key = privateKey, header = {}) {
   const input = `${encode({ alg: 'RS256', kid: jwk.kid, ...header })}.${encode({ iss: URLS.issuer, aud: 'oaiapp_fake', sub: 'fake-subject', email: 'fake@example.invalid', iat: seconds, exp: seconds + 3600, ...claims })}`;
   return `${input}.${sign('RSA-SHA256', Buffer.from(input), key).toString('base64url')}`;
 }
-function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey, header, token = {}, fetchOverride, subject = 'fake-subject' } = {}) {
+function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey, header, token = {}, fetchOverride, subject = 'fake-subject',authorizationTimeoutMs } = {}) {
   let time = seconds * 1000;
   let currentNonce;
   let refreshCount = 0;
@@ -66,7 +66,7 @@ function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey,
     }
     throw new Error('Unexpected URL');
   };
-  const auth = createAuthClient({ store, fetchImpl, now: () => time });
+  const auth = createAuthClient({ store, fetchImpl, now: () => time,authorizationTimeoutMs });
   const begin = async (options = {}) => {
     const attempt = await auth.beginAuthorization({ redirectUri: 'http://127.0.0.1:54321/auth/callback', ...options });
     const parsed = new URL(attempt.authorizeUrl);
@@ -461,4 +461,26 @@ test('repeated local logout never upgrades unconfirmed revocation to confirmed',
   assert.equal((await session.logout()).remoteRevoked, false);
   assert.equal((await session.logout()).remoteRevoked, false);
   assert.equal(f.calls.filter(call => call.url === URLS.revoke).length, 3);
+});
+
+test('configured thirty-minute authorization accepts a callback after ten minutes and rejects it after expiry',async()=>{
+  const f=fixture({authorizationTimeoutMs:1800000});const first=await f.begin();f.advance(600001);
+  const account=await first.attempt.complete(first.callback.href);assert.equal(account.planUsageEnabled,true);
+  const late=fixture({authorizationTimeoutMs:1800000});const second=await late.begin();late.advance(1800001);await assert.rejects(()=>second.attempt.complete(second.callback.href),codeIs('expired_attempt'));
+});
+test('configured OAuth listener stays alive beyond ten minutes and closes at thirty',async t=>{
+  t.mock.timers.enable({apis:['setTimeout']});
+  let authorize,metadata,ready;
+  const authorized=new Promise(resolve=>{ready=resolve;});const f=fixture({authorizationTimeoutMs:1800000});
+  const login=f.auth.login({onAuthorize:(url,info)=>{authorize=new URL(url);metadata=info;ready();}});
+  const rejected=assert.rejects(login,codeIs('expired_attempt'));
+  await authorized;assert.equal(metadata.expiresAt,seconds*1000+1800000);
+  t.mock.timers.tick(600000);
+  const callback=new URL(authorize.searchParams.get('redirect_uri'));
+  assert.equal((await fetch(callback)).status,404);
+  t.mock.timers.tick(1200000);await rejected;
+  await assert.rejects(()=>fetch(callback),TypeError);
+});
+test('authorization wait duration must be an integer between one and sixty minutes',()=>{
+  for(const authorizationTimeoutMs of [0,59999,3600001,NaN,Infinity,1800000.5])assert.throws(()=>createAuthClient({store:new MemoryCredentialStore(),authorizationTimeoutMs}),codeIs('invalid_options'));
 });

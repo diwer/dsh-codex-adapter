@@ -7,6 +7,7 @@ export { AuthError } from './errors.mjs';
 export { MemoryCredentialStore, FileCredentialStore } from './store.mjs';
 
 export const REQUESTED_SCOPES = Object.freeze(['openid', 'profile', 'email', 'offline_access', 'resource.invoke', 'chatgpt.tokens.use.direct']);
+export const LOGIN_TIMEOUT_MS = 600_000;
 const REQUIRED_USAGE = ['resource.invoke', 'chatgpt.tokens.use.direct'];
 const DYNAMIC_CLIENT = 'dynamic_agent_client';
 const validClient = value => typeof value === 'string' && value !== DYNAMIC_CLIENT && /^[A-Za-z0-9._~:-]{1,256}$/.test(value);
@@ -61,9 +62,10 @@ function tokenFields(data, now, oldRecord) {
 }
 
 /** Uses only app-owned credentials. No Codex credential file or browser-cookie access. */
-export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentName = 'DSH Codex Adapter', now = Date.now } = {}) {
+export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentName = 'DSH Codex Adapter', now = Date.now, authorizationTimeoutMs = LOGIN_TIMEOUT_MS } = {}) {
   if (typeof store?.transaction !== 'function' || typeof fetchImpl !== 'function' || typeof now !== 'function'
-    || typeof agentName !== 'string' || !agentName.trim() || agentName.length > 100 || /[\x00-\x1f]/.test(agentName)) throw new AuthError('invalid_options');
+    || typeof agentName !== 'string' || !agentName.trim() || agentName.length > 100 || /[\x00-\x1f]/.test(agentName)
+    || !Number.isSafeInteger(authorizationTimeoutMs) || authorizationTimeoutMs < 60_000 || authorizationTimeoutMs > 3_600_000) throw new AuthError('invalid_options');
   const request = createOfficialTransport(fetchImpl);
   const oidc = createOidcValidator({ request, now });
   // A store must serialize across every client/process sharing the same credentials.
@@ -109,7 +111,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       return startAuthorization({ redirectUri: nextRedirect, accountId, promptConsent }, retained);
     }
     async function complete(callbackUrl, { signal } = {}) {
-      if (consumed || now() - createdAt > 600_000 || now() < createdAt) { cancel(); throw new AuthError('expired_attempt'); }
+      if (consumed || now() - createdAt > authorizationTimeoutMs || now() < createdAt) { cancel(); throw new AuthError('expired_attempt'); }
       consumed = true;
       signal = signal ? AbortSignal.any([signal, attemptController.signal]) : attemptController.signal;
       const savedVerifier = verifier;
@@ -149,7 +151,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
         });
       } catch (error) { throw safeError(error, 'invalid_callback'); }
     }
-    return Object.freeze({ authorizeUrl: authorize.href, complete, cancel, restart });
+    return Object.freeze({ authorizeUrl: authorize.href, expiresAt:createdAt+authorizationTimeoutMs, complete, cancel, restart });
   }
 
   const beginAuthorization = options => startAuthorization(options);
@@ -221,6 +223,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
     let settled = false;
     let handlingCallback = false;
     let codeRestarts = 0;
+    const expiresAt=now()+authorizationTimeoutMs;
     const outcome = new Promise(resolve => { finish = resolve; });
     const end = result => { if (!settled) { settled = true; finish(result); } };
     const server = createServer(async (req, res) => {
@@ -242,7 +245,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
           try {
             attempt = await attempt.restart();
             handlingCallback = false;
-            await onAuthorize(attempt.authorizeUrl);
+            await onAuthorize(attempt.authorizeUrl,{expiresAt});
           } catch (retryError) { end({ error: safeError(retryError) }); }
         } else end({ error: safeError(error) });
       }
@@ -254,7 +257,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
     const timer = setTimeout(() => {
       end({ error: new AuthError('expired_attempt') });
       flowController.abort();
-    }, 600_000);
+    }, authorizationTimeoutMs);
     timer.unref();
     try {
       await new Promise((resolve, reject) => {
@@ -263,7 +266,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       });
       if (signal?.aborted) throw new AuthError('cancelled');
       attempt = await beginAuthorization({ accountId, promptConsent, redirectUri: `http://127.0.0.1:${server.address().port}/auth/callback` });
-      Promise.resolve().then(() => onAuthorize(attempt.authorizeUrl))
+      Promise.resolve().then(() => onAuthorize(attempt.authorizeUrl,{expiresAt}))
         .catch(error => end({ error: safeError(error) }));
       const result = await outcome;
       if (result.error) throw result.error;
