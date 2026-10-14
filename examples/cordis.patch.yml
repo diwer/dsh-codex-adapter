@@ -1,0 +1,18 @@
+# Example only. Replace paths, account and model after explicit local authorization.
+# Merge using the target DSH profile's supported patch workflow.
+- id: chatgpt-plan
+  name: '/absolute/path/to/dsh-codex-adapter/src/plugin.mjs'
+  config:
+    credentialDirectory: '/absolute/path/to/private/dsh-chatgpt-state'
+    accountId: 'ACCOUNT_ID_FROM_THIS_PROJECT_LOGIN'
+    requestTimeoutMs: 300000
+    maxEventBytes: 8388608
+    maxOutputChars: 33554432
+    maxReplayBytes: 33554432
+    modelCapabilities: {}
+
+# In the existing agent-loop configuration, select:
+# provider: openai-chatgpt-plan
+# model: ACCOUNT_MODEL_CATALOG_SLUG
+# Remove unsupported maxTokens, temperature and stop settings.
+# Do not add a second agent-loop plugin or enable competing provider routes.

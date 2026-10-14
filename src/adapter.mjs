@@ -1,0 +1,140 @@
+import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
+import { buildRequest } from './request.mjs';
+import { readSse, parseEvent } from './sse.mjs';
+import { ResponseStream } from './stream.mjs';
+
+export const PROVIDER = 'openai-chatgpt-plan';
+export const API_ORIGIN = 'https://api.openai.com/v1';
+
+async function readJson(response, signal, maxBytes = 2 * 1024 * 1024) {
+  const reader = response.body?.getReader();
+  if (!reader) throw protocol('The provider response body is missing.');
+  const buffers = []; let size = 0;
+  const abort = () => { void reader.cancel().catch(() => {}); };
+  signal?.addEventListener('abort', abort, {once:true});
+  try {
+    signal?.throwIfAborted();
+    while (true) {
+      const {value, done} = await reader.read();
+      signal?.throwIfAborted();
+      if (done) break;
+      size += value.byteLength;
+      if (size > maxBytes) throw protocol('The provider response exceeded the size limit.');
+      buffers.push(value);
+    }
+    try { return JSON.parse(Buffer.concat(buffers).toString('utf8')); } catch { return null; }
+  } finally { signal?.removeEventListener('abort', abort); await reader.cancel().catch(() => {}); reader.releaseLock(); }
+}
+
+function limits(value, fallback, name) {
+  const chosen = value ?? fallback;
+  if (!Number.isSafeInteger(chosen) || chosen <= 0) throw new AdapterError(`${name} must be a positive integer.`, 'INVALID_CONFIG');
+  return chosen;
+}
+
+/** Bind the testable transport to the real, installed DSH runtime classes. */
+export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
+  if (typeof LlmAdapter !== 'function' || typeof LlmError !== 'function' || typeof attributionHeaders !== 'function') throw new TypeError('DSH runtime exports are required.');
+  return class ChatGPTPlanAdapter extends LlmAdapter {
+    constructor({session, fetchImpl = globalThis.fetch, requestTimeoutMs, maxEventBytes, maxOutputChars, maxReplayBytes, modelCapabilities = {}}) {
+      super();
+      if (typeof session?.accessToken !== 'function') throw new AdapterError('An authenticated account session is required.', 'INVALID_CONFIG');
+      this.lifetime = new AbortController();
+      this.session = session;
+      this.fetchImpl = fetchImpl;
+      this.requestTimeoutMs = limits(requestTimeoutMs, 300000, 'requestTimeoutMs');
+      this.maxEventBytes = limits(maxEventBytes, 8 * 1024 * 1024, 'maxEventBytes');
+      this.maxOutputChars = limits(maxOutputChars, 32 * 1024 * 1024, 'maxOutputChars');
+      this.maxReplayBytes = limits(maxReplayBytes, 32 * 1024 * 1024, 'maxReplayBytes');
+      this.capabilities = structuredClone(modelCapabilities);
+      for (const value of Object.values(this.capabilities)) {
+        if (value.contextWindow !== undefined) limits(value.contextWindow, undefined, 'contextWindow');
+        if (value.reasoningEfforts !== undefined && (!Array.isArray(value.reasoningEfforts) || !value.reasoningEfforts.length || value.reasoningEfforts.some(e => typeof e !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(e)) || new Set(value.reasoningEfforts).size !== value.reasoningEfforts.length)) throw new AdapterError('reasoningEfforts must be unique nonempty identifiers.', 'INVALID_CONFIG');
+      }
+    }
+    providerInfo(provider) { this.route(provider); return {id:PROVIDER, name:'ChatGPT plan (Sign in with ChatGPT)'}; }
+    route(provider) { if (provider !== PROVIDER) throw new AdapterError('This adapter does not own the requested provider route.', 'NO_ADAPTER'); }
+    scope(signal) { return AbortSignal.any([this.lifetime.signal, ...(signal ? [signal] : []), AbortSignal.timeout(this.requestTimeoutMs)]); }
+    dispose() { this.lifetime.abort(); }
+    providerRetryPolicy(provider) { this.route(provider); return {mode:'normal', maxRetries:0, retryableCodes:['TRANSPORT_ERROR','TIMEOUT'], initialDelayMs:500, maxDelayMs:10000, jitterRatio:0.1}; }
+    async headers(signal) {
+      signal.throwIfAborted();
+      const token = await this.session.accessToken(signal);
+      signal.throwIfAborted();
+      if (typeof token !== 'string' || !token || /[\s\x00-\x1f\x7f]/.test(token)) throw new AdapterError('The selected account has no usable access token.', 'AUTH');
+      const attribution = attributionHeaders();
+      const headers = new Headers(attribution);
+      if (!headers.get('user-agent')) throw new AdapterError('DSH attributionHeaders() did not provide an application identity.', 'INVALID_CONFIG');
+      headers.set('authorization', `Bearer ${token}`);
+      return headers;
+    }
+    wrap(error, signal, secret) {
+      let failure;
+      if (signal?.aborted) failure = new AdapterError(signal.reason?.name === 'TimeoutError' ? 'The provider request timed out.' : 'The request was cancelled.', signal.reason?.name === 'TimeoutError' ? 'TIMEOUT' : 'ABORTED');
+      else if (error instanceof AdapterError) failure = error;
+      else if (error?.name === 'AuthError') failure = new AdapterError('The selected ChatGPT account needs attention. Check its sign-in status.', safeCode(error.code) ?? 'AUTH');
+      else failure = new AdapterError('The provider request could not be completed.', 'TRANSPORT_ERROR');
+      const safeFact = value => typeof value === 'string' && secret && value.includes(secret) ? undefined : value;
+      const result = new LlmError(failure.message, failure.code, {status:failure.status, requestId:safeFact(failure.requestId), providerRetryAfterMs:failure.providerRetryAfterMs});
+      for (const key of ['providerCode','providerParam','bodyKind']) if (safeFact(failure[key]) !== undefined) result[key] = safeFact(failure[key]);
+      return result;
+    }
+    async catalog(signal) {
+      const scoped = this.scope(signal);
+      let secret;
+      try {
+        const headers = await this.headers(scoped);
+        secret = headers.get('authorization').slice(7);
+        const response = await this.fetchImpl(`${API_ORIGIN}/models`, {method:'GET', headers, signal:scoped, redirect:'error'});
+        const body = await readJson(response, scoped);
+        if (!response.ok) throw providerError(response.status, body, response.headers);
+        if (!Array.isArray(body?.models)) throw protocol('The account model catalog did not contain a models array.');
+        return body.models.map(model => {
+          if (typeof model?.slug !== 'string' || !model.slug || typeof model.display_name !== 'string') throw protocol('The account model catalog contained an invalid entry.');
+          return {provider:PROVIDER, id:model.slug, name:model.display_name, inputModalities:['text'], visibility:model.visibility};
+        });
+      } catch (error) { throw this.wrap(error, scoped, secret); }
+    }
+    async listModels(provider) {
+      this.route(provider);
+      return (await this.catalog()).filter(model => model.visibility === 'list').map(({visibility, ...model}) => model);
+    }
+    async resolveModel(provider, model, signal) {
+      this.route(provider);
+      const catalog = await this.catalog(signal);
+      const found = catalog.find(entry => entry.id === model);
+      if (!found) throw this.wrap(new AdapterError('The model is not in the selected ChatGPT account catalog.', 'MODEL_UNAVAILABLE'));
+      const {visibility, ...result} = found;
+      const configured = this.capabilities[model];
+      if (configured?.contextWindow) result.context = {contextWindow:configured.contextWindow};
+      if (configured?.reasoningEfforts) result.reasoning = {efforts:configured.reasoningEfforts.map(id => ({id, name:id}))};
+      return result;
+    }
+    async *stream(options) {
+      const signal = this.scope(options.signal);
+      let secret;
+      try {
+        this.route(options.provider);
+        if (options.reasoningEffort !== undefined && !this.capabilities[options.model]?.reasoningEfforts?.includes(options.reasoningEffort)) throw new AdapterError('Configure verified reasoning efforts for this model before selecting one.', 'UNSUPPORTED_CAPABILITY');
+        const body = buildRequest(options);
+        const headers = await this.headers(signal);
+        secret = headers.get('authorization').slice(7);
+        headers.set('content-type','application/json');
+        headers.set('accept','text/event-stream');
+        const response = await this.fetchImpl(`${API_ORIGIN}/responses`, {method:'POST', headers, body:JSON.stringify(body), signal, redirect:'error'});
+        if (!response.ok) throw providerError(response.status, await readJson(response, signal), response.headers);
+        if (!/^text\/event-stream(?:\s*;|$)/i.test(response.headers.get('content-type') ?? '')) throw protocol('The provider did not return text/event-stream.');
+        const stream = new ResponseStream({model:options.model, toolNames:(options.tools ?? []).map(tool => tool.name), maxOutputChars:this.maxOutputChars, maxReplayBytes:this.maxReplayBytes, headers:response.headers});
+        for await (const frame of readSse(response.body, {signal, maxEventBytes:this.maxEventBytes})) {
+          for (const chunk of stream.accept(parseEvent(frame))) {
+            signal.throwIfAborted();
+            yield chunk;
+          }
+          signal.throwIfAborted();
+          if (stream.completed) return;
+        }
+        throw protocol('The provider stream ended without response.completed.');
+      } catch (error) { throw this.wrap(error, signal, secret); }
+    }
+  };
+}

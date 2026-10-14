@@ -1,0 +1,26 @@
+{
+  "name": "dsh-codex-official-adapter",
+  "version": "0.1.0-alpha.1",
+  "description": "DeepSeek Harness adapter for the documented Sign in with ChatGPT Responses API flow; not an OpenAI-endorsed product",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.19"
+  },
+  "exports": {
+    ".": "./src/plugin.mjs",
+    "./core": "./src/adapter.mjs",
+    "./auth": "./src/auth/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "verify": "npm run check && npm test",
+    "test:runtime": "node --test test-runtime/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-llm": "0.2.1-alpha.2",
+    "@deepseek-ai/cordis": "4.0.5-alpha.1",
+    "@deepseek-ai/schemastery": "3.18.5-alpha.1"
+  }
+}

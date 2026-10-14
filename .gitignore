@@ -1,0 +1,7 @@
+.references/
+node_modules/
+coverage/
+*.tgz
+.auth/
+.env
+.env.*
