@@ -113,7 +113,10 @@ export class FileCredentialStore {
           let stat;
           try { stat = await fs.lstat(lockPath); }
           catch (statError) { if (statError.code === 'ENOENT') continue; throw statError; }
-          if (!stat.isFile() || stat.isSymbolicLink() || stat.uid !== process.getuid() || (stat.mode & 0o077) || stat.nlink !== 1) throw new AuthError('insecure_store');
+          if (!stat.isFile() || stat.isSymbolicLink() || stat.uid !== process.getuid() || (stat.mode & 0o077) || stat.nlink > 1) throw new AuthError('insecure_store');
+          // macOS can return the unlinked incumbent inode while lstat races its release.
+          // Retry exclusive creation; never treat that inode as an acquired lock.
+          if (stat.nlink === 0) continue;
           if (Date.now() >= deadline) throw new AuthError('store_busy');
           await sleep(20);
         }

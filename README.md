@@ -9,7 +9,7 @@
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add --ignore-scripts \
-  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.3.tgz
+  /absolute/path/to/dsh-codex-official-adapter-0.1.0-alpha.8.tgz
 ```
 
 1. 在 Harness 的插件清单确认 `dsh-codex-official-adapter` 已启用。
@@ -31,6 +31,7 @@
 - “退出”会尝试撤销远程刷新会话，然后清除本地 token；如果未确认远程撤销，页面会提示到 ChatGPT 设置断开应用。
 - 账户管理接口通过 Harness 原有的 authenticated Connection 路由提供，沿用宿主的认证和来源检查，不创建额外的管理服务器。
 - 卸载插件会取消授权等待、中止适配器请求并撤销注册路由。
+- 桌面请求使用本插件独立的 TLS dispatcher，合并 Node 与 macOS 已信任的根证书，保持证书校验，不修改全局网络配置。
 
 ## 能力与边界
 
@@ -52,3 +53,7 @@ npm run test:desktop
 `test:desktop` 直接使用已安装桌面应用的 Electron 和 ASAR 内的 LLM/Cordis/Schemastery；不以 npm 同版本依赖替代宿主验证。测试使用假账户和受控 HTTP 响应，不证明真实订阅推理成功。
 
 更多：[桌面验收记录](docs/DESKTOP_ACCEPTANCE.md)、[认证协议](docs/AUTH.md)、[官方来源](docs/SOURCES.md)。
+
+桌面插件设置提供“新会话默认使用 GPT（可关闭）”。开启且授权可用时设置 GPT 默认值；关闭恢复原默认模型，保留其他位置的手动默认修改。DeepSeek 与 GPT 的模型选择入口并存，已有会话不被强制切换。
+
+图片输入能力直接读取真实账户模型目录。支持图片的 GPT 模型通过 Harness 附件服务发送 Responses input_image；文本与图片顺序保留，默认单张最多 8 MiB、最多 20 张、编码后合计 20 MiB。已卸载的历史图片保留明确提示，不读取任意文件路径或远程图片 URL。

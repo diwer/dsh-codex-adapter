@@ -46,10 +46,10 @@ test('pruned blocks retain only corresponding replay items',()=>{
   const request=buildRequest(options({messages:[{role:'assistant',content:[{type:'text',text:'Hello'}],source:{provider:'openai-chatgpt-plan',replayState}}]}));
   assert.equal(request.input.length,1);assert.equal(request.input[0].type,'message');
 });
-test('rejects model switches with opaque replay instead of corrupting history',()=>{
+test('model switches project visible history without foreign opaque metadata',()=>{
   const chunks=new ResponseStream({model:'other-model'}).accept(complete());
   const message={role:'assistant',content:[{type:'text',text:'Hello'}],source:{provider:'openai-chatgpt-plan',replayState:chunks.at(-1).replayState}};
-  assert.throws(()=>buildRequest(options({messages:[message]})),{code:'UNSUPPORTED_CAPABILITY'});
+  const request=buildRequest(options({messages:[message]}));assert.equal(request.input[0].content[0].text,'Hello');assert.equal(request.input[0].id,undefined);
 });
 test('rejects missing encrypted reasoning replay and unsupported media',()=>{
   for(const block of [{type:'reasoning',text:'Reasoning'},{type:'image',attachment:{}}]) assert.throws(()=>buildRequest(options({messages:[{role:'assistant',content:[block]}]})),{code:'UNSUPPORTED_CAPABILITY'});
@@ -65,4 +65,13 @@ test('long histories remain explicit and input is not mutated',()=>{
 test('DSH projected tool-history bookkeeping is not sent to the provider',()=>{
  const request=buildRequest(options({toolHistory:{tools:[],updates:[]}}));
  assert.equal('toolHistory' in request,false);assert.deepEqual(request.input,[{role:'user',content:'Hello'}]);
+});
+
+test('DeepSeek to GPT preserves text and tools while excluding provider-private reasoning',()=>{
+ const messages=[{role:'assistant',source:{provider:'deepseek-account',model:'deepseek-flash'},content:[{type:'reasoning',text:'private thought'},{type:'text',text:'previous answer'},{type:'tool-call',id:'c1',name:'read_file',arguments:'{}'}]},{role:'tool',toolCallId:'c1',content:[{type:'text',text:'file contents'}]}];
+ const original=structuredClone(messages),request=buildRequest(options({messages}));assert.equal(request.input.length,3);assert.equal(request.input[0].content[0].text,'previous answer');assert.equal(request.input[1].call_id,'c1');assert.equal(request.input[2].output,'file contents');assert.deepEqual(messages,original);assert.equal(JSON.stringify(request).includes('private thought'),false);
+});
+test('GPT model switches validate replay before projecting answers and tools',()=>{
+ const output=[reasonItem(),textItem('answer'),toolItem()];const chunks=new ResponseStream({model:'old-model',toolNames:['read_file']}).accept(complete(output));const message={role:'assistant',source:{provider:'openai-chatgpt-plan',replayState:chunks.at(-1).replayState},content:chunks.filter(x=>x.type==='block-end').map(x=>x.block)};
+ const request=buildRequest(options({messages:[message]}));assert.equal(request.input.length,2);assert.equal(request.input[0].content[0].text,'answer');assert.equal(request.input[1].call_id,'call_1');assert.equal(JSON.stringify(request).includes('encrypted_content'),false);message.content[1].text='modified';assert.throws(()=>buildRequest(options({messages:[message]})),{code:'PROTOCOL_ERROR'});
 });

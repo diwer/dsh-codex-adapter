@@ -23,7 +23,7 @@ export const ChatGPTPlanAdapter = createAdapterClass({LlmAdapter, LlmError, attr
 export function apply(ctx, config) {
   const store = new FileCredentialStore({directory:config.credentialDirectory});
   const auth = createAuthClient({store});
-  const adapter = new ChatGPTPlanAdapter({...config, session:auth.session(config.accountId)});
+  const adapter = new ChatGPTPlanAdapter({...config, session:auth.session(config.accountId),attachments:()=>ctx.get('attachments')});
   ctx.llm.registerAdapter([PROVIDER], adapter);
   ctx.effect(() => () => adapter.dispose());
 }

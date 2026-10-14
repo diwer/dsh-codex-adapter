@@ -86,9 +86,13 @@ export class ResponseStream {
   }
   finish(response) {
     if (response?.status !== 'completed' || !Array.isArray(response.output)) throw protocol('The terminal response was not completed.');
-    if (this.states.size > response.output.length) throw protocol('The terminal response omitted streamed output.');
+    // Live ChatGPT-plan streams may send the terminal metadata with output: [].
+    // Only independently completed output_item.done items can supply that snapshot.
+    const output=response.output.length===0 && this.states.size>0 && [...this.states.values()].every(state=>state.closed)
+      ? [...this.states.values()].map(state=>state.item) : response.output;
+    if (this.states.size > output.length) throw protocol('The terminal response omitted streamed output.');
     const chunks = [];
-    response.output.forEach((item, index) => {
+    output.forEach((item, index) => {
       if (!this.states.has(index)) chunks.push(...this.add(index, item));
       const state = this.states.get(index);
       if (!state.closed) chunks.push(...this.done(index, item));

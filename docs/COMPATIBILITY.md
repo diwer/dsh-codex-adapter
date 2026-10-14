@@ -23,7 +23,7 @@ Desktop update on 2026-10-14: stage 2 passed against the desktop app’s actual 
 - Replay: final output items are aligned one-to-one with DSH blocks. Content digests prevent stale provider state from replaying after message edits; encrypted reasoning and assistant phase remain intact. Pruning a DSH block prunes the corresponding replay entry.
 - Rejected: unsupported generation controls, undeclared/wrong-namespace tools, malformed JSON arguments, missing encrypted reasoning state, unsupported output kinds, incomplete/failed stream terminal events, ambiguous EOF.
 - DSH's non-native tool-history bookkeeping can remain after runtime projection; the adapter uses the complete projected declarations and does not transmit that bookkeeping.
-- The runtime declares text-only model input so DSH can apply its documented attachment projection. Direct image/file inputs to the core are rejected.
+- The runtime preserves the account catalog input_modalities. Image-capable routes read normalized images through the mounted Harness attachment service and encode Responses input_image content. Offloaded images retain explicit text. Arbitrary file paths and remote URLs are not accepted as attachment inputs; non-image files keep the Harness text projection.
 - Context size and selectable reasoning metadata are opt-in per model. No guessed catalog capabilities are advertised.
 
 ## Safety and recovery
@@ -36,4 +36,4 @@ The stream has configurable request/event/output limits and is cancelled when th
 
 ## Known verification gaps
 
-The desktop bundle includes a graphical subscription settings page and standard DSH bundle installation. Native image input, hosted tools, remote compaction call, remote multi-user service, live credential transfer, publishing workflow and a complete OS matrix remain outside scope. No unsupported API capability is silently fabricated.
+The desktop bundle includes a graphical subscription settings page and standard DSH bundle installation. Hosted tools, remote compaction call, remote multi-user service, live credential transfer, publishing workflow and a complete OS matrix remain outside scope. No unsupported API capability is silently fabricated.

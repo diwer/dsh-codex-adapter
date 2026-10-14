@@ -1,3 +1,4 @@
+import {prepareImages} from './images.mjs';
 import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
 import { buildRequest } from './request.mjs';
 import { readSse, parseEvent } from './sse.mjs';
@@ -36,7 +37,7 @@ function limits(value, fallback, name) {
 export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
   if (typeof LlmAdapter !== 'function' || typeof LlmError !== 'function' || typeof attributionHeaders !== 'function') throw new TypeError('DSH runtime exports are required.');
   return class ChatGPTPlanAdapter extends LlmAdapter {
-    constructor({session, fetchImpl = globalThis.fetch, requestTimeoutMs, maxEventBytes, maxOutputChars, maxReplayBytes, modelCapabilities = {}}) {
+    constructor({session, fetchImpl = globalThis.fetch, requestTimeoutMs, maxEventBytes, maxOutputChars, maxReplayBytes, modelCapabilities = {}, attachments}) {
       super();
       if (typeof session?.accessToken !== 'function') throw new AdapterError('An authenticated account session is required.', 'INVALID_CONFIG');
       this.lifetime = new AbortController();
@@ -47,6 +48,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       this.maxOutputChars = limits(maxOutputChars, 32 * 1024 * 1024, 'maxOutputChars');
       this.maxReplayBytes = limits(maxReplayBytes, 32 * 1024 * 1024, 'maxReplayBytes');
       this.capabilities = structuredClone(modelCapabilities);
+      this.attachments = attachments;
       for (const value of Object.values(this.capabilities)) {
         if (value.contextWindow !== undefined) limits(value.contextWindow, undefined, 'contextWindow');
         if (value.reasoningEfforts !== undefined && (!Array.isArray(value.reasoningEfforts) || !value.reasoningEfforts.length || value.reasoningEfforts.some(e => typeof e !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(e)) || new Set(value.reasoningEfforts).size !== value.reasoningEfforts.length)) throw new AdapterError('reasoningEfforts must be unique nonempty identifiers.', 'INVALID_CONFIG');
@@ -73,6 +75,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       if (signal?.aborted) failure = new AdapterError(signal.reason?.name === 'TimeoutError' ? 'The provider request timed out.' : 'The request was cancelled.', signal.reason?.name === 'TimeoutError' ? 'TIMEOUT' : 'ABORTED');
       else if (error instanceof AdapterError) failure = error;
       else if (error?.name === 'AuthError') failure = new AdapterError('The selected ChatGPT account needs attention. Check its sign-in status.', safeCode(error.code) ?? 'AUTH');
+      else if (['UNABLE_TO_GET_ISSUER_CERT_LOCALLY','UNABLE_TO_VERIFY_LEAF_SIGNATURE','CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN'].includes(error?.cause?.code)) failure = new AdapterError(`TLS certificate validation failed (${error.cause.code}).`, 'TLS_ERROR');
       else failure = new AdapterError('The provider request could not be completed.', 'TRANSPORT_ERROR');
       const safeFact = value => typeof value === 'string' && secret && value.includes(secret) ? undefined : value;
       const result = new LlmError(failure.message, failure.code, {status:failure.status, requestId:safeFact(failure.requestId), providerRetryAfterMs:failure.providerRetryAfterMs});
@@ -91,7 +94,9 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
         if (!Array.isArray(body?.models)) throw protocol('The account model catalog did not contain a models array.');
         return body.models.map(model => {
           if (typeof model?.slug !== 'string' || !model.slug || typeof model.display_name !== 'string') throw protocol('The account model catalog contained an invalid entry.');
-          return {provider:PROVIDER, id:model.slug, name:model.display_name, inputModalities:['text'], visibility:model.visibility};
+          const modalities=model.input_modalities??['text'];
+          if(!Array.isArray(modalities)||!modalities.length||modalities.some(value=>!['text','image'].includes(value))||new Set(modalities).size!==modalities.length)throw protocol('The account model catalog contained invalid input modalities.');
+          return {provider:PROVIDER, id:model.slug, name:model.display_name, inputModalities:[...modalities], visibility:model.visibility};
         });
       } catch (error) { throw this.wrap(error, scoped, secret); }
     }
@@ -116,14 +121,18 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       try {
         this.route(options.provider);
         if (options.reasoningEffort !== undefined && !this.capabilities[options.model]?.reasoningEfforts?.includes(options.reasoningEffort)) throw new AdapterError('Configure verified reasoning efforts for this model before selecting one.', 'UNSUPPORTED_CAPABILITY');
-        const body = buildRequest(options);
+        const prepared=await prepareImages(options,typeof this.attachments==='function'?this.attachments():this.attachments,signal);
+        const body = buildRequest(prepared.options,{images:prepared.images});
         const headers = await this.headers(signal);
         secret = headers.get('authorization').slice(7);
         headers.set('content-type','application/json');
         headers.set('accept','text/event-stream');
         const response = await this.fetchImpl(`${API_ORIGIN}/responses`, {method:'POST', headers, body:JSON.stringify(body), signal, redirect:'error'});
         if (!response.ok) throw providerError(response.status, await readJson(response, signal), response.headers);
-        if (!/^text\/event-stream(?:\s*;|$)/i.test(response.headers.get('content-type') ?? '')) throw protocol('The provider did not return text/event-stream.');
+        const contentType=response.headers.get('content-type');
+        // The live ChatGPT-plan endpoint can omit Content-Type while sending SSE.
+        // Framing, event schemas and the completed terminal event remain mandatory.
+        if (contentType && !/^text\/event-stream(?:\s*;|$)/i.test(contentType)) throw protocol('The provider declared an unsupported response content type.');
         const stream = new ResponseStream({model:options.model, toolNames:(options.tools ?? []).map(tool => tool.name), maxOutputChars:this.maxOutputChars, maxReplayBytes:this.maxReplayBytes, headers:response.headers});
         for await (const frame of readSse(response.body, {signal, maxEventBytes:this.maxEventBytes})) {
           for (const chunk of stream.accept(parseEvent(frame))) {

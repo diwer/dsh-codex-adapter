@@ -14,8 +14,32 @@ function textOnly(blocks) {
   }).join('\n');
 }
 
+
+/** Other models' private reasoning cannot be replayed; retain visible answers and tool identities. */
+function projectAssistant(content,input,switching){
+  for(const block of content){
+    if(block.type==='text')input.push({type:'message',role:'assistant',content:[{type:'output_text',text:block.text,annotations:[]}]});
+    else if(block.type==='tool-call')input.push({type:'function_call',call_id:block.id,name:block.name,namespace:TOOL_NAMESPACE,arguments:block.arguments});
+    else if(block.type==='reasoning'){if(!switching)unsupported('Assistant reasoning requires its original replay metadata; refusing lossy history.');}
+    else unsupported('Unsupported assistant content block.');
+  }
+}
+
+function inputContent(blocks,images){
+  if(!blocks.some(block=>block.type==='image'))return textOnly(blocks);
+  return blocks.map(block=>{
+    if(block.type==='text'&&typeof block.text==='string')return {type:'input_text',text:block.text};
+    if(block.type==='image'){
+      const url=images.get(block.attachment?.attachmentId);
+      if(!url)unsupported('Image input requires a prepared Harness attachment.');
+      return {type:'input_image',image_url:url,detail:'auto'};
+    }
+    unsupported('Unsupported image message content.');
+  });
+}
+
 /** Convert supported DSH requests; never silently discard generation controls. */
-export function buildRequest(options) {
+export function buildRequest(options,{images=new Map()}={}) {
   for (const key of ['temperature', 'maxTokens', 'stop']) {
     if (options[key] !== undefined) unsupported(`The ChatGPT plan route cannot honor GenerateOptions.${key}; remove that setting.`);
   }
@@ -38,11 +62,10 @@ export function buildRequest(options) {
     if (message.role === 'tool') {
       const callId = message.toolCallId ?? message.source?.callId;
       if (typeof callId !== 'string' || !callId) throw protocol('Tool results require the original call ID.');
-      input.push({type:'function_call_output', call_id:callId, output:textOnly(message.content)});
+      input.push({type:'function_call_output', call_id:callId, output:inputContent(message.content,images)});
     } else if (message.role === 'assistant') {
       const replay = message.source?.replayState;
       if (message.source?.provider === options.provider && replay?.response?.version === REPLAY_VERSION) {
-        if (replay.response.model !== options.model) unsupported('Switching models requires removing incompatible provider replay metadata through DSH.');
         if (!Array.isArray(replay.blocks) || replay.blocks.length !== message.content.length) throw protocol('Stored replay metadata does not match the assistant message.');
         const entries = replay.blocks.map((entry, index) => {
           if (!entry || entry.digest !== digest(message.content[index])) throw protocol('Stored replay content differs from the assistant message.');
@@ -50,17 +73,15 @@ export function buildRequest(options) {
           if (digest(block) !== entry.digest) throw protocol('Stored replay item differs from the assistant message.');
           return entry;
         });
-        for (const entry of entries.sort((a,b) => a.outputIndex - b.outputIndex)) input.push(structuredClone(entry.item));
+        if(replay.response.model===options.model){
+          for (const entry of entries.sort((a,b) => a.outputIndex - b.outputIndex)) input.push(structuredClone(entry.item));
+        }else projectAssistant(message.content,input,true);
       } else {
-        for (const block of message.content) {
-          if (block.type === 'text') input.push({type:'message', role:'assistant', content:[{type:'output_text', text:block.text, annotations:[]}]});
-          else if (block.type === 'tool-call') input.push({type:'function_call', call_id:block.id, name:block.name, namespace:TOOL_NAMESPACE, arguments:block.arguments});
-          else if (block.type === 'reasoning') unsupported('Assistant reasoning requires its original replay metadata; refusing lossy history.');
-          else unsupported('Unsupported assistant content block.');
-        }
+        const foreign=typeof message.source?.provider==='string'&&message.source.provider!==options.provider;
+        projectAssistant(message.content,input,foreign);
       }
     } else if (message.role === 'user' || message.role === 'developer') {
-      input.push({role:message.role, content:textOnly(message.content)});
+      input.push({role:message.role, content:inputContent(message.content,images)});
     } else unsupported('Unsupported message role.');
   }
   const body = {model:options.model, input, store:false, stream:true};

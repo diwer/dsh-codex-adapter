@@ -164,3 +164,28 @@ test('in-progress items do not retain unneeded encrypted metadata',async()=>{
   stream.accept({type:'response.output_item.added',output_index:0,item:{...reasonItem(),status:'in_progress',encrypted_content:'x'.repeat(100000)}});
   assert.equal('encrypted_content' in stream.states.get(0).initial,false);
 });
+
+test('TLS failures preserve an actionable certificate code without provider secrets',async()=>{
+  const adapter=new Adapter({session:{async accessToken(){return 'VERY_SECRET_TOKEN';}},fetchImpl:async()=>{throw new TypeError('VERY_SECRET_TOKEN',{cause:{code:'UNABLE_TO_GET_ISSUER_CERT_LOCALLY',message:'VERY_SECRET_TOKEN'}});}});
+  await assert.rejects(()=>adapter.listModels(PROVIDER),error=>{assert.equal(error.code,'TLS_ERROR');assert.match(error.message,/UNABLE_TO_GET_ISSUER_CERT_LOCALLY/);assert.doesNotMatch(error.message+JSON.stringify(error),/VERY_SECRET_TOKEN/);return true;});
+});
+
+test('missing Content-Type still requires a valid, completed SSE response',async()=>{
+  const {adapter}=makeAdapter([complete([textItem('Headerless SSE')])],{fetchImpl:async()=>{const r=response([complete([textItem('Headerless SSE')])]);r.headers.delete('content-type');return r;}});
+  const chunks=await collect(adapter.stream(options()));assert.equal(chunks.at(-1).reason.kind,'stop');assert.equal(chunks.find(x=>x.type==='block-end').block.text,'Headerless SSE');
+  const invalid=new Adapter({session:{async accessToken(){return 'fake';}},fetchImpl:async()=>new Response(new TextEncoder().encode('not an SSE response'))});
+  await assert.rejects(()=>collect(invalid.stream(options())),{code:'PROTOCOL_ERROR'});
+});
+
+test('metadata-only completed terminal preserves already completed output and replay',async()=>{
+  const item=textItem('Completed stream item');
+  const {adapter}=makeAdapter([{type:'response.output_item.added',output_index:0,item:{...item,status:'in_progress',content:[]}},{type:'response.output_text.delta',output_index:0,item_id:item.id,content_index:0,delta:'Completed stream item'},{type:'response.output_item.done',output_index:0,item},complete([])]);
+  const chunks=await collect(adapter.stream(options()));const final=chunks.at(-1);assert.equal(final.reason.kind,'stop');assert.equal(final.replayState.blocks.length,1);assert.deepEqual(final.replayState.blocks[0].item,item);
+  const open=makeAdapter([{type:'response.output_item.added',output_index:0,item:{...item,status:'in_progress',content:[]}},{type:'response.output_text.delta',output_index:0,item_id:item.id,content_index:0,delta:'unfinished'},complete([])]).adapter;
+  await assert.rejects(()=>collect(open.stream(options())),{code:'PROTOCOL_ERROR'});
+});
+
+test('account-advertised image modalities survive list and resolution',async()=>{
+ const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>Response.json({models:[{slug:'vision-model',display_name:'Vision',visibility:'list',input_modalities:['text','image']}]})});
+ assert.deepEqual((await adapter.listModels(PROVIDER))[0].inputModalities,['text','image']);assert.deepEqual((await adapter.resolveModel(PROVIDER,'vision-model')).inputModalities,['text','image']);
+});
