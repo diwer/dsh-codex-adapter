@@ -60,4 +60,4 @@ npm run test:desktop
 
 无任何输出块的响应提前结束时，插件等待 500 ms 后最多重试一次；已输出文字、思考或工具块则不会自动重放。缺少 response.completed 始终判为中断，不伪造成功或回放状态。
 
-开发时可运行 `npm run test:protocol`：仅验证适配器、请求转换和 SSE 三组核心协议，终端优先显示中文通过/失败统计及失败项，完整 TAP 日志保存在 `outputs/test-reports/`。该入口保留失败和异常退出码，不会因日志摘要而把失败报告成成功；`npm run verify` 仍运行完整测试。
+开发过程中的内部试跑使用 `npm run test:protocol:diagnostic`：界面仅提示已记录，断言、堆栈、测试退出码和真实通过状态写入 `outputs/test-reports/` 的日志与 JSON 结果。命令成功仅代表记录成功，必须检查结果文件；不能将它作为验收通过依据。完成前运行 `npm run test:protocol` 和 `npm run verify`，最终未通过仍返回非零退出码并明确提示，详细失败内容只保留在日志中。
