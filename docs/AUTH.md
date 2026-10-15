@@ -53,6 +53,8 @@ Account metadata is `{ accountId, clientId, subject, email, signedIn, planUsageE
 
 Desktop login enables `returnToHarness: true`. Only after identity validation and credential persistence, the callback serves a local HTML success page that removes the callback query from browser history and attempts to open the fixed `dsh://open` destination. Harness desktop 0.2.0-rc.2 registers this protocol and focuses its primary window. The page includes an “打开 DeepSeek Harness” link when the browser requires a user gesture or confirmation. It contains no account identity, callback parameters, tokens, or external assets, and allows only nonce-protected inline script and style. Failure pages do not open the app. The default/CLI success response remains plain text.
 
+The desktop settings list shows signed-in accounts, while the store keeps signed-out registration mappings for reconnecting. With no signed-in accounts, “连接 ChatGPT” reuses the last selected registration, or the sole saved registration when no selection exists, passing its `accountId` to `auth.login()`. “使用其他账户” and “添加账户” use an unbound flow (`newAccount: true` on the protected desktop login route); restarting a pending flow preserves that choice. Registrations are never merged by email.
+
 ### Lower-level callback integration
 
 ```js
