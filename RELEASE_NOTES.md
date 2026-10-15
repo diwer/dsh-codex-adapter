@@ -2,6 +2,10 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## v0.1.5
+
+- 基于最新 main 重新发布，包含 v0.1.4 的账户重连、授权回调、代理支持与安全诊断改进。
+
 ## v0.1.4
 
 - 退出后重新连接复用原账户注册，已退出的历史记录不再占用账户列表；支持单独选择“使用其他账户”。

@@ -7,7 +7,7 @@
 ## 在界面中安装
 
 1. 打开 **Plugins → Add plugin**。
-2. 输入 `dsh-codex-official-adapter@0.1.4`。
+2. 输入 `dsh-codex-official-adapter@0.1.5`。
 3. Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。
 4. 等当前任务结束，完全退出并重开 Harness。仅关闭窗口可能不会退出应用。
 5. 在插件列表确认 `dsh-codex-official-adapter` 已启用。
@@ -31,7 +31,7 @@ macOS 正式版可直接复制：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add dsh-codex-official-adapter@0.1.4 \
+  plugin --profile desktop add dsh-codex-official-adapter@0.1.5 \
   --ignore-scripts --registry=https://registry.npmjs.org/
 ```
 
@@ -39,19 +39,19 @@ macOS 正式版可直接复制：
 
 ### 本地包安装
 
-从 [v0.1.4 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.4)下载 `dsh-codex-official-adapter-0.1.4.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
+从 [v0.1.5 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.5)下载 `dsh-codex-official-adapter-0.1.5.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add \
-  "$HOME/Downloads/dsh-codex-official-adapter-0.1.4.tgz" --ignore-scripts
+  "$HOME/Downloads/dsh-codex-official-adapter-0.1.5.tgz" --ignore-scripts
 ```
 
 文件不在“下载”目录时，替换最后一行的路径。保留安装时使用的本地包，避免影响后续依赖解析。
 
 ### 自动下载并校验
 
-已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.4、校验发行页的 SHA-256，再调用目标应用的官方安装器：
+已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.5、校验发行页的 SHA-256，再调用目标应用的官方安装器：
 
 ```sh
 node scripts/install-release.mjs \
@@ -65,7 +65,7 @@ node scripts/install-release.mjs \
 
 ### 浏览器授权成功，但回调登录失败
 
-升级到 v0.1.4 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
+升级到 v0.1.5 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
 
 浏览器和插件的网络设置可能不同。插件读取 `HTTPS_PROXY` / `HTTP_PROXY`（含小写）、`NO_PROXY`，并支持 HTTP(S) 类型的 `ALL_PROXY` 作为后备。通过图标启动 Harness 时可能没有这些环境变量；可在插件配置中将 `proxyUrl` 设置为实际 HTTP(S) 代理地址，例如 `http://127.0.0.1:7890`，保存并重启插件后重新授权。示例端口需替换成代理软件的 HTTP 或混合端口。显式 `proxyUrl` 优先于代理环境变量，包括 `NO_PROXY`；留空恢复环境变量配置。插件不自动读取操作系统或浏览器的代理设置。
 
@@ -75,7 +75,7 @@ node scripts/install-release.mjs \
 
 | 现象 | 处理方式 |
 | --- | --- |
-| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.4`。 |
+| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.5`。 |
 | `ERR_PNPM_MISSING_TARBALL_INTEGRITY` | 下载发行包后使用本地路径安装，或运行上面的校验脚本。无需删除锁文件或关闭完整性检查。 |
 | GitHub 仓库地址安装失败 | 改用明确的 npm 包名与版本，或下载本地包。仓库名 `dsh-codex-adapter` 与实际 npm 包名不同。 |
 | 设置中没有“ChatGPT 订阅” | 确认安装目标应用、desktop Profile 和宿主版本，启用插件后完全退出并重开。 |
