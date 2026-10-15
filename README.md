@@ -4,6 +4,8 @@
 
 [English](README.en.md) · [许可证](LICENSE) · [市场接入](docs/MARKET_PUBLISHING.md) · [数据与隐私](docs/PRIVACY.md)
 
+[使用文档](https://diwer.github.io/dsh-codex-adapter/) · [AI 可读说明 llms.txt](https://diwer.github.io/dsh-codex-adapter/llms.txt)
+
 当前使用版本为 **v0.1.0 Release**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 与各市场收录另行推进。
 
 ## 安装与登录

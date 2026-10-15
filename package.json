@@ -23,7 +23,8 @@
     "test:protocol:diagnostic": "node scripts/test-protocol.mjs --diagnostic",
     "market:check": "node scripts/market-check.mjs",
     "market:prepare": "node scripts/prepare-market-release.mjs",
-    "market:discover": "node scripts/discover-markets.mjs"
+    "market:discover": "node scripts/discover-markets.mjs",
+    "docs:build": "node scripts/build-docs.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",

@@ -1,0 +1,36 @@
+# DSH ChatGPT Adapter
+
+> Community ChatGPT subscription model provider for DeepSeek Harness desktop. Not affiliated with OpenAI or DeepSeek.
+
+## Project identity
+
+- Package: dsh-codex-official-adapter
+- Release: 0.1.0
+- Repository: https://github.com/diwer/dsh-codex-adapter
+- License: MIT
+- Supported host: DeepSeek Harness desktop 0.2.0-rc.2; macOS installation tested. Other versions and platforms require separate validation.
+
+## Capabilities
+
+Uses Sign in with ChatGPT authorization and the Responses API. Account model availability is queried dynamically; no fixed list of models is guaranteed. DeepSeek and GPT remain selectable. New conversations may default to GPT through a setting that can be turned off. Models reporting image input support accept host-managed attachments. DSH executes tools; this provider adapts tool calls and tool results. Supports streaming, cancellation and replay metadata.
+
+## Install
+
+Download https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.0/dsh-codex-official-adapter-0.1.0.tgz, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/dsh-codex-official-adapter-0.1.0.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.
+
+## Data and limits
+
+This is not a free ChatGPT subscription or an API-key relay. The plugin is free MIT software; an eligible authorized account and its subscription availability are separate. Requests and selected conversation images/tool results go to OpenAI. OAuth credentials use plugin-owned plaintext files, directory 0700 and files 0600. The plugin does not read credentials from Codex or other apps. No API-key fallback or model availability guarantee. See the privacy document before connecting.
+
+## Verification
+
+Release v0.1.0: 172 offline tests, 88 protocol tests (part of the suite), 7 real desktop runtime tests and isolated-package install/load checks passed. These are not a claim that every account/model or long-context compression scenario has been live-tested. Marketplace submission, listing, search availability and installation are separate states.
+
+## Sources
+
+- Source repository: https://github.com/diwer/dsh-codex-adapter
+- Download release: https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.0
+- Privacy and credentials: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md
+- Compatibility: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md
+- Installation and upgrade: https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md
+- Market coverage: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/MARKET_PUBLISHING.md

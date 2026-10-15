@@ -1,0 +1,33 @@
+{
+  "name": "DSH ChatGPT Adapter author catalog",
+  "url": "https://diwer.github.io/dsh-codex-adapter/",
+  "source": "https://github.com/diwer/dsh-codex-adapter",
+  "updated": "2026-10-15",
+  "notice": "First-party author catalog. Not the awesome-dsh-plugin community registry; inclusion here is not third-party review.",
+  "count": 1,
+  "categories": {
+    "model": {
+      "en": "Models & Providers",
+      "zh": "模型与账号接入"
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-codex-official-adapter",
+      "owner": "diwer",
+      "url": "https://github.com/diwer/dsh-codex-adapter",
+      "category": "model",
+      "description": {
+        "en": "ChatGPT subscription models in DeepSeek Harness desktop, with image input, host tools and DeepSeek/GPT switching.",
+        "zh": "在 DeepSeek Harness 桌面版使用 ChatGPT 订阅模型，支持图片输入、宿主工具和 DeepSeek/GPT 切换。"
+      },
+      "version": "0.1.0",
+      "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.0/dsh-codex-official-adapter-0.1.0.tgz",
+      "install": "dsh plugin --profile desktop add https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.0/dsh-codex-official-adapter-0.1.0.tgz",
+      "added": "2026-10-15",
+      "dshPeers": {
+        "@deepseek-ai/dsh-llm": "0.2.0-rc.2"
+      }
+    }
+  ]
+}

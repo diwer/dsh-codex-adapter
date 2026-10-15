@@ -1,7 +1,7 @@
 import {lstat, readFile, readdir} from 'node:fs/promises';
 import path from 'node:path';
 
-export const PUBLIC_ROOTS = ['src','lib','test','test-runtime','scripts','market','.github','examples',
+export const PUBLIC_ROOTS = ['src','lib','test','test-runtime','scripts','market','site','.github','examples',
   'package.json','package-lock.json','cordis.patch.yml','README.md','README.en.md','RELEASE_NOTES.md','LICENSE','.gitignore',
   'docs/AUTH.md','docs/COMPATIBILITY.md','docs/SOURCES.md','docs/PRIVACY.md','docs/MARKET_PUBLISHING.md'];
 export const TOPICS = ['dsh-plugin','deepseek-harness','dsh','cordis-plugin','chatgpt','codex','llm-provider'];
