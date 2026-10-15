@@ -30,7 +30,7 @@ function jwt(claims, key = privateKey, header = {}) {
   const input = `${encode({ alg: 'RS256', kid: jwk.kid, ...header })}.${encode({ iss: URLS.issuer, aud: 'oaiapp_fake', sub: 'fake-subject', email: 'fake@example.invalid', iat: seconds, exp: seconds + 3600, ...claims })}`;
   return `${input}.${sign('RSA-SHA256', Buffer.from(input), key).toString('base64url')}`;
 }
-function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey, header, token = {}, fetchOverride, subject = 'fake-subject',authorizationTimeoutMs } = {}) {
+function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey, header, token = {}, fetchOverride, subject = 'fake-subject',authorizationTimeoutMs,onDiagnostic } = {}) {
   let time = seconds * 1000;
   let currentNonce;
   let refreshCount = 0;
@@ -66,7 +66,7 @@ function fixture({ store = new MemoryCredentialStore(), claims = {}, signingKey,
     }
     throw new Error('Unexpected URL');
   };
-  const auth = createAuthClient({ store, fetchImpl, now: () => time,authorizationTimeoutMs });
+  const auth = createAuthClient({ store, fetchImpl, now: () => time,authorizationTimeoutMs,onDiagnostic });
   const begin = async (options = {}) => {
     const attempt = await auth.beginAuthorization({ redirectUri: 'http://127.0.0.1:54321/auth/callback', ...options });
     const parsed = new URL(attempt.authorizeUrl);
@@ -139,6 +139,21 @@ test('loopback failure page identifies blocked discovery without leaking callbac
   const page=await callbackResponse;
   assert.match(page,/http_error; discovery; HTTP 403/);assert.match(page,/proxy settings/);
   assert.doesNotMatch(page,/DO-NOT-LEAK|fake-code|oaiapp_fake|state=/);
+});
+
+test('loopback diagnostics prove listener startup, callback receipt, HTTP progress and exact rejected token field',async()=>{
+  const events=[];const f=fixture({token:{expires_in:0},onDiagnostic:event=>events.push(event)});
+  let page;
+  await assert.rejects(f.auth.login({onAuthorize:value=>{
+    const authorize=new URL(value),callback=new URL(authorize.searchParams.get('redirect_uri'));
+    callback.search=new URLSearchParams({state:authorize.searchParams.get('state'),code:'fake-code',client_id:'oaiapp_fake'}).toString();
+    page=fetch(callback).then(r=>r.text());
+  }}),error=>{assert.equal(error.stage,'token_response');assert.equal(error.field,'expires_in');return error.code==='invalid_response';});
+  assert.match(await page,/token_response; expires_in/);
+  const names=events.map(e=>e.event);for(const name of ['listener_ready','authorization_ready','callback_received','callback_validated','request_succeeded','login_failed','listener_closed'])assert.ok(names.includes(name),name);
+  assert.ok(names.indexOf('listener_ready')<names.indexOf('callback_received'));
+  assert.deepEqual(events.find(e=>e.event==='login_failed').field,'expires_in');
+  assert.doesNotMatch(JSON.stringify(events),/fake-code|fake-access|fake-refresh|authorize\?|state=|nonce/);
 });
 
 for (const [name, options] of [

@@ -42,17 +42,19 @@ function callbackUri(value) {
   } catch { throw new AuthError('invalid_options'); }
 }
 function tokenFields(data, now, oldRecord) {
-  if (!tokenString(data.access_token) || !tokenString(data.refresh_token) || (typeof data.token_type !== 'string' || data.token_type.toLowerCase() !== 'bearer')
-    || !Number.isSafeInteger(data.expires_in) || data.expires_in <= 0 || data.expires_in > 86_400
-    || typeof data.scope !== 'string' || data.scope.length > 4096
-    || (!oldRecord && !tokenString(data.id_token)) || (data.id_token !== undefined && !tokenString(data.id_token))) throw new AuthError('invalid_response');
+  const checks={access_token:tokenString(data.access_token),refresh_token:tokenString(data.refresh_token),
+    token_type:typeof data.token_type==='string'&&data.token_type.toLowerCase()==='bearer',
+    expires_in:Number.isSafeInteger(data.expires_in)&&data.expires_in>0&&data.expires_in<=86_400,
+    scope:typeof data.scope==='string'&&data.scope.length<=4096,
+    id_token:(oldRecord&&data.id_token===undefined)||tokenString(data.id_token)};
+  for(const [field,valid]of Object.entries(checks))if(!valid)throw new AuthError('invalid_response',{stage:'token_response',field});
   const scopes = [...new Set(data.scope.split(/\s+/).filter(Boolean))];
   let earliestRefreshAt = null;
   if (data.earliest_refresh_at !== undefined && data.earliest_refresh_at !== null) {
     if (Number.isSafeInteger(data.earliest_refresh_at) && data.earliest_refresh_at >= 0) earliestRefreshAt = data.earliest_refresh_at * 1000;
     else if (typeof data.earliest_refresh_at === 'string' && /^\d{4}-\d\d-\d\dT/.test(data.earliest_refresh_at)) earliestRefreshAt = Date.parse(data.earliest_refresh_at);
-    else throw new AuthError('invalid_response');
-    if (!Number.isFinite(earliestRefreshAt)) throw new AuthError('invalid_response');
+    else throw new AuthError('invalid_response',{stage:'token_response',field:'earliest_refresh_at'});
+    if (!Number.isFinite(earliestRefreshAt)) throw new AuthError('invalid_response',{stage:'token_response',field:'earliest_refresh_at'});
   }
   return {
     accessToken: data.access_token, refreshToken: data.refresh_token, idToken: data.id_token ?? oldRecord?.idToken,
@@ -62,11 +64,12 @@ function tokenFields(data, now, oldRecord) {
 }
 
 /** Uses only app-owned credentials. No Codex credential file or browser-cookie access. */
-export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentName = 'DSH Codex Adapter', now = Date.now, authorizationTimeoutMs = LOGIN_TIMEOUT_MS } = {}) {
+export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentName = 'DSH Codex Adapter', now = Date.now, authorizationTimeoutMs = LOGIN_TIMEOUT_MS, onDiagnostic=()=>{} } = {}) {
   if (typeof store?.transaction !== 'function' || typeof fetchImpl !== 'function' || typeof now !== 'function'
     || typeof agentName !== 'string' || !agentName.trim() || agentName.length > 100 || /[\x00-\x1f]/.test(agentName)
     || !Number.isSafeInteger(authorizationTimeoutMs) || authorizationTimeoutMs < 60_000 || authorizationTimeoutMs > 3_600_000) throw new AuthError('invalid_options');
-  const request = createOfficialTransport(fetchImpl);
+  const diagnostic=value=>{try{Promise.resolve(onDiagnostic(value)).catch(()=>{});}catch{}};
+  const request = createOfficialTransport(fetchImpl,diagnostic);
   const oidc = createOidcValidator({ request, now });
   // A store must serialize across every client/process sharing the same credentials.
   const transact = async operation => {
@@ -129,6 +132,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
         if (!validClient(clientId) || (selected.clientId !== DYNAMIC_CLIENT && callbackClient !== null && callbackClient !== selected.clientId)) throw new AuthError('invalid_callback');
         const code = url.searchParams.get('code');
         if (!tokenString(code)) throw new AuthError('invalid_callback');
+        diagnostic({event:'callback_validated',stage:'callback'});
         await oidc.configuration(signal);
         let data;
         try {
@@ -137,8 +141,11 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
           if (error.code === 'invalid_grant') restartClientId = clientId;
           throw error;
         }
+        diagnostic({event:'token_response_received',stage:'token_response',expiresIn:data.expires_in,hasAccessToken:tokenString(data.access_token),hasRefreshToken:tokenString(data.refresh_token),hasIdToken:tokenString(data.id_token)});
         const fields = tokenFields(data, now());
+        diagnostic({event:'token_response_validated',stage:'token_response'});
         const identity = await oidc.validate(fields.idToken, { clientId, nonce, signal });
+        diagnostic({event:'id_token_validated',stage:'id_token'});
         if (selected.subject !== undefined && identity.subject !== selected.subject) throw new AuthError('account_mismatch');
         const id = accountKey(clientId, identity.subject);
         if (accountId !== undefined && id !== accountId) throw new AuthError('account_mismatch');
@@ -223,6 +230,9 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
     let settled = false;
     let handlingCallback = false;
     let codeRestarts = 0;
+    const flow=randomBytes(8).toString('hex');
+    const log=value=>diagnostic({...value,flow});
+    log({event:'login_started'});
     const expiresAt=now()+authorizationTimeoutMs;
     const outcome = new Promise(resolve => { finish = resolve; });
     const end = result => { if (!settled) { settled = true; finish(result); } };
@@ -234,9 +244,11 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       if (!attempt || settled || handlingCallback || req.method !== 'GET' || !req.url?.startsWith('/auth/callback?') || req.url.length > 16_384) { res.writeHead(404); res.end('Not found.'); return; }
       const redirectUri = `http://127.0.0.1:${server.address().port}/auth/callback`;
       if (req.headers.host !== new URL(redirectUri).host) { res.writeHead(400); res.end('Invalid callback.'); return; }
+      log({event:'callback_received',stage:'callback'});
       handlingCallback = true;
       try {
         const account = await attempt.complete(`${new URL(redirectUri).origin}${req.url}`, { signal });
+        log({event:'credentials_saved',stage:'credential_store'});
         res.end('Sign-in complete. You can close this window.');
         end({ account });
       } catch (error) {
@@ -264,14 +276,17 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
         server.once('error', () => reject(new AuthError('callback_unavailable')));
         server.listen({ port, host: '127.0.0.1', exclusive: true }, resolve);
       });
+      log({event:'listener_ready',port:server.address().port});
       if (signal?.aborted) throw new AuthError('cancelled');
       attempt = await beginAuthorization({ accountId, promptConsent, redirectUri: `http://127.0.0.1:${server.address().port}/auth/callback` });
+      log({event:'authorization_ready'});
       Promise.resolve().then(() => onAuthorize(attempt.authorizeUrl,{expiresAt}))
         .catch(error => end({ error: safeError(error) }));
       const result = await outcome;
       if (result.error) throw result.error;
+      log({event:'login_succeeded'});
       return result.account;
-    } catch (error) { throw safeError(error); }
+    } catch (error) { const safe=safeError(error);log({event:'login_failed',code:safe.code,stage:safe.stage,status:safe.status,field:safe.field});throw safe; }
     finally {
       flowController.abort();
       attempt?.cancel();
@@ -279,6 +294,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       signal?.removeEventListener('abort', abort);
       server.closeAllConnections();
       if (server.listening) await new Promise(resolve => server.close(resolve));
+      log({event:'listener_closed'});
     }
   }
   return Object.freeze({ accounts, beginAuthorization, session, login });

@@ -69,6 +69,8 @@ node scripts/install-release.mjs \
 
 新版错误会包含阶段（`discovery` 身份配置、`token` 令牌交换、`jwks` 签名公钥）、错误码和 HTTP 状态。例如 `http_error; discovery; HTTP 403` 表示回调已到达，但身份配置请求被拒绝，应先检查网络出口与代理。提交问题时只附这些诊断字段，不附完整回调 URL。
 
+设置页显示实际运行版本。诊断日志位于插件凭证目录下的 `auth-diagnostics.jsonl`（默认 `~/.dsh/plugin-data/dsh-codex-official-adapter/auth/auth-diagnostics.jsonl`）。它记录本地监听端口、回调到达、各官方请求的状态、令牌字段校验、身份验证和凭证保存；不记录 URL、授权码、令牌、邮箱或服务原始响应。文件权限为 `0600`，达到 512 KiB 后保留一份轮转日志 `.1`。`listener_ready` 证明监听已启动，`callback_received` 证明回调已到达，`login_failed` 给出失败阶段与安全诊断字段。
+
 | 现象 | 处理方式 |
 | --- | --- |
 | `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.4`。 |

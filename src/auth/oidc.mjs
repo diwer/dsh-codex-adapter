@@ -43,10 +43,13 @@ async function readJson(response) {
   finally { reader.releaseLock(); }
 }
 
-export function createOfficialTransport(fetchImpl) {
+export function createOfficialTransport(fetchImpl,diagnostic=()=>{}) {
   return async function request(url, { form, signal, emptySuccess = false } = {}) {
     if (!(form ? WRITE_ENDPOINTS : READ_ENDPOINTS).has(url)) throw new AuthError('invalid_options');
     if (signal?.aborted) throw new AuthError('cancelled');
+    const stage=url===ENDPOINTS.discovery?'discovery':url===ENDPOINTS.jwks?'jwks':url===ENDPOINTS.token?'token':'revocation';
+    const started=Date.now();
+    diagnostic({event:'request_started',stage});
     const timeout = AbortSignal.timeout(15_000);
     const combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
     let response;
@@ -60,6 +63,7 @@ export function createOfficialTransport(fetchImpl) {
       if (response.redirected || (response.url && response.url !== url) || (response.status >= 300 && response.status < 400)) throw new AuthError('invalid_response');
       if (emptySuccess && response.status === 200) {
         await response.body?.cancel();
+        diagnostic({event:'request_succeeded',stage,status:response.status,durationMs:Date.now()-started});
         return {};
       }
       let data;
@@ -71,11 +75,12 @@ export function createOfficialTransport(fetchImpl) {
         const error = new AuthError(isTerminalRefresh(code) ? 'invalid_grant' : code === 'invalid_client' ? 'invalid_client' : 'http_error', { status: response.status });
         throw error;
       }
+      diagnostic({event:'request_succeeded',stage,status:response.status,durationMs:Date.now()-started});
       return data;
     } catch (error) {
-      const stage=url===ENDPOINTS.discovery?'discovery':url===ENDPOINTS.jwks?'jwks':url===ENDPOINTS.token?'token':'revocation';
-      if (signal?.aborted) throw new AuthError('cancelled',{stage});
-      throw new AuthError(error instanceof AuthError?error.code:'network_error',{status:error instanceof AuthError?error.status:undefined,stage});
+      const safe=new AuthError(signal?.aborted?'cancelled':error instanceof AuthError?error.code:'network_error',{status:error instanceof AuthError?error.status:undefined,stage});
+      diagnostic({event:'request_failed',stage,code:safe.code,status:safe.status,durationMs:Date.now()-started});
+      throw safe;
     }
   };
 }
@@ -137,7 +142,7 @@ export function createOidcValidator({ request, now }) {
       return { issuer: claims.iss, subject: claims.sub, email: typeof claims.email === 'string' && claims.email.length <= 320 ? claims.email : null };
     } catch (error) {
       if (error instanceof AuthError && ['cancelled', 'network_error', 'http_error', 'invalid_discovery'].includes(error.code)) throw error;
-      throw new AuthError('invalid_id_token');
+      throw new AuthError('invalid_id_token',{stage:'id_token'});
     }
   }
   return { configuration, validate };

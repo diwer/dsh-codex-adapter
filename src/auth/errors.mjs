@@ -26,18 +26,19 @@ const MESSAGES = Object.freeze({
 
 /** Intentionally excludes provider response bodies, tokens, URLs, and native causes. */
 export class AuthError extends Error {
-  constructor(code, { status, stage } = {}) {
+  constructor(code, { status, stage, field } = {}) {
     super(MESSAGES[code] ?? MESSAGES.invalid_response);
     this.name = 'AuthError';
     this.code = Object.hasOwn(MESSAGES, code) ? code : 'invalid_response';
     if (Number.isInteger(status) && status >= 100 && status <= 599) this.status = status;
-    if (['discovery','token','jwks','revocation'].includes(stage)) this.stage = stage;
+    if (['discovery','token','jwks','revocation','callback','token_response','id_token','credential_store'].includes(stage)) this.stage = stage;
+    if (['access_token','refresh_token','id_token','token_type','expires_in','scope','earliest_refresh_at'].includes(field)) this.field = field;
   }
 }
 
 export function formatAuthError(error) {
   const safe=safeError(error);
-  return `${safe.message} (${[safe.code,safe.stage,safe.status?`HTTP ${safe.status}`:null].filter(Boolean).join('; ')})`;
+  return `${safe.message} (${[safe.code,safe.stage,safe.field,safe.status?`HTTP ${safe.status}`:null].filter(Boolean).join('; ')})`;
 }
 
 export function safeError(error, fallback = 'invalid_response') {

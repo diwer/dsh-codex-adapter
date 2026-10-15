@@ -9,6 +9,9 @@ import {createAuthClient,FileCredentialStore,AuthError} from './auth/index.mjs';
 import {DesktopAccountController} from './desktop-controller.mjs';
 import {createDesktopFetch} from './desktop-fetch.mjs';
 import {DesktopDefaultModel} from './desktop-default-model.mjs';
+import {createDiagnosticLog} from './auth/diagnostics.mjs';
+
+const pluginVersion=JSON.parse(await readFile(new URL('../package.json',import.meta.url),'utf8')).version;
 
 export const name='dsh-codex-official-adapter';
 export const inject=['llm','connection'];
@@ -27,7 +30,9 @@ export const Config=Schema.object({
 export function apply(ctx,config){
   const store=new FileCredentialStore({directory:config.credentialDirectory});
   const transport=createDesktopFetch({proxyUrl:config.proxyUrl});
-  const auth=createAuthClient({store,fetchImpl:transport.fetch,authorizationTimeoutMs:config.authorizationTimeoutMs});
+  const diagnostics=createDiagnosticLog({directory:config.credentialDirectory});
+  diagnostics.record({event:'runtime_started',version:pluginVersion,proxyMode:config.proxyUrl?'explicit':(process.env.https_proxy??process.env.HTTPS_PROXY??process.env.http_proxy??process.env.HTTP_PROXY??process.env.all_proxy??process.env.ALL_PROXY)?'environment':'direct'});
+  const auth=createAuthClient({store,fetchImpl:transport.fetch,authorizationTimeoutMs:config.authorizationTimeoutMs,onDiagnostic:diagnostics.record});
   const controller=new DesktopAccountController({auth,store,onChange:()=>ctx.emit('llm/adapters-updated')});
   const adapter=new ChatGPTPlanAdapter({...config,session:controller,fetchImpl:transport.fetch,attachments:()=>ctx.get('attachments')});
   const listModels=adapter.listModels.bind(adapter);
@@ -42,7 +47,7 @@ export function apply(ctx,config){
   const loadIcon=()=>icon??=readFile(new URL('../lib/assets/big-fish-codex.png',import.meta.url));
   ctx.connection.registerFetchRoute(ctx,{path:'/api/dsh-chatgpt-plan/icon',methods:['GET'],requestBody:'buffered',fetch:async()=>new Response(await loadIcon(),{headers:{'content-type':'image/png','cache-control':'private, max-age=3600','x-content-type-options':'nosniff'}})});
   const routes={
-    status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
+    status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,pluginVersion,diagnostics:diagnostics.status(),...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
     preferences:{method:'POST',run:body=>{if(!defaults)throw new AuthError('invalid_options');return defaults.setEnabled(body.enabled);}},
     login:{method:'POST',run:()=>controller.beginLogin()},
     restart:{method:'POST',run:()=>controller.restartLogin()},
@@ -70,5 +75,5 @@ export function apply(ctx,config){
       }
     }});
   }
-  ctx.effect(()=>async()=>{adapter.dispose();await controller.dispose();await transport.close();});
+  ctx.effect(()=>async()=>{adapter.dispose();await controller.dispose();await transport.close();await diagnostics.flush();});
 }
