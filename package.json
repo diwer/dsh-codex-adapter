@@ -18,7 +18,8 @@
     "check": "node scripts/check.mjs",
     "verify": "npm run check && npm test",
     "test:runtime": "node --test test-runtime/*.test.mjs",
-    "test:desktop": "node scripts/test-desktop.mjs"
+    "test:desktop": "node scripts/test-desktop.mjs",
+    "test:protocol": "node scripts/test-protocol.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",

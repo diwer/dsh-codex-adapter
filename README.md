@@ -59,3 +59,5 @@ npm run test:desktop
 图片输入能力直接读取真实账户模型目录。支持图片的 GPT 模型通过 Harness 附件服务发送 Responses input_image；文本与图片顺序保留，默认单张最多 8 MiB、最多 20 张、编码后合计 20 MiB。已卸载的历史图片保留明确提示，不读取任意文件路径或远程图片 URL。
 
 无任何输出块的响应提前结束时，插件等待 500 ms 后最多重试一次；已输出文字、思考或工具块则不会自动重放。缺少 response.completed 始终判为中断，不伪造成功或回放状态。
+
+开发时可运行 `npm run test:protocol`：仅验证适配器、请求转换和 SSE 三组核心协议，终端优先显示中文通过/失败统计及失败项，完整 TAP 日志保存在 `outputs/test-reports/`。该入口保留失败和异常退出码，不会因日志摘要而把失败报告成成功；`npm run verify` 仍运行完整测试。
