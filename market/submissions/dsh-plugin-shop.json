@@ -1,0 +1,24 @@
+{
+  "package": "dsh-codex-official-adapter",
+  "dsh": {
+    "catalog": {
+      "category": "provider",
+      "summary": {
+        "en": "Use your ChatGPT subscription in Harness: sign in without an API key, switch GPT/DeepSeek, and work with images and built-in tools.",
+        "zh": "登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。"
+      },
+      "capabilities": [
+        "llm",
+        "connection",
+        "attachments",
+        "agentDefaultModel"
+      ]
+    },
+    "compatibility": {
+      "dsh": "0.2.0-rc.2",
+      "profiles": [
+        "desktop"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "cloud": true,
+  "network": [
+    "https://auth.openai.com",
+    "https://api.openai.com"
+  ],
+  "offlineMode": false,
+  "apiKeys": [],
+  "credentials": {
+    "type": "OAuth with PKCE",
+    "storage": "file-0600",
+    "directoryMode": "0700",
+    "encryptedAtRest": false,
+    "logged": false
+  },
+  "permissions": [
+    "network: OpenAI authorization and inference",
+    "filesystem: plugin-owned credential directory",
+    "attachments: selected conversation images through the host",
+    "settings: optional default model preference"
+  ],
+  "retention": "Local authorization persists until logout; request store=false; upstream retention is governed by OpenAI."
+}

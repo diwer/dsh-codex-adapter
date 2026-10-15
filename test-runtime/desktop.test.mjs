@@ -18,10 +18,11 @@ test('desktop bundle mounts without an account, owns authenticated routes, and c
   const ctx=new Context();const llm=ctx.plugin(LlmRuntime),connection=ctx.plugin(Connection);await Promise.all([llm.await(),connection.await()]);
   const fiber=ctx.plugin(desktop,{credentialDirectory:directory});
   try{
-    await fiber.await();assert.equal(ctx.connection.routes.size,8);assert.deepEqual(await ctx.llm.listModels(PROVIDER),[]);
+    await fiber.await();assert.equal(ctx.connection.routes.size,9);assert.deepEqual(await ctx.llm.listModels(PROVIDER),[]);
     const route=action=>ctx.connection.routes.get('/api/dsh-chatgpt-plan/'+action);
     const call=(action,body)=>route(action).fetch(new Request('http://127.0.0.1/api/dsh-chatgpt-plan/'+action,{method:body===undefined?'GET':'POST',...(body===undefined?{}:{headers:{'content-type':'application/json'},body:JSON.stringify(body)})}));
     assert.equal((await(await call('status')).json()).value.phase,'not-signed-in');
+    assert.equal(route('icon').requestBody,'buffered');const icon=await call('icon');assert.equal(icon.headers.get('content-type'),'image/png');assert.equal(icon.headers.get('x-content-type-options'),'nosniff');assert.deepEqual([...new Uint8Array(await icon.arrayBuffer()).slice(0,8)],[137,80,78,71,13,10,26,10]);
     const malformed=await route('login').fetch(new Request('http://127.0.0.1/api/dsh-chatgpt-plan/login',{method:'POST',body:'{}'}));assert.equal(malformed.status,415);
     const invalid=await call('login',{unexpected:true});assert.equal(invalid.status,400);
     const authorization=(await(await call('login',{})).json()).value;const parsed=new URL(authorization.url);assert.equal(parsed.origin,'https://auth.openai.com');assert.equal(parsed.searchParams.get('client_id'),'dynamic_agent_client');

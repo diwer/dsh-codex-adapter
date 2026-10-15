@@ -1,0 +1,20 @@
+[
+  {
+    "file": "ydhrdh.schema.json",
+    "source": "https://github.com/ydhrdh/dsh-marketplace/blob/main/schema/plugin.schema.json",
+    "retrievedAt": "2026-10-15",
+    "sha256": "27cbe8f2f27bf6e5201ac8532206da37d6b69666be36dc0f844007f4af5c6b37"
+  },
+  {
+    "file": "shop.schema.json",
+    "source": "https://github.com/LivXue/dsh-plugin-shop/blob/main/registry/schema/plugin-entry.schema.json",
+    "retrievedAt": "2026-10-15",
+    "sha256": "e30f3dfdf16f43e5f29b67c3c4ff39d4094c5379284e405ec94a7c1a63f994a1"
+  },
+  {
+    "file": "1024.schema.json",
+    "source": "https://github.com/imsai-sh/awesome-deepseek-harness-plugins/blob/main/catalog/schema/plugin.schema.json",
+    "retrievedAt": "2026-10-15",
+    "sha256": "853709e735f49510b1bbdd273ec1cbbfcdcc8b538674393eef9a510b57660aaf"
+  }
+]

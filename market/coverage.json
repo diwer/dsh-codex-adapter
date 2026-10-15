@@ -1,0 +1,5410 @@
+{
+  "asOf": "2026-10-15",
+  "scope": "公共完整目录 market 分类 + GitHub market 关键词仓库搜索全量分页 + 市场导航及可访问 README 来源链接 + 内置浏览器 Google 搜索；不声称互联网穷尽。",
+  "unavailablePolicy": "2026-10-15 用户要求忽略异常内容，只适配可正常访问的渠道。",
+  "discovery": {
+    "source": "https://awesome-dsh-plugin.com/plugins.json",
+    "retrievedAt": "2026-10-15T09:39:15.383Z",
+    "sha256": "f443f88ebe23a72342063295032911136075e7cb78b289c31b980c24714b3132",
+    "catalogCount": 4671,
+    "marketCount": 81
+  },
+  "statusMeaning": {
+    "adapted": "已具备声明的包/提交格式；不代表市场收录或实际安装通过",
+    "not-applicable": "渠道资源形态不接收此模型 Provider",
+    "skipped": "异常或未取得规范，按用户指示跳过"
+  },
+  "entries": [
+    {
+      "name": "DSH 插件精选站",
+      "url": "http://dsh-plugins.top",
+      "origin": "nexus",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic"
+      ],
+      "note": "内置浏览器正常读取；站点展示 GitHub 链接，来源为 Top 榜单与 dsh-plugin topic，不要求额外安装格式。",
+      "source": {
+        "url": "http://dsh-plugins.top",
+        "read": true
+      }
+    },
+    {
+      "name": "DSH Plugin Radar",
+      "url": "https://adamplatin123.github.io/dsh-plugin-radar/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "radar-row"
+      ],
+      "note": "已读取登记规范；未伪造运行结论。",
+      "source": {
+        "url": "https://github.com/AdamPlatin123/dsh-plugin-radar/blob/main/PLUGINS.md",
+        "read": true
+      }
+    },
+    {
+      "name": "awesome-dsh-plugin",
+      "url": "https://awesome-dsh-plugin.com/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "community-yaml"
+      ],
+      "note": "完整目录已刷新；社区 YAML 已生成。",
+      "source": {
+        "url": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/contributing.md",
+        "read": true
+      }
+    },
+    {
+      "name": "DeepSeek Code 插件列表",
+      "url": "https://deepseek-code.com/plugins",
+      "origin": "nexus",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "导航中的旧网站线索，当前未取得可核对规范；按用户要求跳过。",
+      "source": {
+        "url": "https://deepseek-code.com/plugins",
+        "read": false
+      }
+    },
+    {
+      "name": "1024 Store",
+      "url": "https://deepseek1024.com/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "1024-schema"
+      ],
+      "note": "目录源码与 API 可访问；按包名搜索未命中，JSON 材料已生成。",
+      "source": {
+        "url": "https://github.com/imsai-sh/awesome-deepseek-harness-plugins/blob/main/CONTRIBUTING.md",
+        "read": true
+      }
+    },
+    {
+      "name": "DSH Hub",
+      "url": "https://dsh-hub.cc/publish?lang=en",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "提交页已读取；根 dsh.bundle.patch 和预构建源码满足所述入口，仍需 GitHub 登录后由站点审核发布。",
+      "source": {
+        "url": "https://dsh-hub.cc/publish?lang=en",
+        "read": true
+      }
+    },
+    {
+      "name": "dsh-plugin.net",
+      "url": "https://dsh-plugin.net/submit",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "旧台账或 README 线索，当前规则未取得；按用户新范围不计入已适配市场。",
+      "source": {
+        "url": "https://dsh-plugin.net/submit",
+        "read": false
+      }
+    },
+    {
+      "name": "dsh-plugins-mp.com",
+      "url": "https://dsh-plugins-mp.com/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "manual-form"
+      ],
+      "note": "公开客户端可读，平台源码为私有；仅完成通用包契约，不宣称私有平台审批通过。",
+      "source": {
+        "url": "https://github.com/maryasov/dsh-plugins-hub",
+        "read": true
+      }
+    },
+    {
+      "name": "DSH 一站式插件发现",
+      "url": "https://dsh.cooljser.com",
+      "origin": "nexus",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "导航中的旧网站线索，当前未取得可核对规范；按用户要求跳过。",
+      "source": {
+        "url": "https://dsh.cooljser.com",
+        "read": false
+      }
+    },
+    {
+      "name": "dsh.directory",
+      "url": "https://dsh.directory/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "浏览器可读取 FAQ；公开仓库提交或 dsh-plugin topic 均经过相同 bundle 契约，已备投稿元数据。",
+      "source": {
+        "url": "https://dsh.directory/",
+        "read": true
+      }
+    },
+    {
+      "name": "岚叔目录",
+      "url": "https://dsh.lanshuagent.com/",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "公开数据请求失败或超时；按用户指示跳过。",
+      "source": {
+        "url": "https://dsh.lanshuagent.com/",
+        "read": false
+      }
+    },
+    {
+      "name": "dsh.market",
+      "url": "https://dsh.market/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "站点与公开源码可读；topic 自动发现与提交表单均使用仓库/npm 身份。",
+      "source": {
+        "url": "https://github.com/2BingLing/dsh-market",
+        "read": true
+      }
+    },
+    {
+      "name": "dsh.pub",
+      "url": "https://dsh.pub/zh/submit/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest"
+      ],
+      "note": "内置浏览器已读取提交页；根包、patch、入口、README 和许可证齐备。",
+      "source": {
+        "url": "https://dsh.pub/zh/submit/",
+        "read": true
+      }
+    },
+    {
+      "name": "dsh.works",
+      "url": "https://dsh.works/",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "公开数据请求失败或超时；按用户指示跳过。",
+      "source": {
+        "url": "https://dsh.works/",
+        "read": false
+      }
+    },
+    {
+      "name": "dshbase",
+      "url": "https://dshbase.com/plugins/directory/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "页面可读；明确聚合 GitHub dsh-plugin topic 与 dsh.so，可提交仓库 Issue；已具备根包与元数据。",
+      "source": {
+        "url": "https://dshbase.com/plugins/directory/",
+        "read": true
+      }
+    },
+    {
+      "name": "DSH Find",
+      "url": "https://dshfind.com",
+      "origin": "nexus",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "对应公开源码 hikariming/dshfind 已可读取；适配标准包与投稿元数据。",
+      "source": {
+        "url": "https://github.com/hikariming/dshfind",
+        "read": true
+      }
+    },
+    {
+      "name": "dshmarket.com",
+      "url": "https://dshmarket.com/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "community-yaml"
+      ],
+      "note": "与 awesome 共用目录，不重复提交市场程序仓库。",
+      "source": {
+        "url": "https://github.com/dsh-market/dsh-market#submit-your-plugin",
+        "read": true
+      }
+    },
+    {
+      "name": "dshmarketplace.dev",
+      "url": "https://dshmarketplace.dev/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "manual-form"
+      ],
+      "note": "源码可读；安装候选另经该目录的实装门槛，已备 npm 与通用材料。",
+      "source": {
+        "url": "https://github.com/DshMarketPlace/dsh-plugins-store",
+        "read": true
+      }
+    },
+    {
+      "name": "dshmp",
+      "url": "https://dshmp.com/en/guides/publishing/publish-a-plugin",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "旧台账或 README 线索，当前规则未取得；按用户新范围不计入已适配市场。",
+      "source": {
+        "url": "https://dshmp.com/en/guides/publishing/publish-a-plugin",
+        "read": false
+      }
+    },
+    {
+      "name": "dshplugin.market",
+      "url": "https://dshplugin.market/",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "公开数据请求失败或超时；按用户指示跳过。",
+      "source": {
+        "url": "https://dshplugin.market/",
+        "read": false
+      }
+    },
+    {
+      "name": "DSH Plugin Leaderboard",
+      "url": "https://dshpluginleaderboard.com/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "manual-form"
+      ],
+      "note": "客户端公开说明可读；提供仓库/npm/版本/隐私/兼容材料，未宣称收录。",
+      "source": {
+        "url": "https://github.com/sandbaseai/dsh-plugin-store",
+        "read": true
+      }
+    },
+    {
+      "name": "dshpluginstore",
+      "url": "https://dshpluginstore.com/submit",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "旧台账或 README 线索，当前规则未取得；按用户新范围不计入已适配市场。",
+      "source": {
+        "url": "https://dshpluginstore.com/submit",
+        "read": false
+      }
+    },
+    {
+      "name": "ybkk-AIOS",
+      "url": "https://github.com/01men/ybkk-AIOS",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "访问失败，按用户指示跳过。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/01men/ybkk-AIOS/HEAD/README.md",
+        "sha256": null,
+        "read": false,
+        "error": "HTTP 404",
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "0326/dsh-plugin-market",
+      "url": "https://github.com/0326/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/0326/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "1f9e18dce45b27530ed0dc2701194516890074d82d14f79428dae556f757c824",
+        "error": null,
+        "evidence": [
+          {
+            "line": 119,
+            "text": "- 后续接入的公开漏洞数据源。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "0xsline/awesome-deepseek-harness",
+      "url": "https://github.com/0xsline/awesome-deepseek-harness",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取公开说明；支持根清单、精确 npm 与通用材料；不宣称维护者已收录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/0xsline/awesome-deepseek-harness/HEAD/README.md",
+        "sha256": "d805fd3f12cd804e01f51e835da6caae08ef016793f1e7e4c1b516c52849163b",
+        "read": true
+      }
+    },
+    {
+      "name": "dsh-plugin-mall",
+      "url": "https://github.com/1e0zj/dsh-plugin-mall",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/1e0zj/dsh-plugin-mall/HEAD/README.md",
+        "sha256": "545150f30307914dbc61ac49f21b0d2ef530ce381160b7a6cf56ab8b009a1b9a",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 3,
+            "text": "**An open plugin marketplace for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh): search every GitHub repo tagged `topic:dsh-plugin`, automatically verify which ones are real dsh plugins, install and update with one click.**"
+          },
+          {
+            "line": 11,
+            "text": "Curated lists only show what has been reviewed and merged. This marketplace is open by construction: **any repo tagged `topic:dsh-plugin` is discoverable the moment it is pushed** — no submission, no approval queue. To keep that openness usable:"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "1wanganshi/dsh-marketing-toolkit",
+      "url": "https://github.com/1wanganshi/dsh-marketing-toolkit",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/1wanganshi/dsh-marketing-toolkit/HEAD/README.md",
+        "read": true,
+        "sha256": "20d9dcdb9f492d680d693a308916698e62d20403a3f6e5d8beb406df8d4f3e16",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "2026heshao/dsh-armory",
+      "url": "https://github.com/2026heshao/dsh-armory",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/2026heshao/dsh-armory/HEAD/README.md",
+        "read": true,
+        "sha256": "50dacd7dccb2308bd3f1116220b89e47a6f18eeecc50860328362d0f81235efe",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/2160039878-cyber/dsh-plugin-market",
+      "kind": "pinned-registry",
+      "status": "adapted",
+      "adapters": [
+        "pinned-source"
+      ],
+      "note": "固定 commit 生成格式已实现；只在公开源码版本匹配时产出条目。当前目标版本 0.1.2、公开证据版本 0.1.1，不沿用旧 commit 证明新代码。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/2160039878-cyber/dsh-plugin-market/HEAD/README.md",
+        "sha256": "d19d291f7a42db64b32ff670d8d102ac4b8a084d8bd1a1805eaadcd313f61bdf",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 48,
+            "text": "The built-in directory lives in [`registry/plugins.json`](registry/plugins.json). Entries are intentionally conservative: a repository must expose a root `package.json`, declare `dsh.bundle.patch`, have the referenced patch file available, and record a 40-character verified commit. As of v0.4.0 it includes 12 checked repositories, with skin/theme plugins such as `dancingmemory/dskin`, `KinGao294/dsh-skin`, and `luoyan96/dsh-catnap-studio`."
+          }
+        ]
+      }
+    },
+    {
+      "name": "250shiwo/dsh-plugin-market",
+      "url": "https://github.com/250shiwo/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/250shiwo/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "a0947ef11116ab0f7865f416a8330b2a380bb2c11426b81115212e3705f2ebb9",
+        "error": null,
+        "evidence": [
+          {
+            "line": 15,
+            "text": "- 浏览 / 搜索 / 分类筛选社区插件清单（plugins.json 数据源，README 解析兜底）"
+          },
+          {
+            "line": 25,
+            "text": "- **插件清单**：来自社区精选清单 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)（结构化数据源 [awesome-dsh-plugin.com/plugins.json](https://awesome-dsh-plugin.com/plugins.json)，README 解析作为兜底）。清单收录不代表安全背书，安装前请自行审查来源。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/2768651338/dsh-plugin-manager",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/2768651338/dsh-plugin-manager/HEAD/README.md",
+        "sha256": "17ff0fbc88d11d887a6c5a41ef3a6490700e63eef2723b20ae40241232b400da",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "2BingLing/dsh-market",
+      "url": "https://github.com/2BingLing/dsh-market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取公开说明；支持根清单、精确 npm 与通用材料；不宣称维护者已收录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/2BingLing/dsh-market/HEAD/README.md",
+        "sha256": "a5f0143c8b06d6c7a12b14e78198038a95038ffcdbf7a5dab45f18f6b7ccbe12",
+        "read": true
+      }
+    },
+    {
+      "name": "6kongbai/dsh-plugin-market",
+      "url": "https://github.com/6kongbai/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/6kongbai/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "fbf1866f6013a3301c1cc9d2fcbe1b78dd0d4c34f6df15a53e95c7c4e5c6f24c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-feed",
+      "url": "https://github.com/863683348/dsh-feed",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-feed/HEAD/README.md",
+        "sha256": "43bb7916a7f2d3b2b13b3881da7c031c064da3d146f114c740282f9136656ee9",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 7,
+            "text": "- 现有市场各自抓数据、各自维护，闭源且重复。`dsh-feed` 成为**数据源**：同步一次，全生态可查。"
+          },
+          {
+            "line": 29,
+            "text": "| `feed_stats` | 索引统计：总数、来源、热门 topic、npm 覆盖 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-insight",
+      "url": "https://github.com/863683348/dsh-insight",
+      "kind": "curated-snapshot",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "manual-form"
+      ],
+      "note": "内置策展/配方目录需维护者选择；已备元数据，不自行扩大其收录范围。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-insight/HEAD/README.md",
+        "sha256": "dcc97bfb82cfaa1bbed7c738412ea68021a2e9852d60327442be6e34e8760c2f",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-need-finder",
+      "url": "https://github.com/863683348/dsh-need-finder",
+      "kind": "curated-snapshot",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "manual-form"
+      ],
+      "note": "内置策展/配方目录需维护者选择；已备元数据，不自行扩大其收录范围。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-need-finder/HEAD/README.md",
+        "sha256": "459cdd8ceb9f8a79c552ab5062668a95519554577f16f7ffdc498d07194530e7",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-audit",
+      "url": "https://github.com/863683348/dsh-plugin-audit",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-plugin-audit/HEAD/README.md",
+        "sha256": "bacb799f2ec9536b9a49a8445978a3fa7d4dff9a6672f3f3c5e99fabf4610008",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 50,
+            "text": "- Sync pulls `GET /search/repositories?q=topic:dsh-plugin` (100/page), probes"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-recommend",
+      "url": "https://github.com/863683348/dsh-plugin-recommend",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-plugin-recommend/HEAD/README.md",
+        "sha256": "b13f0c6ac81072fe46d605eb87b557c44dfa5544f4bd9cd36b0cf39fde9ae428",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-scorecard",
+      "url": "https://github.com/863683348/dsh-plugin-scorecard",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-plugin-scorecard/HEAD/README.md",
+        "sha256": "a8935c641b2ef7afd23b6cc5e4a96f9ae10476d1d87b7e35582a74a5064991e2",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-recipe",
+      "url": "https://github.com/863683348/dsh-recipe",
+      "kind": "curated-snapshot",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "manual-form"
+      ],
+      "note": "内置策展/配方目录需维护者选择；已备元数据，不自行扩大其收录范围。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/863683348/dsh-recipe/HEAD/README.md",
+        "sha256": "2a0d8ac2e6295ae4cb54cb476f7eb302fa45887ba81a06b25034439a8ef3eb4b",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 47,
+            "text": "- **纯逻辑**：`lib/recipe.js`（检索/展开/组合/命令序列）零依赖；`lib/recipe-data.json`（配方）+ `lib/plugins.json`（84 个插件目录，与 dsh-need-finder 同源）。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/99galaxy/dsh-plugin-market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/99galaxy/dsh-plugin-market/HEAD/README.md",
+        "sha256": "b75bf43a487a606e440a482301e90dc16789c59283a988a8d68e879a49325a33",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 9,
+            "text": "官方目录 `plugins.json` —— 约 **3,500+ 个插件、23 个双语分类**，带 Star 数、下载量、收录日期，"
+          },
+          {
+            "line": 20,
+            "text": "| **全部插件** | 完整目录。可按分类筛选、按 Star/下载量/名称/收录时间排序、搜索插件名或简介 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "ACEMaravilla/dsh-plugin-market",
+      "url": "https://github.com/ACEMaravilla/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ACEMaravilla/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "10c881c6579892eb46f8bfb68ca73acb5ba7e7b02515980271eefa2c4b72c476",
+        "error": null,
+        "evidence": [
+          {
+            "line": 7,
+            "text": "- **plugin_search** — finds candidates on the official platforms (GitHub `dsh-plugin` topic, npm registry, awesome-list READMEs), ranks them by term-based relevance (0-100), and enriches the top 2-3 with README-derived functional summaries and install hints."
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdamPlatin123/awesome-dsh-plugins",
+      "url": "https://github.com/AdamPlatin123/awesome-dsh-plugins",
+      "kind": "radar",
+      "status": "adapted",
+      "adapters": [
+        "radar-row",
+        "github-topic"
+      ],
+      "note": "上游已迁移指向 dsh-plugin-radar；生成登记行，运行级保留待测。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AdamPlatin123/awesome-dsh-plugins/HEAD/README.md",
+        "sha256": "41df0e07b151e4c6267a74d0d7d831d8a82e865ab42b4bd147812ec39cc7aed9",
+        "read": true
+      }
+    },
+    {
+      "name": "AdamPlatin123/dsh-tonghuashun",
+      "url": "https://github.com/AdamPlatin123/dsh-tonghuashun",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AdamPlatin123/dsh-tonghuashun/HEAD/README.md",
+        "read": true,
+        "sha256": "ff88d03cd95b69d03c125622790638e06487dd3223457e0a046c912ac7b4c510",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "AIcivilization/dsh-vps",
+      "url": "https://github.com/AIcivilization/dsh-vps",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AIcivilization/dsh-vps/HEAD/README.md",
+        "read": true,
+        "sha256": "3af3a0ad760e5bcdbf1d6da0b765a6c5371f32ca18bbb6248d94743b5e632e91",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Awesome DeepSeek Harness Plugins",
+      "url": "https://github.com/Alex-Yanggg/awesome-DSH-plugin",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Alex-Yanggg/awesome-DSH-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": "306db5df5be5243774d7e1974121c459ee94bf37d975a0ece75baf7833a2ddce",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-forge",
+      "url": "https://github.com/alex04130/dsh-forge",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/alex04130/dsh-forge/HEAD/README.md",
+        "sha256": "40a712ab67b13b1cd2d19cc4a3b709278c6e79881f5933ecd972348f97a1b634",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 34,
+            "text": "- `dynboot` / `dynrestore` — auto-plugins.json 动态插件重启恢复 + 页面刷新重挂客户端"
+          },
+          {
+            "line": 122,
+            "text": "- **市场安装的插件以宿主进程权限执行**（与 `dsh plugin add` 同样无沙箱隔离）：只安装审查过来源的仓库；面板内已有警示横幅。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-console",
+      "url": "https://github.com/AlexYin-Tongji/dsh-plugin-console",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AlexYin-Tongji/dsh-plugin-console/HEAD/README.md",
+        "sha256": "29ae86a62c740b4ecba9086a05e0bc510712ca81f61d8605228b42859d1bedda",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 11,
+            "text": "- **插件商店**：默认同步 [awesome-dsh-plugin](https://awesome-dsh-plugin.com/plugins.json)，支持搜索、分类、分页和本地 last-known-good 缓存。"
+          },
+          {
+            "line": 15,
+            "text": "- **快捷更新**：不会自动安装或更新。发现新版本后只显示更新按钮；用户点击后仍需复核目标版本和来源、勾选确认并再次点击“确认执行”。社区目录中的包按已验证 artifact 更新；目录外 npm 包只有在同名、同 repository、合法升级版本和 integrity 都成立时才可更新，并在确认页单独警告。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "AlgoVaultLabs/dsh-algovault",
+      "url": "https://github.com/AlgoVaultLabs/dsh-algovault",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AlgoVaultLabs/dsh-algovault/HEAD/README.md",
+        "read": true,
+        "sha256": "a218a753e4dae276a3a143e4bb6c3f1e3f2d5f9bbf90689cee9bc079bfded5dc",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "AnacondaKC/dsh-stock-market",
+      "url": "https://github.com/AnacondaKC/dsh-stock-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AnacondaKC/dsh-stock-market/HEAD/README.md",
+        "read": true,
+        "sha256": "c9c84638dc9e6b1b2458eed69d6b12d0e0622d4eb3fd6cad9ad58772df4cc892",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-mcp-lens",
+      "url": "https://github.com/andrietteprotective835/dsh-mcp-lens",
+      "origin": "nexus",
+      "kind": "unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "当前内容为 MCP 优化器或通用 API 目录，不是本 Provider 的发行市场。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/andrietteprotective835/dsh-mcp-lens/HEAD/README.md",
+        "read": true,
+        "sha256": "f16f68784d67a69ae5e5543798e54b9a06b7fc5404785aeab2c3ca264dee64e8",
+        "error": null
+      }
+    },
+    {
+      "name": "awesome-deepseek-harness",
+      "url": "https://github.com/anil-matcha/awesome-deepseek-harness",
+      "origin": "nexus",
+      "kind": "unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "当前内容为 MCP 优化器或通用 API 目录，不是本 Provider 的发行市场。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/anil-matcha/awesome-deepseek-harness/HEAD/README.md",
+        "read": true,
+        "sha256": "85f695a34364d46ff1b2f9b0dde2f47eb25594b32e55942d071a16f3f81e2d74",
+        "error": null
+      }
+    },
+    {
+      "name": "DSH Community Market",
+      "url": "https://github.com/anywhere-labs/deepseek-harness-desktop/tree/master/dsh-community-market",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "npm-exact"
+      ],
+      "note": "已读取标准源契约；插件通过目录提供精确 npm 身份，安装仍由宿主验证。未把旧 plugins.json 冒充标准 HTTP provider API。",
+      "source": {
+        "url": "https://github.com/anywhere-labs/deepseek-harness-desktop/blob/master/dsh-community-market/docs/catalog-provider-contract.md",
+        "read": true
+      }
+    },
+    {
+      "name": "ApakohZzz/DSHPluginHub-Market-Framework",
+      "url": "https://github.com/ApakohZzz/DSHPluginHub-Market-Framework",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "自包含源码分发模板；不接受 npm/外部仓库目录目标，不能将本插件的独立发布包伪装成其内嵌插件。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ApakohZzz/DSHPluginHub-Market-Framework/HEAD/README.md",
+        "read": true,
+        "sha256": "9fa137279cb05d99d1b718a7afad1e79e42ca3fddabb5416aded3c4c06cc9a0a",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "DSH Plugin Hub",
+      "url": "https://github.com/aust24lzy/dsh-plugin-hub",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/aust24lzy/dsh-plugin-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "423c9a63dc68938ce07e278cd79bf741c2ef64f9db8a0deae6b223e7b2b1aa6f",
+        "error": null
+      }
+    },
+    {
+      "name": "Awesome DSH Plugin",
+      "url": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
+      "origin": "nexus",
+      "kind": "community-catalog",
+      "status": "adapted",
+      "adapters": [
+        "community-yaml"
+      ],
+      "note": "完整目录和贡献规则已另外核对，源码 clone 可读；README 超长不影响既有 YAML 适配。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/awesome-dsh-plugin/awesome-dsh-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": null,
+        "error": "README 超过 512 KiB"
+      }
+    },
+    {
+      "name": "dsh-find-plugin",
+      "url": "https://github.com/awesome-dsh-plugin/dsh-find-plugin",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/awesome-dsh-plugin/dsh-find-plugin/HEAD/README.md",
+        "sha256": "857cc287bc750c6a32b944a8d62db6e78a8f03a8fcfc59fafc0fdd5d8594fe91",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 42,
+            "text": "  bilingual description from `plugins.json` replaces the GitHub one (the"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "AwesomeHou/dsh-plugin-marketplace",
+      "url": "https://github.com/AwesomeHou/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/AwesomeHou/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "ece7045ebafece6241de61c6e03f773fe5e49ed687438304117fad6686e7381c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "huahua-dsh-plugin-orchestra",
+      "url": "https://github.com/azure5100/huahua-dsh-plugin-orchestra",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/azure5100/huahua-dsh-plugin-orchestra/HEAD/README.md",
+        "sha256": "5120a7f5e41ff025d0ca66b179262ad2d84b6df00775de494213953d4ae64175",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "BeanCookie 精选库",
+      "url": "https://github.com/beancookie/awesome-dsh-plugin",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/beancookie/awesome-dsh-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": "4ebf3b4b26aa7252e48ec268ac55111c74c8be64f3af71904efec55fe31e0481",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-bridge",
+      "url": "https://github.com/beartackler/dsh-bridge",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/beartackler/dsh-bridge/HEAD/README.md",
+        "sha256": "cbe774f9115b94e35f4d19fd7904e4e9d798ad91611cc1158ae97ee2fb98be15",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "ben7am1n/dsh-claude-marketplace",
+      "url": "https://github.com/ben7am1n/dsh-claude-marketplace",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ben7am1n/dsh-claude-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "05a31d948528c0ebda32aad7a25e7dd56b7b808646925e75221999d1bd75282d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "awesome-dsh-plugin",
+      "url": "https://github.com/billliao/awesome-dsh-plugin",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/billliao/awesome-dsh-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": "11fffe3d1a4dfc26404969915d49d3947602422e9a2d4aeab4eab18deabf9809",
+        "error": null
+      }
+    },
+    {
+      "name": "DSH-Plugins-Marketplace",
+      "url": "https://github.com/bradeGithub/DSH-Plugins-Marketplace",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/bradeGithub/DSH-Plugins-Marketplace/HEAD/README.md",
+        "sha256": "2cebe05d829794f703d5f5d28247d7423135815070773b900f9daed4f68b7c99",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 15,
+            "text": "  <b>9500+</b> DSH 插件 &nbsp;·&nbsp; <b>20000+</b> 通用 Skills &nbsp;·&nbsp; <b>2 小时</b> 增量收录 &nbsp;·&nbsp; 浏览侧 <b>0</b> 次 GitHub API 调用"
+          },
+          {
+            "line": 25,
+            "text": "- [插件作者如何被收录](#插件作者如何被收录)"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "Awesome DSH Plugins",
+      "url": "https://github.com/bruc3van/awesome-dsh-plugin",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/bruc3van/awesome-dsh-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": "d47ec8e1db45f8354007af3aaf45817ea96ab98ffd5db7386a821eb05b972b62",
+        "error": null
+      }
+    },
+    {
+      "name": "bruc3van/safer-dsh-market",
+      "url": "https://github.com/bruc3van/safer-dsh-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/bruc3van/safer-dsh-market/HEAD/README.md",
+        "read": true,
+        "sha256": "79ee6ee2b579031d09a5ba15d0afe19d104b0812138baf6b809a268362515287",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-pluginmanager",
+      "url": "https://github.com/buhuikongpan/dsh-pluginmanager",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/buhuikongpan/dsh-pluginmanager/HEAD/README.md",
+        "sha256": "da5f16ed6b58a5394399f58f93d20c14712bac08daa52aa9d09f7f4aaae5ef87",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-advisor",
+      "url": "https://github.com/ChengxiuCDP/dsh-plugin-advisor",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ChengxiuCDP/dsh-plugin-advisor/HEAD/README.md",
+        "sha256": "9da02633977e090b64bc263f9e0d25a4b3b73b6aa30e069ed23530fb630d75ed",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 6,
+            "text": "- 全量覆盖：内置索引是 dsh-plugin topic 全量仓库（4700+）的每日快照，含质量分（可安装声明 / 精选收录 / 星标 / 活跃度 / 许可证）与功能簇"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "chnjames/dsh-plugin-market",
+      "url": "https://github.com/chnjames/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/chnjames/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "17316b6a62f492a38d0d7db8c0552c7cd8c97628eac9c42ed448356ec8fb1854",
+        "error": null,
+        "evidence": [
+          {
+            "line": 66,
+            "text": "| `catalog.fallbackToSearch` | 目录全失败时是否回退本机 GitHub / npm 搜索 |"
+          },
+          {
+            "line": 85,
+            "text": "            topic: \"dsh-plugin\""
+          }
+        ]
+      }
+    },
+    {
+      "name": "cogine-ai/marketplace",
+      "url": "https://github.com/cogine-ai/marketplace",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cogine-ai/marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "466f5355bca5d2e3e5d218f362665a5278d9aa30db5c0ea409ad0e001bb339c2",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "condaThinker/dsh-webui-market-plugin-plus",
+      "url": "https://github.com/condaThinker/dsh-webui-market-plugin-plus",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/condaThinker/dsh-webui-market-plugin-plus/HEAD/README.md",
+        "read": true,
+        "sha256": "982796bd81ba23d32587a3187f61a91dcb0a8a693db72420a26d14ec2fade4a0",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugins#to-english",
+      "url": "https://github.com/CREAIT-nl/dsh-plugins/tree/main/to-english",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/CREAIT-nl/dsh-plugins/HEAD/to-english/README.md",
+        "sha256": "6a924d4bdf812fc23c20701b0d8622530fba6ef7ad465defb45f2e620877d64c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-center",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-center",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/crTnT/dsh-plugin-suite/HEAD/dsh-plugin-center/README.md",
+        "sha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 9,
+            "text": "- 安装前要求用户确认，服务端只接受 npm 包名或 GitHub 仓库来源。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-updater",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-updater",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/crTnT/dsh-plugin-suite/HEAD/dsh-plugin-updater/README.md",
+        "sha256": "83378481fa03a953a7f8785f58df116d4f3a46cf436e3642373d3bdca3220b37",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-skills-marketplace",
+      "url": "https://github.com/cxdyun/dsh-skills-marketplace",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cxdyun/dsh-skills-marketplace/HEAD/README.md",
+        "sha256": "670761bc5c46029cfdddca91c3570fdc89be92e7c5f6e1d2a93b4d17e2876d68",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "cyber-moshen/dsh-plugin-market",
+      "url": "https://github.com/cyber-moshen/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "static-registry",
+      "status": "adapted",
+      "adapters": [
+        "cyber-catalog"
+      ],
+      "note": "已生成 url、最多 5 个 tags、npm 包名的目录条目；安装与更新采用 npm。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cyber-moshen/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "20254a8684c9d6a85ed72d1497171927581c77cff4cdf50b74d705115efffd08",
+        "error": null,
+        "evidence": [
+          {
+            "line": 21,
+            "text": "**The catalog is this repo's own `data/plugins.json`** — anyone can add a plugin by opening a pull request (see [Submitting a PR](#submitting-a-pr-to-add-your-plugin)). The plugin fetches it live at runtime; there is no offline cache or snapshot."
+          },
+          {
+            "line": 91,
+            "text": "The catalog is a single JSON file: [`data/plugins.json`](data/plugins.json)."
+          }
+        ]
+      }
+    },
+    {
+      "name": "plugin-switch",
+      "url": "https://github.com/cynch18/plugin-switch",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cynch18/plugin-switch/HEAD/README.md",
+        "sha256": "7d428c81611eafdd37b15fad1592f62853876486abff739bde6e1a6f891866fd",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 91,
+            "text": "npm test   # 单元测试（applyPatchEdit / 备份轮换 / 来源判定 / baked-disabled scrub）"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dakeqiqi123/dsh-skill-market",
+      "url": "https://github.com/dakeqiqi123/dsh-skill-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dakeqiqi123/dsh-skill-market/HEAD/README.md",
+        "read": true,
+        "sha256": "810c6ad2217871fde742761d4423a5084f79801fa39c18e3a1e58eb7a203352d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-starter-pack",
+      "url": "https://github.com/Dariandai/dsh-starter-pack",
+      "kind": "curated-snapshot",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "manual-form"
+      ],
+      "note": "内置策展/配方目录需维护者选择；已备元数据，不自行扩大其收录范围。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Dariandai/dsh-starter-pack/HEAD/README.md",
+        "sha256": "13c997537ebb396159157eade00b44b43ac3a71760e366b65d472ad610231bb8",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-agent-plugin-market",
+      "url": "https://github.com/Diluka/dsh-agent-plugin-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Diluka/dsh-agent-plugin-market/HEAD/README.md",
+        "sha256": "d430c1f509335f8511dc242b3e516976925066a83ad043c21314142b6d572583",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 33,
+            "text": "3. **安装插件**：市场清单的每项插件由 `source` 指向市场内的插件目录；未声明 `source` 时使用仓库根目录。字符串 `source` 和 `{\"source\":\"local\",\"path\":\"<仓库内路径>\"}` 都可用；`./` 指向仓库根。`{\"source\":\"url\",\"url\":\"...\"}` 仅在 URL 规范化后等于当前市场仓库时被视为仓库根插件，其他 URL 来源会标记为不支持。所有路径都必须解析在市场根目录内。"
+          },
+          {
+            "line": 110,
+            "text": "审批使用配置来源和内容的 SHA-256 指纹，并在当前 hooks 配置指纹匹配已保存审批时生效。禁用、配置指纹变化、插件卸载和市场移除都会处置已挂载的 hook Fibers；当前 hooks 配置消失或不再是可用对象时也会清除对应审批。市场更新只在 Git 操作期间暂停该市场 hook Fibers，随后重新检查当前配置；更新是否成功不会直接撤销或恢复审批。审批仍有效但 bridge 注册失败时，审批保留，状态显示加载错误。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dingchenhui0618-arch/dsh-market-sidebar",
+      "url": "https://github.com/dingchenhui0618-arch/dsh-market-sidebar",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dingchenhui0618-arch/dsh-market-sidebar/HEAD/README.md",
+        "read": true,
+        "sha256": "a6d8385a06e198765d6bb69b9f8310aec11cedbb66dc9643aa77d6e0102e2b61",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dmsobtl/dsh-tool-market-data",
+      "url": "https://github.com/dmsobtl/dsh-tool-market-data",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dmsobtl/dsh-tool-market-data/HEAD/README.md",
+        "read": true,
+        "sha256": "bb9344aaa91cc381d424afb07774d11840182eff82df210244d690c25a38c121",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "DSH-Desktop/dsh-plugin-marketplace",
+      "url": "https://github.com/DSH-Desktop/dsh-plugin-marketplace",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "访问失败，按用户指示跳过。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/DSH-Desktop/dsh-plugin-marketplace/HEAD/README.md",
+        "sha256": null,
+        "read": false
+      }
+    },
+    {
+      "name": "dsh-market",
+      "url": "https://github.com/dsh-market/dsh-market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dsh-market/dsh-market/HEAD/README.md",
+        "sha256": "9bd52037ac51eb20736195e62f925c1bebc467f7a73da2cfd3eba703d0f4d942",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 111,
+            "text": "Fetched live on every open from [awesome-dsh-plugin.com/plugins.json](https://awesome-dsh-plugin.com/plugins.json) — curated entries, npm mapping, and star counts refreshed daily by CI, with no stale cache behind it. A failure reports the actual reason and elapsed time, with a Retry button."
+          },
+          {
+            "line": 117,
+            "text": "**If that host is unreachable from your network**, point the market at a mirror. Set `DSHM_REGISTRY_URL` in the environment dsh runs in, to anything serving the same `plugins.json` shape:"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugins/dsh-plugin-market",
+      "url": "https://github.com/dsh-plugins/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "static-registry",
+      "status": "adapted",
+      "adapters": [
+        "descriptor-catalog"
+      ],
+      "note": "已生成本市场 id、双语 description、support_versions 和 urls 格式，保留精确宿主版本。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dsh-plugins/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "11ac6d7a8f9bb8c9bd2d9cefe9ca5aeff662e792176ca48dce65c417f6cb0f3f",
+        "error": null,
+        "evidence": [
+          {
+            "line": 7,
+            "text": "**A structured plugin marketplace for DeepSeek Harness — each plugin described as JSON, auto-aggregated into a single `plugins.json` for the dsh-plugins.github.io site.**"
+          },
+          {
+            "line": 19,
+            "text": "  aggregate.mjs           # Aggregation script: plugins/*.json → plugins.json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-research",
+      "url": "https://github.com/dsh-research/dsh-research",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dsh-research/dsh-research/HEAD/README.md",
+        "sha256": "4df20aeee05eef79705458a0f62d9b31bc21bd1fdc03aabccab8fbfa1094e451",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dshhub-market",
+      "url": "https://github.com/dshhub-co/dshhub-market",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/dshhub-co/dshhub-market/HEAD/README.md",
+        "sha256": "2a151f49c97810c266bc551f510dc0ee26ec29e440009dbd202b269e963a0079",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 139,
+            "text": "Live from [www.dshhub.co/api/registry/plugins.json](https://www.dshhub.co/api/registry/plugins.json), with a bundled snapshot as offline fallback."
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugins-store",
+      "url": "https://github.com/DshMarketPlace/dsh-plugins-store",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/DshMarketPlace/dsh-plugins-store/HEAD/README.md",
+        "sha256": "d5d8a43cad60959f392c46fc7f59c1ebe46be76712ecc3bd8170cde907d4c62f",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "duxingxiake3/dsh-plugin-market",
+      "url": "https://github.com/duxingxiake3/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/duxingxiake3/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "48cd07b64c69fe54c95b8ea4b769b8ad6353e1b91491c723c097420a069b2f43",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-panel",
+      "url": "https://github.com/Dylan37670/dsh-plugin-panel",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Dylan37670/dsh-plugin-panel/HEAD/README.md",
+        "sha256": "b416e5a0c12ba3a64fdf495b2866be79b6d013e40cc4ae3f6f31899722738f3d",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "> **版本 v0.6.17**：目录安装信息改用 `awesome-dsh-plugin.com/plugins.json` 官方公开源；下载会限时重试并严格校验，完整目录任务会在 GitHub 全量抓取前先检查数据源，避免长时间运行后才失败。"
+          },
+          {
+            "line": 59,
+            "text": "- **安全**：HTTP API 仅接受 loopback 请求；安装来源为目录中列出的官方仓库 / npm 包（不执行任意命令，只转发到官方 `dsh plugin`）。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-find-plugins",
+      "url": "https://github.com/Eray114514/dsh-find-plugins",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Eray114514/dsh-find-plugins/HEAD/README.md",
+        "sha256": "90442eab8aa161cf148fe96fe6ed6b222b6c9acea78cd2ec27022655b64d5544",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 84,
+            "text": "| dsh-plugin-radar | ~280 | 唯一会**真的跑一遍**它收录的插件的目录 |"
+          },
+          {
+            "line": 86,
+            "text": "| 岚叔目录 | ~560 | 归档状态、最后提交时间、许可证、审查结论 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "DSH 社区插件商店",
+      "url": "https://github.com/Ericwong5021/deepseek-plugin-store",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Ericwong5021/deepseek-plugin-store/HEAD/README.md",
+        "read": true,
+        "sha256": "158c0d5683f61b8d53394bd0132a1de385b5ec7a48afd1f6faa9227ec9b5622b",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-plugin-ops#dsh-plugin-ops-bundle",
+      "url": "https://github.com/f-infinite-z/dsh-plugin-ops/tree/main/packages/bundle",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/f-infinite-z/dsh-plugin-ops/HEAD/packages/bundle/README.md",
+        "sha256": "75f0ceb108da7a8965662dc7046c2d1a80ed516ca22700ee7266d3dde2ebb61c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "FeiZhuNiU-INFJA/dsh-stock-ticker",
+      "url": "https://github.com/FeiZhuNiU-INFJA/dsh-stock-ticker",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/FeiZhuNiU-INFJA/dsh-stock-ticker/HEAD/README.md",
+        "read": true,
+        "sha256": "ef674c1077a7ac3db0291e26bb2601e641475a94fbc1229ae9de5e163ed7f630",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Femad-6/dsh-lumen-market",
+      "url": "https://github.com/Femad-6/dsh-lumen-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Femad-6/dsh-lumen-market/HEAD/README.md",
+        "read": true,
+        "sha256": "54ad743be4025ae4e0b0ed81daf1d17bd03aff72d5ea4cf9c3319a464ac8f13f",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Awesome DeepSeek Harness",
+      "url": "https://github.com/fendouai/awesome-deepseek-harness",
+      "origin": "nexus",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "README 超出审计大小限制；按用户要求跳过，不影响其他目录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/fendouai/awesome-deepseek-harness/HEAD/README.md",
+        "read": false,
+        "sha256": null,
+        "error": "README 超过 512 KiB"
+      }
+    },
+    {
+      "name": "FitBBC/dsh-plugin-tokenmarket",
+      "url": "https://github.com/FitBBC/dsh-plugin-tokenmarket",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/FitBBC/dsh-plugin-tokenmarket/HEAD/README.md",
+        "read": true,
+        "sha256": "472cd30bed1443e364c27c73250394a714424d6f695acd60441a38c934ff18d0",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "FUSU123fusu/dsh-tui-market",
+      "url": "https://github.com/FUSU123fusu/dsh-tui-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/FUSU123fusu/dsh-tui-market/HEAD/README.md",
+        "read": true,
+        "sha256": "079c7a2d1c256d3288d35f53df502e2caafcd8bc89306e10fe250670ad37c67f",
+        "error": null,
+        "evidence": [
+          {
+            "line": 9,
+            "text": "- `/market` — 浏览[生态精选列表](https://raw.githubusercontent.com/dsh-tui-ecosystem/dsh-tui-ecosystem/main/plugins.json)（分页，多选安装，可直接进搜索）"
+          },
+          {
+            "line": 10,
+            "text": "- `/market search <关键词>` — 按 GitHub `topic:dsh-plugin` 搜索全网插件"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ghost011118/dsh-plugin-marketplace",
+      "url": "https://github.com/Ghost011118/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Ghost011118/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "cf1953b309964c44a15efa99acd9e1ce8df25781fdf4e4f44f0d867a917b4d94",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugins",
+      "url": "https://github.com/hacksing/dsh-plugins",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hacksing/dsh-plugins/HEAD/README.md",
+        "read": true,
+        "sha256": "6f313d578eb7b856e2f7d79b79369d25941b208f72409d5b5b13f20723d4d314",
+        "error": null
+      }
+    },
+    {
+      "name": "hancao97/hanai-investment-dsh",
+      "url": "https://github.com/hancao97/hanai-investment-dsh",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hancao97/hanai-investment-dsh/HEAD/README.md",
+        "read": true,
+        "sha256": "4762eeea1292c91a59eaba631c8663c2adadfe11a622c9d32b9406a821140b76",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "harness-home/harness-ai-desktop",
+      "url": "https://github.com/harness-home/harness-ai-desktop",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/harness-home/harness-ai-desktop/HEAD/README.md",
+        "read": true,
+        "sha256": "36385d1aece7e910bdeaeca1c26c15689bf11a6dec73701598c554b7e6ccc058",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-cli-store",
+      "url": "https://github.com/Harzva/dsh-cli-store",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Harzva/dsh-cli-store/HEAD/README.md",
+        "sha256": "7ac516ce1df8383940ec161694a5bb0f11862d29c245d8c0b4d504423cff46ef",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "Harness Flow Hub",
+      "url": "https://github.com/harzva/harness-flow-hub",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/harzva/harness-flow-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "a6c47586044c5bb974b22d3cd5f3c44ea0e0a4f7b4c252cf161089236fa90842",
+        "error": null
+      }
+    },
+    {
+      "name": "dshfind",
+      "url": "https://github.com/hikariming/dshfind",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hikariming/dshfind/HEAD/README.md",
+        "read": true,
+        "sha256": "236bd976327a7325ef96b6ad6cf46e8f8e9c0bb456b0c3e2446128465cf3ba48",
+        "error": null
+      }
+    },
+    {
+      "name": "hoangdtdoothanh-svg/dsh-whale-market",
+      "url": "https://github.com/hoangdtdoothanh-svg/dsh-whale-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hoangdtdoothanh-svg/dsh-whale-market/HEAD/README.md",
+        "read": true,
+        "sha256": "75d45c9051fff7a8dd0f4f4d46198d51c18fd05d66f1c885374b6e80dd2053df",
+        "error": null,
+        "evidence": [
+          {
+            "line": 9,
+            "text": "- **实时市场**：GitHub Search API 拉取 topic:dsh-plugin（4700+ 仓库）与 topic:agent-skills（15000+ 技能），按 star 排序、分页、关键词搜索。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-mall",
+      "url": "https://github.com/hoyyang/dsh-mall",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hoyyang/dsh-mall/HEAD/README.md",
+        "sha256": "17f4bae32624deb1d44a6e081a01b31b7f2456a7baacd93aa65b8fe09dbc515a",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 28,
+            "text": "- **全目录收录**——GitHub 上打 `#dsh-plugin` 标签的仓库全收，每 30 分钟自动刷新目录数据，遇到限流也能接着用。"
+          },
+          {
+            "line": 56,
+            "text": "- 怀疑某个插件已经没人维护时，看休眠警告徽章和最近提交时间再决定。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "hskelp9527-pixel/dsh-plugin-market",
+      "url": "https://github.com/hskelp9527-pixel/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/hskelp9527-pixel/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "51b68408223c978e13504bd6846ae32d1101b88686283d80ee6ba26bfe1fbbe8",
+        "error": null,
+        "evidence": [
+          {
+            "line": 10,
+            "text": "2. **社区精选**——[awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)（数据端点 `awesome-dsh-plugin.com/plugins.json`）：数百个社区插件，自带中英双语介绍与安装命令；"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-community-plugins",
+      "url": "https://github.com/HubaKing/dsh-community-plugins",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/HubaKing/dsh-community-plugins/HEAD/README.md",
+        "read": true,
+        "sha256": "ecc94c65f0c89d2dc65c30cb47c934d139b5a78ed2c1c6b5bedd6977f96c8fed",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-store",
+      "url": "https://github.com/huguangyu666/dsh-store",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/huguangyu666/dsh-store/HEAD/README.md",
+        "sha256": "c2323498610003177752b3c800a7820f6aca59fde232f1566cd7a7e1508e1f9e",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "> 已收录于 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) 精选列表（Development & Runtime）"
+          },
+          {
+            "line": 13,
+            "text": "| 数据源 | **npm registry 权威源**（插件实际安装处）+ awesome 精选 + GitHub 星标 | 多为 GitHub topic / awesome 目录（二手源、含蹭话题噪声） |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-scout",
+      "url": "https://github.com/icefall7/dsh-plugin-scout",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/icefall7/dsh-plugin-scout/HEAD/README.md",
+        "sha256": "7a41161f8b596e034e2cb51294c84a0f5078fff9fb5f011bfbd0446112c0bae4",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "awesome-deepseek-harness-plugins",
+      "url": "https://github.com/imsai-sh/awesome-deepseek-harness-plugins",
+      "kind": "json-catalog",
+      "status": "adapted",
+      "adapters": [
+        "1024-schema",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "逐插件 JSON 通过上游 schema；npm 发布身份已核对，未提交目录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/imsai-sh/awesome-deepseek-harness-plugins/HEAD/README.md",
+        "sha256": "d6a02e9047608488e18fb047856efc4f50ebf865cf90a98a4a66b2f087f480a5",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "面向 [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness)（`dsh`）生态的社区插件目录，共收录 **13785** 个插件（含 PR 收录与 GitHub `dsh-plugin` topic 自动发现），目录数据更新于 2026-10-14。"
+          },
+          {
+            "line": 7,
+            "text": "> 📦 **仓库拆分公告**：自 2026-08-25 起，deepseek1024.com 网站与 `dsh1024` CLI 的源码已拆分至独立仓库 [imsai-sh/dsh-1024store](https://github.com/imsai-sh/dsh-1024store)。本仓库从此专注插件目录（awesome 清单）与收录流程；网站与 CLI 相关的 issue / PR 请移步新仓库，插件收录照旧在这里提交。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "imsai-sh/dsh-1024store",
+      "url": "https://github.com/imsai-sh/dsh-1024store",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取公开说明；支持根清单、精确 npm 与通用材料；不宣称维护者已收录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/imsai-sh/dsh-1024store/HEAD/README.md",
+        "sha256": "3aee83468411ea3c90d6a6965767b32f4f656b593f9b3fc5123e55cdf2b05957",
+        "read": true
+      }
+    },
+    {
+      "name": "Imzl-zl/dsh-toolbox-ui",
+      "url": "https://github.com/Imzl-zl/dsh-toolbox-ui",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Imzl-zl/dsh-toolbox-ui/HEAD/README.md",
+        "read": true,
+        "sha256": "84b6711b96f29cf7a8f16d7dfaa2d7d5c0fa6878651cc1bc1b75bba23c7599b6",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "jacket-sikaha/dsh-market-gist-autosync",
+      "url": "https://github.com/jacket-sikaha/dsh-market-gist-autosync",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/jacket-sikaha/dsh-market-gist-autosync/HEAD/README.md",
+        "read": true,
+        "sha256": "d450c0beb34aa1054d1b530f9a3ce928b1a131843b19afac6a1d18e1622146c9",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "JasperGuWP/dsh-plugin-market",
+      "url": "https://github.com/JasperGuWP/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/JasperGuWP/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "2313dc6b0ba6ec4d4076d2c5d8e603cdde7d46e11ad5f9d391aff73049ca3828",
+        "error": null,
+        "evidence": [
+          {
+            "line": 127,
+            "text": "  (`https://api.github.com/search/repositories?q=topic:dsh-plugin&sort=stars`)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "find-dsh-plugins",
+      "url": "https://github.com/JazzuLu/find-dsh-plugins",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/JazzuLu/find-dsh-plugins/HEAD/README.md",
+        "sha256": "1157228ab9089af52649b62cba500b57df68582bccc72b5498c228b23fb77f5d",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 36,
+            "text": "| 数据源 | 四源聚合（岚叔/awesome/dsh.so/GitHub topic） | GitHub topic 单源 | 2 源 | dsh.so 单源 |"
+          },
+          {
+            "line": 121,
+            "text": "- **网络**：需要访问四个数据源（岚叔 / awesome-dsh-plugin / dsh.so / GitHub API）。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-manager#cli",
+      "url": "https://github.com/Jesse-njx/dsh-plugin-manager/tree/main/packages/cli",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Jesse-njx/dsh-plugin-manager/HEAD/packages/cli/README.md",
+        "sha256": "c9c024af41110831cc10a1cbc5923750ae1d16903a628d29dedfc0687f90042c",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 53,
+            "text": "    stateFile: ~/.dsh/pm/plugins.json"
+          },
+          {
+            "line": 62,
+            "text": "| `stateFile` | `~/.dsh/pm/plugins.json` | pm's own side-band state |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-dejaview",
+      "url": "https://github.com/jiang4wqy/dsh-dejaview",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/jiang4wqy/dsh-dejaview/HEAD/README.md",
+        "sha256": "12f1f9505467a565e722852bcd44dfa58a79b79358f4298a22c16b2f1c7e9536",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "jianjianzhu/dsh-harness-ui",
+      "url": "https://github.com/jianjianzhu/dsh-harness-ui",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/jianjianzhu/dsh-harness-ui/HEAD/README.md",
+        "read": true,
+        "sha256": "85dcb502eba5d694ebe0608f3d0360f1df44e30b9fe9b22c70c51d3a902611de",
+        "error": null,
+        "evidence": [
+          {
+            "line": 10,
+            "text": "- 面板顶部是视图切换器，含 7 个视图。**每个视图读取 DSH 运行时的真实数据源**，源不可用时显示明确的空状态，不填充占位数据："
+          },
+          {
+            "line": 12,
+            "text": "| 视图 | 数据源 |"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-unified-market",
+      "url": "https://github.com/jing-hy/dsh-unified-market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/jing-hy/dsh-unified-market/HEAD/README.md",
+        "sha256": "ac6188a5558ff45d23c10b83e279a33b773b612579a6ff44bb1d61760038edbf",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "> 一个市场，三个数据源：**精选目录 + GitHub dsh-plugin 生态 + npm registry**。"
+          },
+          {
+            "line": 23,
+            "text": "| 来源插件 | 定位 | 本市场吸收的能力 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "jli658942-web/dsh-market-skill",
+      "url": "https://github.com/jli658942-web/dsh-market-skill",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/jli658942-web/dsh-market-skill/HEAD/README.md",
+        "read": true,
+        "sha256": "38c1759e292feb22438275f48a072ebe99d5494d8e3d85887b949db2c56db30f",
+        "error": null,
+        "evidence": [
+          {
+            "line": 15,
+            "text": "  - 抓取市场 `plugins.json` 数据做中文检索、筛选、排序"
+          },
+          {
+            "line": 37,
+            "text": "| §2 发现 | 抓取 `plugins.json`、中文检索、字段说明 |"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JohnXu22786/market-watch",
+      "url": "https://github.com/JohnXu22786/market-watch",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/JohnXu22786/market-watch/HEAD/README.md",
+        "read": true,
+        "sha256": "0a104e11d4e8aaa2d7a443e2f921f175e3164890d77f19ecd5b8124e953ca0ce",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "kaiwu/sparkles",
+      "url": "https://github.com/kaiwu/sparkles",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kaiwu/sparkles/HEAD/README.md",
+        "read": true,
+        "sha256": "b37c8251bcced724d47c7b4cb4008df3025e1a673ec6160596b8f1742255d440",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "KCNyu/clawock",
+      "url": "https://github.com/KCNyu/clawock",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/KCNyu/clawock/HEAD/README.md",
+        "read": true,
+        "sha256": "a6ae07cbd071884d472eac45068273dc7044c90a24b67719293e79811c6b5bc5",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Awesome DSH Plugins 中文精选",
+      "url": "https://github.com/kejixiaoliang/awesome-dsh-plugins",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kejixiaoliang/awesome-dsh-plugins/HEAD/README.md",
+        "read": true,
+        "sha256": "0da64451da7f5f71cddec04fc38e9658e33fd6fff1ea85d1dd4346db9a53b641",
+        "error": null
+      }
+    },
+    {
+      "name": "keman-ai/dsh-skin-market",
+      "url": "https://github.com/keman-ai/dsh-skin-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/keman-ai/dsh-skin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "bc73ac3df99e2e208b23c1698af8d26f3454efbca020b9d304d49c3a7d1b2312",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/kimiya1010/dsh-plugin-market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kimiya1010/dsh-plugin-market/HEAD/README.md",
+        "sha256": "0208768b91de88ee62266d3d9680db6dd2916adb700958a2fda74bad4676484f",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 50,
+            "text": "  - `GET  /api/plugin-market/search?q=<keyword>` — calls the GitHub Search API (`topic:dsh-plugin`)"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-skin-market",
+      "url": "https://github.com/kingOfSoySauce/dsh-skin-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kingOfSoySauce/dsh-skin-market/HEAD/README.md",
+        "sha256": "a924bdd8aa91099a893059ba70aefe472327a52eb9a6d1004f66f0ba0b4abd41",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 16,
+            "text": "### 近期收录"
+          },
+          {
+            "line": 18,
+            "text": "- **2026-09-10 至 2026-10-05**：新增 **7 条**，包括终末地主题（改版）、千夏 · 绝区零外观主题、鲸鱼娘动态壁纸等。详见[收录日志](./docs/recently-added.md#recent-since-2026-09-10)。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-theme-switch",
+      "url": "https://github.com/kinmat-A/dsh-theme-switch",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kinmat-A/dsh-theme-switch/HEAD/README.md",
+        "sha256": "828a6a0e9638657fa37f6e34cf2709702c469343878ddccdb8eae8947300ce2f",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/kkkkkklze/dsh-plugin-manager",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kkkkkklze/dsh-plugin-manager/HEAD/README.md",
+        "sha256": "260fc94402400bdcc4eeffce2fd5af5544a4da845dbefceb97444c9234a5b8ab",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 84,
+            "text": "- **数据源① Topic 搜索**:调用 GitHub Search API `q=topic:dsh-plugin&sort=stars&order=desc&per_page=30`(分页)。未认证限 10 次/分,故结果缓存进 `sessionStorage`(10 分钟)。"
+          },
+          {
+            "line": 85,
+            "text": "- **数据源② Awesome 精选**:直接抓取 `awesome-dsh-plugin/awesome-dsh-plugin` 的 README,正则解析条目(支持 `#fragment` 与 `/tree/<branch>/<dir>` 子目录写法,如 `zoahdev/dsh-subscribe#plugin`),分页浏览 —— 覆盖「没有 dsh-plugin topic」和「package.json 在子目录」的漏网插件。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "kobenfang/BigPlan",
+      "url": "https://github.com/kobenfang/BigPlan",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kobenfang/BigPlan/HEAD/README.md",
+        "read": true,
+        "sha256": "45da296d19d5655a305663bfb14b4836b208ee4c8b1fb0d8dfdd9ab977b04141",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "KokuYu-sysu/dsh-market-desktop",
+      "url": "https://github.com/KokuYu-sysu/dsh-market-desktop",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/KokuYu-sysu/dsh-market-desktop/HEAD/README.md",
+        "read": true,
+        "sha256": "2fac4de8c5829931ce0b8cf676f69895acd042604244643a144cd64d92e1dc95",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "kongyecn-wq/dsh-okx-skill-hub",
+      "url": "https://github.com/kongyecn-wq/dsh-okx-skill-hub",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/kongyecn-wq/dsh-okx-skill-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "1d7e4a143fed33b7efce999789775e9db4289798cdab3d334a67e6a6867dbe58",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-vibe-pack",
+      "url": "https://github.com/LeemanCheung/dsh-vibe-pack",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/LeemanCheung/dsh-vibe-pack/HEAD/README.md",
+        "sha256": "5fc2b71cdff18a629b082d0ed47d4c2bb4975b77d8fd047c952c3e9e3fa3764c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "LeonxLJX/dsh-mcp-market",
+      "url": "https://github.com/LeonxLJX/dsh-mcp-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/LeonxLJX/dsh-mcp-market/HEAD/README.md",
+        "read": true,
+        "sha256": "ce1f3c7aa2e5d3bbbfeb974967554dde36ec8d8e710206bea00f35c35553d195",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Liaominduyh/GitHub-dsh-plugin-market",
+      "url": "https://github.com/Liaominduyh/GitHub-dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Liaominduyh/GitHub-dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "ed63995ce7f2687cafa76f7066a6d762fe95dde6e289a8f2cf70cc748051c9db",
+        "error": null,
+        "evidence": [
+          {
+            "line": 14,
+            "text": "- 数据源每日刷新，本地磁盘缓存 24h + 面板内 30 分钟自动刷新，离线兜底"
+          },
+          {
+            "line": 22,
+            "text": "> - **gh CLI（已登录）**：GitHub 数据源（注册表搜索 / README / 订阅更新）经 `gh` 调用 api.github.com"
+          }
+        ]
+      }
+    },
+    {
+      "name": "awesome-deepseek-harness",
+      "url": "https://github.com/libukai/awesome-deepseek-harness",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/libukai/awesome-deepseek-harness/HEAD/README.md",
+        "read": true,
+        "sha256": "b730d34790301b24bdb1c732554f534058ae73c019762624ae2dad05ccdceaa3",
+        "error": null
+      }
+    },
+    {
+      "name": "lijma/dsh-plugin-marketplace",
+      "url": "https://github.com/lijma/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lijma/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "2a91c219cbba15aa91667efc8966e5b04fa0310dbce673d3b80cbbbef2a76255",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "like-study1/Oh-My-DSH",
+      "url": "https://github.com/like-study1/Oh-My-DSH",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取公开说明；支持根清单、精确 npm 与通用材料；不宣称维护者已收录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/like-study1/Oh-My-DSH/HEAD/README.md",
+        "sha256": "2069830370dbecbb4d1e62fb085db154d4d5d3084af8584c39bf1b74e5f79b5c",
+        "read": true
+      }
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/liqichen/dsh-plugin-manager",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/liqichen/dsh-plugin-manager/HEAD/README.md",
+        "sha256": "2d7b1fa85d19e410d71bc6d13a729d750aab42abed28116c36294f184813ae4b",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-shop",
+      "url": "https://github.com/LivXue/dsh-plugin-shop",
+      "kind": "schema-catalog",
+      "status": "adapted",
+      "adapters": [
+        "shop-schema",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "根 dsh.catalog 通过上游严格 schema；兼容声明仍限定 desktop 0.2.0-rc.2。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/LivXue/dsh-plugin-shop/HEAD/README.md",
+        "sha256": "e97fc1564d2b03eedc138d5c8af049a5dd74061c515db855dcc8e1c2f37c165b",
+        "read": true,
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-local-installer",
+      "url": "https://github.com/ljh257110/dsh-local-installer",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ljh257110/dsh-local-installer/HEAD/README.md",
+        "sha256": "f51a814d75097b516fe3043a08d65ebf8ab34aa9613f0f1d6a37dfa002e7045b",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/LKMeng2001/dsh-mcp-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/LKMeng2001/dsh-mcp-market/HEAD/README.md",
+        "sha256": "1703b8d4c102d543795953da70ea59a76b9f95cf0e7cf39d32f920b727a47227",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-workshop",
+      "url": "https://github.com/loguhan/dsh-workshop",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/loguhan/dsh-workshop/HEAD/README.md",
+        "sha256": "96feb344c61c45c8244a2f5a5341d400cabca5152956748600bb05fa9bf10f1b",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 45,
+            "text": "- **收录 ≠ 安全背书**：目录数据来自第三方社区索引（dsh-recommend 数据仓库），插件由各自作者维护。安装任何第三方插件 = 在本机运行第三方代码，请自行审查源码。"
+          },
+          {
+            "line": 58,
+            "text": "# 构建（产物提交到 lib/，git 源安装无需构建）"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "loker66fan/dsh-market-github",
+      "url": "https://github.com/loker66fan/dsh-market-github",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/loker66fan/dsh-market-github/HEAD/README.md",
+        "read": true,
+        "sha256": "5cf8cde4e2a3cbf59317b2a817550a04e098223e924ed03c055f28bef80b4c9b",
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "在 dsh web GUI 内部的插件商城：**启动页引导入口 + GitHub `topic:dsh-plugin` 实时搜索 + 一键安装/启用停用/一键重启**。"
+          },
+          {
+            "line": 7,
+            "text": "An in-harness plugin market for the dsh web GUI: **startup-page onboarding entry + real-time GitHub `topic:dsh-plugin` search + one-click install, enable/disable, and restart**."
+          }
+        ]
+      }
+    },
+    {
+      "name": "looput/dsh-finance-lab",
+      "url": "https://github.com/looput/dsh-finance-lab",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/looput/dsh-finance-lab/HEAD/README.md",
+        "read": true,
+        "sha256": "3572d42c6852a5d3f42d44c93078857c447527a3780c10ccff7d221726f0bcdc",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "losebird/dsh-plugin-market",
+      "url": "https://github.com/losebird/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "公开说明读取失败，按用户要求跳过。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/losebird/dsh-plugin-market/HEAD/README.md",
+        "read": false,
+        "sha256": null,
+        "error": "README 超过 512 KiB",
+        "evidence": []
+      }
+    },
+    {
+      "name": "lovstudio/dsh-plugin-marketplace",
+      "url": "https://github.com/lovstudio/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lovstudio/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "b2e76c7508210f6d96e970ea47e57429d55cf101cc3d771baca42773f8eb4ea6",
+        "error": null,
+        "evidence": [
+          {
+            "line": 55,
+            "text": "The `github` provider searches `topic:dsh-plugin` through the Host-side `pluginMarketGithub` Remote. Initialization recursively bisects the full `pushed` interval whenever GitHub reports more than 1,000 matches, then pages each leaf from the older interval to the newer one. After every successful GitHub request, one IndexedDB transaction commits th"
+          }
+        ]
+      }
+    },
+    {
+      "name": "lpf0404/dsh-compat-market",
+      "url": "https://github.com/lpf0404/dsh-compat-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lpf0404/dsh-compat-market/HEAD/README.md",
+        "read": true,
+        "sha256": "34503e436533d94811cd18aab9dba1b77e345e8a41246cb181a5b78c81d78b93",
+        "error": null,
+        "evidence": [
+          {
+            "line": 112,
+            "text": "### 目录数据源"
+          },
+          {
+            "line": 128,
+            "text": "注册表看不见从未发布过的插件，而这个缺口可以量化：`topic:dsh-plugin` 里**最近更新的 100 个仓库**，抽样 14 个有 10 个是带 `dsh.bundle.patch` 的真插件，注册表一个都不知道。复跑 `node tools/github-delta.mjs` 可以重新检验这个判断，而不是凭它当真。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Luaphes/dsh-plugins-market",
+      "url": "https://github.com/Luaphes/dsh-plugins-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Luaphes/dsh-plugins-market/HEAD/README.md",
+        "read": true,
+        "sha256": "b37754590a6465d99e516db6744c76aea01368a2bb83797873eb212396b6f58e",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "LUMOGRESS/dsh-skill-navigator",
+      "url": "https://github.com/LUMOGRESS/dsh-skill-navigator",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/LUMOGRESS/dsh-skill-navigator/HEAD/README.md",
+        "read": true,
+        "sha256": "55c436af61e56824761bdbc3f7d58ca5bb91ea3de244e4cbe3b72a537b142d1a",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "maddogfinance/dsh-trading",
+      "url": "https://github.com/maddogfinance/dsh-trading",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/maddogfinance/dsh-trading/HEAD/README.md",
+        "read": true,
+        "sha256": "9a3b0ef23b95b8794abc0cea765ebe0c8840f3a2d98dddc3f156e2237cc74f6d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-registry",
+      "url": "https://github.com/majiayu000/dsh-plugin-registry",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/majiayu000/dsh-plugin-registry/HEAD/README.md",
+        "read": true,
+        "sha256": "932d70614c944f472fa886468cec166b7682edd996be20b58e68e9da1144b677",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-plugins-hub",
+      "url": "https://github.com/maryasov/dsh-plugins-hub",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/maryasov/dsh-plugins-hub/HEAD/README.md",
+        "sha256": "9565c44502e91e9aa41b5db43486df6fae39dd7a51639318f2600054595e456e",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-center",
+      "url": "https://github.com/Max-Null/dsh-plugin-center",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Max-Null/dsh-plugin-center/HEAD/README.md",
+        "sha256": "3f4a538298e11184187e39baf6127c2dde16585ab206ccf2d8b64c201299ac3c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "mengxingGG/dsh-plugin-marketplace",
+      "url": "https://github.com/mengxingGG/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/mengxingGG/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "4611192a8867e5f03f6697b46e8e283847a5c50b21dc2c9b81c94c167fc25b1f",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Minglink/dsh-stream-market",
+      "url": "https://github.com/Minglink/dsh-stream-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Minglink/dsh-stream-market/HEAD/README.md",
+        "read": true,
+        "sha256": "7f6ad7cc07622353b3889797c7a8a13a24db2aaf043fee1a90f70c03887fa7d1",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-stock-mentions",
+      "url": "https://github.com/mingzeng21/dsh-stock-mentions",
+      "kind": "unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票提及功能，虽在 market 分类中但不是插件发行市场。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/mingzeng21/dsh-stock-mentions/HEAD/README.md",
+        "sha256": "617e2a12becea57e3e3da82960cac85a27458fa898e9c764f9db83fbd8199fc7",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 114,
+            "text": "- 浏览器只提交经过限制的候选证券和规范化 symbol。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "mishibeikejie/zat-dsh-engine",
+      "url": "https://github.com/mishibeikejie/zat-dsh-engine",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取公开说明；支持根清单、精确 npm 与通用材料；不宣称维护者已收录。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/mishibeikejie/zat-dsh-engine/HEAD/README.md",
+        "sha256": "45969ac5d1e36e0d281511030ce4f0c3ec74ccb749f1d33f36bb5f0022139e01",
+        "read": true
+      }
+    },
+    {
+      "name": "Modole/dsh-plugin-market-laoboshi",
+      "url": "https://github.com/Modole/dsh-plugin-market-laoboshi",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Modole/dsh-plugin-market-laoboshi/HEAD/README.md",
+        "read": true,
+        "sha256": "77e4c37e0b428df67ebb73cd2e5d882f78587cde2e469bb4ada50f95563908bb",
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "市场数据源为 GitHub 的 [`dsh-plugin` topic](https://github.com/topics/dsh-plugin)（2200+ 插件，持续增长）。"
+          }
+        ]
+      }
+    },
+    {
+      "name": "montersy123/dsh-skill-market",
+      "url": "https://github.com/montersy123/dsh-skill-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/montersy123/dsh-skill-market/HEAD/README.md",
+        "read": true,
+        "sha256": "70e3b9b9215b544648875f08aa4da923e519f1702a2bdf5cb87f24a67d1610c1",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "mrk-king/dsh-plugin-market",
+      "url": "https://github.com/mrk-king/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/mrk-king/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "9c49b9e9e71a776c4a85630330b8ccab12f0dd08e808112bdf03ac5c6bdb398e",
+        "error": null,
+        "evidence": [
+          {
+            "line": 14,
+            "text": "- **浏览与搜索**：默认限定 DSH 插件（`topic:dsh-plugin`，可一键切换\"全 GitHub\"范围）；每页 100 条、滚动到底自动加载下一页（API 上限 1000 条）"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/Mrxieyong/dsh-mcp-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Mrxieyong/dsh-mcp-market/HEAD/README.md",
+        "sha256": "16d80fc78ea55ad310f68549a51af626fc0f38154c09b0fa397a563090be4da5",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 78,
+            "text": "  请勿把该文件提交到版本库。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-archive-manager",
+      "url": "https://github.com/MS666666/dsh-archive-manager",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/MS666666/dsh-archive-manager/HEAD/README.md",
+        "sha256": "8457abdc4131a253f5d30381f3c6e5139246106e75074d9b65e0a753f91cbc3c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "muen-collective/muen-plugins",
+      "url": "https://github.com/muen-collective/muen-plugins",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/muen-collective/muen-plugins/HEAD/README.md",
+        "read": true,
+        "sha256": "4dc958d711ff3de3f7358ec238095e8c877b43f538f884153f7c711b71c9770c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "NanmiCoder/dsh-plugin-market",
+      "url": "https://github.com/NanmiCoder/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/NanmiCoder/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "79800d93a53cf3a4eb7f851836383c64f4ca5ce2ed58985665d0d95ae5de711d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "DSH-Plugin-Market",
+      "url": "https://github.com/nanshan1995/DSH-Plugin-Market",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/nanshan1995/DSH-Plugin-Market/HEAD/README.md",
+        "sha256": "591663f007e025188c63ccc2e2b9e127341df66ba3a2d2774cfccb796499641a",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "NattoCB/dsh-plugin-petdex-market",
+      "url": "https://github.com/NattoCB/dsh-plugin-petdex-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/NattoCB/dsh-plugin-petdex-market/HEAD/README.md",
+        "read": true,
+        "sha256": "3a73a660c029300f3b82bf448241916d96c22e39507b9ec3ec2f6fd2f3a951f6",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "NattoCB/dsh-widget-center",
+      "url": "https://github.com/NattoCB/dsh-widget-center",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/NattoCB/dsh-widget-center/HEAD/README.md",
+        "read": true,
+        "sha256": "eb1439691990423c4333e69e1507da438b76ca21c0d0b28c15e4768acbf7a0b4",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "newbieYi/dsh-plugin-market",
+      "url": "https://github.com/newbieYi/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/newbieYi/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "e20f074ffa41fd26bd1c999c4df5578a24ac7bfb3102d5b35d6852faebbd4ae3",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Niceck/dsh-hhxg-market",
+      "url": "https://github.com/Niceck/dsh-hhxg-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Niceck/dsh-hhxg-market/HEAD/README.md",
+        "read": true,
+        "sha256": "656ed2bad24c3e67106ab7d64d11b0e973727ffe8f073632b9d8bc0b19a621d5",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "NokorinNishikino/kidai-plugin-market-hub",
+      "url": "https://github.com/NokorinNishikino/kidai-plugin-market-hub",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/NokorinNishikino/kidai-plugin-market-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "e3bad72a696e09636d5409ce308ec7f5a2f306fc1fcfcc0838527211a4c8eb1c",
+        "error": null,
+        "evidence": [
+          {
+            "line": 17,
+            "text": "- 🗂️ **海量目录,一处逛完** — 聚合 GitHub `dsh-plugin` 话题、npm 注册表与社区精选 awesome 列表,**1700+ 插件**可搜索、可排序、可分类;"
+          },
+          {
+            "line": 96,
+            "text": "### 目录数据源"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/nonentity303/dsh-plugin-manager",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/nonentity303/dsh-plugin-manager/HEAD/README.md",
+        "sha256": "45a3a0748b2f7e57ce1e3f692f1217419ed93f0bc9739d9e1723c99889f583d2",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 102,
+            "text": "- **来源分类**：区分**架构自带**（随 dsh 提供）与**用户安装**（`dsh plugin add` / 市场安装），顶部 chips 筛选 + 行徽标"
+          },
+          {
+            "line": 103,
+            "text": "- **来源人工修正**：自动判定来源标签（npm / GitHub / 本地 / 内置），每行可手动覆盖并持久化"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "Noob-stupid/dsh-plugin-gating-hub",
+      "url": "https://github.com/Noob-stupid/dsh-plugin-gating-hub",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Noob-stupid/dsh-plugin-gating-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "7cf8b070b210150c7db373a1ced2a917ce6f349ea02cad06c8cae672fcfebfcc",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "DSH 插件中心",
+      "url": "https://github.com/Noob-stupid/dsh-plugin-hub",
+      "origin": "nexus",
+      "kind": "alias",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest"
+      ],
+      "note": "旧名称已迁移到 Noob-stupid/dsh-plugin-gating-hub；作为别名保留，不计独立市场。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Noob-stupid/dsh-plugin-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "7cf8b070b210150c7db373a1ced2a917ce6f349ea02cad06c8cae672fcfebfcc",
+        "error": null
+      }
+    },
+    {
+      "name": "omdsh-dev/dsh-longbridge",
+      "url": "https://github.com/omdsh-dev/dsh-longbridge",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/omdsh-dev/dsh-longbridge/HEAD/README.md",
+        "read": true,
+        "sha256": "a8f9cee7254c4297fa6cd349ccc115f1b17bbc818e27dd25e0ed66af092d0259",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-employee",
+      "url": "https://github.com/open-dshai/dsh-employee",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/open-dshai/dsh-employee/HEAD/README.md",
+        "sha256": "b7090042a3b30ed0034f8f1e2bd2ceb4e2a3587ac79dab2106fc86cfb767d8c7",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-deepatlas",
+      "url": "https://github.com/Oscar-Williams/dsh-deepatlas",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Oscar-Williams/dsh-deepatlas/HEAD/README.md",
+        "sha256": "7d74df34afaec5a48de5ac23c56887afbbd24ebbfd85c950a2762d4135248cd3",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "ouyangyipeng/dsh-marketplace",
+      "url": "https://github.com/ouyangyipeng/dsh-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ouyangyipeng/dsh-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "899c979eabdabad9a94a605afd00120b9c9c2e7815ba2430bb2f280a805a9d04",
+        "error": null,
+        "evidence": [
+          {
+            "line": 18,
+            "text": "`dsh-marketplace` 本身就是一个 DeepSeek Harness bundle。它把 GitHub [`topic:dsh-plugin`](https://github.com/topics/dsh-plugin) 的实时社区仓库放进 **设置 → 插件 → Marketplace**，让插件发现、搜索、检查、安装、更新和卸载留在同一个 Harness 界面里。"
+          },
+          {
+            "line": 56,
+            "text": "  Topic[\"GitHub topic:dsh-plugin\"] --> Cache[\"Catalog cache + ETag\"]"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dsh-plugin-mgr",
+      "url": "https://github.com/oxlyn/dsh-plugin-mgr",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/oxlyn/dsh-plugin-mgr/HEAD/README.md",
+        "sha256": "69b9eee2f9c249e66800aa0eaa247c3041423532d5a542ec769bbbe38fffe2e3",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 20,
+            "text": "| 3 | 详情展开 | 点卡片展开：版本 / 安装来源（npm·GitHub·本地分类 + 版本范围 + 可点击的仓库地址）/ 插件介绍 |"
+          },
+          {
+            "line": 22,
+            "text": "| 5 | 更新检查 + 一键更新 | npm 来源插件自动比对 registry 最新版（结果缓存 5min），有新版时卡片显示「可更新」徽标，详情里一键更新到 latest；更新不冲掉已有启停状态；有更新的包会惰性补查并显示新版本的 npm 发布时间 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "Palpitate1388/dsh-market-sidebar",
+      "url": "https://github.com/Palpitate1388/dsh-market-sidebar",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Palpitate1388/dsh-market-sidebar/HEAD/README.md",
+        "read": true,
+        "sha256": "61cbf63ef60caf7c6f51c14d307234a2675af104a67985b17a58b651d74f5951",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "pbwheel/dsh-agency-market",
+      "url": "https://github.com/pbwheel/dsh-agency-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/pbwheel/dsh-agency-market/HEAD/README.md",
+        "read": true,
+        "sha256": "a42abe4127b50a5f6449e53760f52da384250e4d7772fd89f2b0ec04dd2e7069",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "peiqi10086/dsh-skills-market",
+      "url": "https://github.com/peiqi10086/dsh-skills-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/peiqi10086/dsh-skills-market/HEAD/README.md",
+        "read": true,
+        "sha256": "c7d087f01013c5fc72638a5ff4788c67c7d433d9696cbe5725aed86a5361840e",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "deepseek-plugin-store",
+      "url": "https://github.com/pericardiac-podzolsoil527/deepseek-plugin-store",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/pericardiac-podzolsoil527/deepseek-plugin-store/HEAD/README.md",
+        "read": true,
+        "sha256": "2b79901ebf61a9d2e6687f4fd19368cda1eb7c967be2e9e974565b3057fbedfc",
+        "error": null
+      }
+    },
+    {
+      "name": "PerryLink/dsh-catalog",
+      "url": "https://github.com/PerryLink/dsh-catalog",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "PerryLink 作者家族专用目录；不把他人专属目录当作通用投稿渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/PerryLink/dsh-catalog/HEAD/README.md",
+        "read": true,
+        "sha256": "da9e671f24689756ec67a22c339e5a48b969b948227663cc86e3a3b8952bc9bc",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "PerryLink/perrylink",
+      "url": "https://github.com/PerryLink/perrylink",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "PerryLink 作者家族专用目录；不把他人专属目录当作通用投稿渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/PerryLink/perrylink/HEAD/README.md",
+        "read": true,
+        "sha256": "3507cb78b2d47339fdd741f8bc897074e6407c086e741f803edd5fe4202c992e",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/PetCT/dsh-plugin-marketplace",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/PetCT/dsh-plugin-marketplace/HEAD/README.md",
+        "sha256": "c7f2b68c1301024da2475ef54ffc4044ed0bbe117e1e7376a039cb12471ec28a",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 21,
+            "text": "- ⭐ **排序**：星标（高→低 / 低→高）、最新收录、下载量"
+          },
+          {
+            "line": 43,
+            "text": "- **实时**：`https://awesome-dsh-plugin.com/plugins.json`（社区策展目录，每日刷新）"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "phil616/dsh-plugin-market",
+      "url": "https://github.com/phil616/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/phil616/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "3e51205da66401e79e1c15540a484ed11ce1ce79f83b431c3c69a8820cd740c7",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "phoenixlucky/business-data-analyst-skill",
+      "url": "https://github.com/phoenixlucky/business-data-analyst-skill",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/phoenixlucky/business-data-analyst-skill/HEAD/README.md",
+        "read": true,
+        "sha256": "5ea5b0742a1c0aeaab560e442dea624dc54d78d18d914134a13e4ca73aa6582d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-skill-market",
+      "url": "https://github.com/pn1024/dsh-skill-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/pn1024/dsh-skill-market/HEAD/README.md",
+        "sha256": "9a4531a77a3f120a5391184606e26e8f7706ce98637a568771f88f04d03c85c4",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 5,
+            "text": "DeepSeek Harness 技能市场插件 —— 聚合 SkillHub + ClawHub 双数据源，站内 README 预览，一键安装/卸载，聊天栏技能选择器，侧边栏技能中心面板。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "potoior/dsh-bull-bear",
+      "url": "https://github.com/potoior/dsh-bull-bear",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/potoior/dsh-bull-bear/HEAD/README.md",
+        "read": true,
+        "sha256": "67bce0ad67d5343cdd3f1108aaceaebac09617c8c16406cde4ff22c0bf8f8d90",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "pwangxo-sg/financial-market-analysis",
+      "url": "https://github.com/pwangxo-sg/financial-market-analysis",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/pwangxo-sg/financial-market-analysis/HEAD/README.md",
+        "read": true,
+        "sha256": "10bbc532cec7b59d9a4e3dabeac1c62e3bf3cced0c56f10bc0f638fc6d3c0e1c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "QinpanWan/dsh-harmonyos-market",
+      "url": "https://github.com/QinpanWan/dsh-harmonyos-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "仅接纳 HarmonyOS 已验证插件；本项目当前只声明已验证的 macOS desktop，不虚构鸿蒙兼容。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/QinpanWan/dsh-harmonyos-market/HEAD/README.md",
+        "read": true,
+        "sha256": "4654c62d29b40d3fd8bb8e4a396a4a4181bbc4640e99df905eb7649f213a9b51",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-install",
+      "url": "https://github.com/qinyre/dsh-plugin-install",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/qinyre/dsh-plugin-install/HEAD/README.md",
+        "sha256": "4da80696316f01bc7652f62eb3720b8496d937496815895a9aa1f7b8e6851413",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 9,
+            "text": "- 点进插件详情页，标题旁挂绿色「可更新 x.y.z」标签（github 安装则提示远端有新提交），页首操作区同样提供「更新」。"
+          },
+          {
+            "line": 14,
+            "text": "检测规则与更新走的仍是 `dsh plugin add` 这条 CLI 路径：npm 安装的对照 registry 的 latest 版本号，github 安装的对照仓库 HEAD 提交，本地链接则如实标注、不做检查。更新前会核对方向——registry 的 latest 不高于已装版本时拒绝执行，绝不把更新变成降级。每次 add 与 remove 都附带 `--config.minimum-release-age=0`：pnpm 11 默认开启 24 小时发布冷静期，`@latest` 会被静默解析到窗口外的旧版本，发布当天点更新等于原地不动；它还会在每次操作前对整个 lockfile 做策略校验，只要里面有窗口内发布的条目（例如显式钉版安装带进来的传递依赖），安装与卸载会一并被 `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION` 拦死——界面上点名操作的包不受这层默认限制（旧版 pnpm 不认识该参数时自动去掉重试）。更新完成后还会核对实际落地的版本号，与 registry latest 不一致时如实提示，而不是谎报成功。落盘之后尽量原地生效：正在运行的插件会被自动摘下再挂上，宿主的活重组按包名重新解析，pnpm 换盘后的新代码即刻加载，浏览器端刷新一次页面即与新版对齐；热替换不适用时（组合含无法行级停用的行、插件当前未运行、或更新的是本插件自身），按钮翻转为「重启」——桌面宿主里交由壳层重启受监督的 sidecar，独立运行 `dsh web`"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "QQ-M/dsh-skill-market",
+      "url": "https://github.com/QQ-M/dsh-skill-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/QQ-M/dsh-skill-market/HEAD/README.md",
+        "read": true,
+        "sha256": "9c043610bb77e2ee3fe0f2709fa3e025c22fd281b0bf5730d34a601cdeaa556d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "QT7-C23/DSH-Marketplace",
+      "url": "https://github.com/QT7-C23/DSH-Marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/QT7-C23/DSH-Marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "eaf8830220285044bbc9de34ccfe7abdef3a0057ccd01b1e8bd534c22901b4fe",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Realyujie/dsh-us-stocks",
+      "url": "https://github.com/Realyujie/dsh-us-stocks",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Realyujie/dsh-us-stocks/HEAD/README.md",
+        "read": true,
+        "sha256": "9ff032ff1e723f36fe02c99f0544c802bde227f7f6f12a24f0407ee0bbde46b7",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "RedMaple96/dsh-plugin-safety",
+      "url": "https://github.com/RedMaple96/dsh-plugin-safety",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/RedMaple96/dsh-plugin-safety/HEAD/README.md",
+        "read": true,
+        "sha256": "5778f982fde182b3930266c0304b01a9723f617b97e89d9c6cdcddd32adc08e6",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-extension-hub",
+      "url": "https://github.com/Relistencode/dsh-extension-hub",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Relistencode/dsh-extension-hub/HEAD/README.md",
+        "sha256": "38433e779dd62918b301188c23fe0bc3ca0787299f48634d52844a614278cb07",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 102,
+            "text": "  ([awesome-dsh-plugin](https://awesome-dsh-plugin.com/plugins.json), refreshed"
+          },
+          {
+            "line": 281,
+            "text": "  (daily-refreshed `plugins.json`, bilingual descriptions, npm mappings)."
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-store",
+      "url": "https://github.com/sandbaseai/dsh-plugin-store",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sandbaseai/dsh-plugin-store/HEAD/README.md",
+        "sha256": "85f2bd2d07ce0907b39beef3fea9dcd766c6b8adda94ff674fdd8249b6014aeb",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-webui-market-plugin",
+      "url": "https://github.com/Sanqi-normal/dsh-webui-market-plugin",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Sanqi-normal/dsh-webui-market-plugin/HEAD/README.md",
+        "sha256": "2531a9b4b6097d23425dd0470e368ca2160ec481666008d8604a2d6e1a20ff74",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 51,
+            "text": "- 目录按分类分组，支持搜索与\"已安装\"过滤；每个卡片显示 GitHub Star 数（无数据不显示），可一键按 **最热（Star 降序，无 Star 的排最后）/ 最新（收录日期）** 排序，或恢复官网默认顺序；大目录分批渐进渲染，避免打开瞬间一次性插入数百卡片造成卡顿"
+          },
+          {
+            "line": 57,
+            "text": "- **安装 / 更新 / 卸载** 组成 FIFO 任务队列：多个插件可以连续排队提交，任务面板固定在右下角、不随页面滚动隐藏，实时显示「排队中 / 校验中 / 执行中 / 完成 / 失败 / 已终止 / 超时」，可取消排队项、终止执行项、查看每个任务的 pnpm 日志；每个任务默认超过 120 秒自动超时（可用环境变量 `DSH_MARKET_OP_TIMEOUT_MS` 调大，如 `300000`）；遇到 pnpm 的临时网络错误（`GET ... error` / `ETIMEDOUT` / `ECONNRESET` 等）会**自动重试一次**，持续失败时给出代理/镜像排查提示；**一键更新全部**会把所有可更新插件依次加入队列；队列头部「清空」可一键清除全部已完成/失败记录（逐条清除也支持），清除会同步到服务端，刷新或重新打开面板后不会再次出现"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/Scorp1o117/dsh-plugin-marketplace",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Scorp1o117/dsh-plugin-marketplace/HEAD/README.md",
+        "sha256": "1c4cafda026e05f87a81ae4f5bfc6ffae99671b174d5fb30c8fb28577d245353",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "shixiaosia/dsh-plugin-marketplace",
+      "url": "https://github.com/shixiaosia/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/shixiaosia/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "92230e1bb29533dfcdf0f918d78b942456a10d222b436cbe09c1787311925cff",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-agent-plugins-market",
+      "url": "https://github.com/Sivan757/dsh-agent-plugins-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Sivan757/dsh-agent-plugins-market/HEAD/README.md",
+        "sha256": "0fbac0199a81c2c93db0fa2824041b1860d2d80450a27984c1bbd1adf4b3236c",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/springbrand-lab/dsh-plugin-market",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/springbrand-lab/dsh-plugin-market/HEAD/README.md",
+        "sha256": "9b55bc9b80082d4d90dab30835b8e17343616f142a65583e05950e1d1b4c9f2b",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "sstar16/dsh-plugin-market",
+      "url": "https://github.com/sstar16/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sstar16/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "44d6b5dc6c45f3cb923e0e699ea90317ae3c7903ef625fd7aab8abc8ec9437e0",
+        "error": null,
+        "evidence": [
+          {
+            "line": 16,
+            "text": "- **Long-tail search** — npm's relevance ranking buries zero-download packages even on near-exact queries, so a name-shaped query is resolved *exactly* (`/<name>/latest`), with automatic `dsh-` prefix variants and hyphenation."
+          },
+          {
+            "line": 38,
+            "text": "5. Packages the catalog cannot know (no keywords, no topic, fresh off the press): type the exact package name and hit **在 npm 上直接搜索**."
+          }
+        ]
+      }
+    },
+    {
+      "name": "awesome-dsh",
+      "url": "https://github.com/stakeswky/awesome-dsh",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/stakeswky/awesome-dsh/HEAD/README.md",
+        "sha256": "b403b6e78a6ede6bbe28615fcb6cefca1ba2b0accc810782dfddb5343d3cdc9f",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 23,
+            "text": "         浏览器 ◀─ /api/plugins.json ◀─ fetch()"
+          },
+          {
+            "line": 52,
+            "text": "| `GET /api/plugins.json` | 完整快照（约 1.1 MB，gzip 后约 290 KB）；带 `ETag`，命中条件请求返回 304 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "stvlynn/dsh-dify-marketplace",
+      "url": "https://github.com/stvlynn/dsh-dify-marketplace",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/stvlynn/dsh-dify-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "9a46145bd30a42815d363285967f4011100a1f50c23f2cc33a216a5fefdb2b5d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "supanexus/dsh-plugin-supanexus-core",
+      "url": "https://github.com/supanexus/dsh-plugin-supanexus-core",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/supanexus/dsh-plugin-supanexus-core/HEAD/README.md",
+        "read": true,
+        "sha256": "1221f0b1c8f301f2198010d10e449d5a896c7da5785cf012165421aa0d9188c3",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "TeaClearInkII/DSH-Marketplaces-Nexus",
+      "url": "https://github.com/TeaClearInkII/DSH-Marketplaces-Nexus",
+      "origin": "github-search",
+      "kind": "market-navigation",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest"
+      ],
+      "note": "市场导航只收市场本身，本 Provider 由其引用的下游目录发行；本次已读取其完整 52 项入口继续搜索。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/TeaClearInkII/DSH-Marketplaces-Nexus/HEAD/README.md",
+        "read": true,
+        "sha256": "5809129ec6d4c558d812bbde0aec3e71461e9bd9bf535001b724464c8f93a19e",
+        "error": null,
+        "evidence": [
+          {
+            "line": 3,
+            "text": "> DSH 生态的「市场集」—— 收录插件市场、插件市场网站和精选库，一键发现全生态。"
+          },
+          {
+            "line": 43,
+            "text": "> 自动生成于 2026-08-17 · 共 52 个市场 · 数据源 [marketplaces.json](docs/marketplaces.json)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "theBigGavin/marketingdashboard",
+      "url": "https://github.com/theBigGavin/marketingdashboard",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/theBigGavin/marketingdashboard/HEAD/README.md",
+        "read": true,
+        "sha256": "31b721e91164098bda87e2932027210350a557cfad59aa9dd0215591e555ca07",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "TheYoungChen/dsh-plugin-market",
+      "url": "https://github.com/TheYoungChen/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/TheYoungChen/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "5e1ab44efadc1ebaf79e2f8980acbff44f1dc6e8cd5c61ac5e5dadd9e2b8d9df",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "tianyagk/dsh-tradewatcher",
+      "url": "https://github.com/tianyagk/dsh-tradewatcher",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tianyagk/dsh-tradewatcher/HEAD/README.md",
+        "read": true,
+        "sha256": "ee6284ae8e411bf9bd46b3e94018b2c49b70a9386934d3fe550cd7f3a161753c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "ToBeWin/DSH-Plugin-Market",
+      "url": "https://github.com/ToBeWin/DSH-Plugin-Market",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ToBeWin/DSH-Plugin-Market/HEAD/README.md",
+        "read": true,
+        "sha256": "279bcb5f88377fc0f68600465cae890892d18bcf422bc360eb47dea3f759d9b0",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-diraud",
+      "url": "https://github.com/tttwh/dsh-plugin-diraud",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tttwh/dsh-plugin-diraud/HEAD/README.md",
+        "sha256": "ca8a26493aa523cc0fa5d9306bb5325eff6a1011924ab0886b379cc5c29e891a",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugin-toggle",
+      "url": "https://github.com/tuogusa/dsh-plugin-toggle",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tuogusa/dsh-plugin-toggle/HEAD/README.md",
+        "sha256": "1e03174c73afa7d068487fcb617fe5148cefb94b1e886ab9745437efc47d3391",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 34,
+            "text": "> 说明：`dsh plugin` 是 pnpm 的前置转发器，`update` 会按当前依赖声明重新解析该包；通过 `github:tuogusa/dsh-plugin-toggle` 安装时，会更新到仓库默认分支的最新提交。本插件自带的版本检测 UI 目前只对 **npm registry 依赖**提供“一键更新”，git 依赖会标记为“暂不支持自动检测”，但你可以用上面的 CLI 命令手动更新。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugins-hub",
+      "url": "https://github.com/tyeclipse/dsh-plugins-hub",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tyeclipse/dsh-plugins-hub/HEAD/README.md",
+        "read": true,
+        "sha256": "0986ee5ea124534fa2355599d9a5a8a1ea8a2e773f5d9bb0d28a2af4c73cd4e3",
+        "error": null
+      }
+    },
+    {
+      "name": "universal-plugin-hub",
+      "url": "https://github.com/Ultmebius/universal-plugin-hub",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Ultmebius/universal-plugin-hub/HEAD/README.md",
+        "sha256": "706a77a61a1702093f0659c886eafb061a3848b0a249ba162a799fa2894ec852",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "uluckystar/dsh-plugin-market",
+      "url": "https://github.com/uluckystar/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/uluckystar/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "241322fd687c0b88a4b15628c65a9b801bde366a197b2d0444f4032a1d53660a",
+        "error": null,
+        "evidence": [
+          {
+            "line": 61,
+            "text": "    marketBaseUrl: 'https://mydsh.dev'      # 数据源"
+          },
+          {
+            "line": 86,
+            "text": "## 数据源"
+          }
+        ]
+      }
+    },
+    {
+      "name": "V-dev-388/DSH-plugin-market",
+      "url": "https://github.com/V-dev-388/DSH-plugin-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "自定义静态/动态单文件下载协议，需修改 DSH 核心；不等同当前标准 Cordis bundle 安装契约。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/V-dev-388/DSH-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "fff84e91da85809066d92de9d3117fcb10dd143c049d02bb7b86a48d87ac373c",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "VCPr0j3k7/dsh-desktop-settings",
+      "url": "https://github.com/VCPr0j3k7/dsh-desktop-settings",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/VCPr0j3k7/dsh-desktop-settings/HEAD/README.md",
+        "read": true,
+        "sha256": "84fd19ee27299156c3a938ced17a0139a917cc88d481f5536445b5429c7c4ebd",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "VCPr0j3k7/dsh-plugin-market",
+      "url": "https://github.com/VCPr0j3k7/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/VCPr0j3k7/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "c8713c09d2cf21524046407ca810dc1114f8470a30d974ac9d0ca31f31408b39",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Viveksssss/DeepSeek-harness-marketplace",
+      "url": "https://github.com/Viveksssss/DeepSeek-harness-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Viveksssss/DeepSeek-harness-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "26268502f825d4dd5af1a35fae30c1ef8c48a221304100cb28c9f9a9e402b2f6",
+        "error": null,
+        "evidence": [
+          {
+            "line": 47,
+            "text": "1. 🔍 **浏览** GitHub 上带 `topic:dsh-plugin` 标签的仓库；"
+          },
+          {
+            "line": 60,
+            "text": "| 🔎 **GitHub 搜索** | 按 `topic:dsh-plugin` / `topic:dsh-theme` / `topic:dsh-skill` 等关键词检索，按星标排序 |"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vladimir-Human/ru-marketplace-mcp",
+      "url": "https://github.com/Vladimir-Human/ru-marketplace-mcp",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Vladimir-Human/ru-marketplace-mcp/HEAD/README.md",
+        "read": true,
+        "sha256": "89c930bd590d14a86b6325dfb41d772120058add37efed60e18f7a8183f0ef98",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "plugin-registry",
+      "url": "https://github.com/vlln/plugin-registry",
+      "origin": "nexus",
+      "kind": "archived",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "README 已声明 2026-10-03 归档停止维护，原生插件页已替代。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/vlln/plugin-registry/HEAD/README.md",
+        "read": true,
+        "sha256": "017ec868aeb97ba242024c368afa366ff1a95a9ee7f7f681b123fe752b66adb5",
+        "error": null
+      }
+    },
+    {
+      "name": "plugin-registry#console",
+      "url": "https://github.com/vlln/plugin-registry/tree/main/packages/plugin/console",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/vlln/plugin-registry/HEAD/packages/plugin/console/README.md",
+        "sha256": "b0e5c3330bcb880c60b51cd9a742b6222141e752842f587ca923a86274dd11ad",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "WhaleHub",
+      "url": "https://github.com/vvlife/whalehub-dsh",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/vvlife/whalehub-dsh/HEAD/README.md",
+        "read": true,
+        "sha256": "f030572252e8943bfb4ea76f89bc8ca452483b6a64129a5ba2c939e84acda8f1",
+        "error": null
+      }
+    },
+    {
+      "name": "w2112515/dsh-plugin-marketplace",
+      "url": "https://github.com/w2112515/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/w2112515/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "031736e64792db9f97ea03aa363cf47ab086751ffd22388d0e6bf99d89393d79",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "Weaxs/stock-analysis-plugin",
+      "url": "https://github.com/Weaxs/stock-analysis-plugin",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Weaxs/stock-analysis-plugin/HEAD/README.md",
+        "read": true,
+        "sha256": "c92f23a490530437508214b36971a91a7708c608fff58caa9965e9856e5c8dd7",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "experts-management",
+      "url": "https://github.com/weibaohui/experts-management",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/weibaohui/experts-management/HEAD/README.md",
+        "sha256": "b05b30d0aeba1c349c5a25ab1dfc13cf2f92411f20c6a701b3b776c0be2f4808",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 22,
+            "text": "- **分享专家**：详情弹窗一键分享——AI 读取本机 GitCode 令牌，fork 官方仓库 → 建分支 → 提交专家目录到 `experts/` 子树 → 创建 PR；提示词可编辑，执行过程实时可见（与技能分享同管线）"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "weopenfire-git/dsh-market-quote",
+      "url": "https://github.com/weopenfire-git/dsh-market-quote",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/weopenfire-git/dsh-market-quote/HEAD/README.md",
+        "read": true,
+        "sha256": "7ac4b731bb1db91b5ab33d111294f8e12bb8289a50e9b338dd844deee0ad6d8b",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-plugin-doctor",
+      "url": "https://github.com/white-sand-grand/dsh-plugin-doctor",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/white-sand-grand/dsh-plugin-doctor/HEAD/README.md",
+        "sha256": "5b79e500dca7d1099dd1bd7083aedbb44c6e4a391606b83194944e893150992a",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 47,
+            "text": "| 找一个插件 | 搜索 GitHub `dsh-plugin` 主题和降级数据源，返回匹配度、功能标签、stars、更新时间和安装引用 |"
+          },
+          {
+            "line": 144,
+            "text": "| 依赖模型记忆或临时搜索 | 使用 GitHub、缓存和 registry 降级链，并注明数据来源 |"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-suite",
+      "url": "https://github.com/whyihaveyou/dsh-suite",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/whyihaveyou/dsh-suite/HEAD/README.md",
+        "read": true,
+        "sha256": "305b8b145674e05590d11f448e8e1fb19340ae5646a6d48ffbc1d8b2f7f26b4e",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-suite#plugin-manager",
+      "url": "https://github.com/whyihaveyou/dsh-suite/tree/main/packages/plugins/plugin-manager",
+      "kind": "custom-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "独立目录或人工选择；已备通用提交材料，收录与安装需市场侧完成。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/whyihaveyou/dsh-suite/HEAD/packages/plugins/plugin-manager/README.md",
+        "sha256": "2fb71df952e88e72fb552e7801ded152724ba497706b0fcc6b948df6f3efd1bc",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 89,
+            "text": "- **v0.4.0**：新增「已装管理」视图（与 Store 顶部切换）——按来源分组（官方内建 @deepseek-ai/* / 第三方 npm / git 源 / 自研 @dsh-suite/* / 其他）+ 搜索过滤 + 各组计数徽标 + 版本/来源/状态；每项 Remove 按钮 + 确认框（显示名称/来源/「需重启完全卸载」提示），执行 `dsh plugin remove`（pnpm remove + bundle 协调）。"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "Wine-Cupable/dsh-plugin-marketplace",
+      "url": "https://github.com/Wine-Cupable/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Wine-Cupable/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "4f535bdd93ce8839872b8ecbde37386215e6ed9cef7f1866ffb370232209f985",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "wishesl/dsh-launcher",
+      "url": "https://github.com/wishesl/dsh-launcher",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/wishesl/dsh-launcher/HEAD/README.md",
+        "read": true,
+        "sha256": "7b6adc883ad21911beef22bca8fe95607ae5bf2ffa3b63fa390e26a474825547",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "wsifan31-bit/Smart-DSH-Market",
+      "url": "https://github.com/wsifan31-bit/Smart-DSH-Market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/wsifan31-bit/Smart-DSH-Market/HEAD/README.md",
+        "read": true,
+        "sha256": "cb0b333aeac98fa038718770526117e2e908dd3f1f819a32e85d53ce173a1f32",
+        "error": null,
+        "evidence": [
+          {
+            "line": 175,
+            "text": "    A[\"GitHub topic: dsh-plugin\"] --> B[\"两小时增量扫描\"]"
+          },
+          {
+            "line": 178,
+            "text": "    D -->|\"验证通过\"| E[\"registry/plugins.json\"]"
+          }
+        ]
+      }
+    },
+    {
+      "name": "wzn16/dsh-skill-market",
+      "url": "https://github.com/wzn16/dsh-skill-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/wzn16/dsh-skill-market/HEAD/README.md",
+        "read": true,
+        "sha256": "afb3fe3d70abee9320c707cb6088ef8fc738bdfeee320f6878e2a38aee41e08d",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "WZZNNE/DSH-CyberWorkStation",
+      "url": "https://github.com/WZZNNE/DSH-CyberWorkStation",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/WZZNNE/DSH-CyberWorkStation/HEAD/README.md",
+        "read": true,
+        "sha256": "81b0493e9d704868e26d8cf15b538db8ca03c93e14ea906feed65cd3d88944df",
+        "error": null,
+        "evidence": [
+          {
+            "line": 157,
+            "text": "This page turns dsh's plugin command line into a form. At the top you type an npm package name or a `link:` path to a local folder and install it. The table beneath lists every plugin in the web profile with its version, its source (npm or link), whether it is mounted as a bundle layer, and an Uninstall button; community plugins and suite plugins s"
+          }
+        ]
+      }
+    },
+    {
+      "name": "xcasee/dsh-plugin-market-intelligence",
+      "url": "https://github.com/xcasee/dsh-plugin-market-intelligence",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/xcasee/dsh-plugin-market-intelligence/HEAD/README.md",
+        "read": true,
+        "sha256": "b2fb923669775dedf7764dabaf2e734759b721e1549f4da4d16717164f54cd36",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "xhvdhczd/dsh-plugin-marketplace",
+      "url": "https://github.com/xhvdhczd/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/xhvdhczd/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "2a2b27c31382eef44fcbb6a50ad191d2011688f18cf30a2a780425b7c3f25de3",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "xrj/dsh-market-site",
+      "url": "https://github.com/xrj/dsh-market-site",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/xrj/dsh-market-site/HEAD/README.md",
+        "read": true,
+        "sha256": "45b53db7d7d00f61685751118436d2358313305f90e37679b371e4890982e839",
+        "error": null,
+        "evidence": [
+          {
+            "line": 13,
+            "text": "1. 用 GitHub API 检查 `dsh-plugin` 数据源；"
+          }
+        ]
+      }
+    },
+    {
+      "name": "xxccdl/deepseek-harness-desktop",
+      "url": "https://github.com/xxccdl/deepseek-harness-desktop",
+      "origin": "github-search",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "本地管理、更新或宿主界面项目；采用标准包契约，无单独上架格式。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/xxccdl/deepseek-harness-desktop/HEAD/README.md",
+        "read": true,
+        "sha256": "732d4b387a3bb808b312d77fa94099f069be416f9d065b8fa0873ca24c164641",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-expert-market",
+      "url": "https://github.com/yangyizhu8/dsh-expert-market",
+      "kind": "specialized",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "面向技能、主题、MCP、专家或其他资源形态，不作为本模型 Provider 的发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/yangyizhu8/dsh-expert-market/HEAD/README.md",
+        "sha256": "1c20ba0933e0bb4598137f24109867e562225220523b8bc24d73065d520308f2",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-marketplace",
+      "url": "https://github.com/ydhrdh/dsh-marketplace",
+      "kind": "static-registry",
+      "status": "adapted",
+      "adapters": [
+        "ydhrdh-schema"
+      ],
+      "note": "生成上游 schema 合法条目，verified=false，保留 desktop/macOS 范围。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ydhrdh/dsh-marketplace/HEAD/README.md",
+        "sha256": "ddfb88db64bba54b20845f8f3a5aea9ee23f52109ec865e2bf1f4756eeb90b06",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 13,
+            "text": "- **Static, auditable registry** — every plugin is a small JSON file (`registry/plugins/<id>/plugin.json`)"
+          },
+          {
+            "line": 140,
+            "text": "Each `registry/plugins/<id>/plugin.json` follows [`schema/plugin.schema.json`](schema/plugin.schema.json)."
+          }
+        ]
+      }
+    },
+    {
+      "name": "YELEBAI/dsh-plugin-marketplace",
+      "url": "https://github.com/YELEBAI/dsh-plugin-marketplace",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/YELEBAI/dsh-plugin-marketplace/HEAD/README.md",
+        "read": true,
+        "sha256": "032e40b9e32778571125d5119f926b6f43427e98ad039f2670e0120387021629",
+        "error": null,
+        "evidence": [
+          {
+            "line": 24,
+            "text": "| 🔍 自动发现 | 每两小时扫描一次 `topic:dsh-plugin archived:false` |"
+          },
+          {
+            "line": 198,
+            "text": "    A[\"GitHub topic: dsh-plugin\"] --> B[\"两小时增量扫描\"]"
+          }
+        ]
+      }
+    },
+    {
+      "name": "yi-yezhiqiu/dsh-prompt-market",
+      "url": "https://github.com/yi-yezhiqiu/dsh-prompt-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/yi-yezhiqiu/dsh-prompt-market/HEAD/README.md",
+        "read": true,
+        "sha256": "c6b3c15f707bd911dc471652f82d9c63f28696a7c5b5d034794bc7ced0eaf076",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "DSH Plugin Stars",
+      "url": "https://github.com/ywsldxk/dsh-plugin-stars",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ywsldxk/dsh-plugin-stars/HEAD/README.md",
+        "read": true,
+        "sha256": "49180da8cdb68ae9327249a7c45e767abafb6c04400a6f83aac9bf456b02666b",
+        "error": null
+      }
+    },
+    {
+      "name": "dsh-plugin-workshop",
+      "url": "https://github.com/yyyyukari/dsh-plugin-workshop",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact"
+      ],
+      "note": "适配发现与包契约；未运行此市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/yyyyukari/dsh-plugin-workshop/HEAD/README.md",
+        "sha256": "f85fa1e300141a80c827a27a9bf7ef11352862a5ec9e6ef1b877ed75f5d8e179",
+        "read": true,
+        "error": null,
+        "evidence": [
+          {
+            "line": 13,
+            "text": "- **默认只搜 DSH 插件**：默认「插件话题」（`topic:dsh-plugin`）；搜索结果自动排除官方 harness 等核心仓库（查询级 `-repo:` 过滤，不再占据榜首）；全站模式自带**插件特征验证**（检查 `package.json` 的 `dsh` 字段 / `cordis.yml` 等，走 raw CDN 不耗 API 额度），默认过滤无关仓库"
+          },
+          {
+            "line": 14,
+            "text": "- **已安装管理**：工具栏「📦 已安装」视图——合并 profile 依赖/激活行/本地预设展示本机插件（类型、激活状态、安装来源），一键更新（pnpm update / git pull）与卸载"
+          }
+        ]
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "dsh-plugins-store",
+      "url": "https://github.com/ZASENJC/dsh-plugins-store",
+      "origin": "nexus",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "已读取来源说明，具备标准包与双语投稿元数据；目录人工选择和运行验证独立。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ZASENJC/dsh-plugins-store/HEAD/README.md",
+        "read": true,
+        "sha256": "d9f4ef1a975a6234ebdef0232bd15ba988741b571e2dc7a2449e3aaafb5b3582",
+        "error": null
+      }
+    },
+    {
+      "name": "zhiyaoli0221/dsh-finance-db",
+      "url": "https://github.com/zhiyaoli0221/dsh-finance-db",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zhiyaoli0221/dsh-finance-db/HEAD/README.md",
+        "read": true,
+        "sha256": "5e47be52325493afee15712c0037cff932ff8819ad91681ac397c0d013c7bbcc",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "zhu1090093659/dsh-skins",
+      "url": "https://github.com/zhu1090093659/dsh-skins",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zhu1090093659/dsh-skins/HEAD/README.md",
+        "read": true,
+        "sha256": "e5d0064e9d21d1868271a45bd312f98b2f943e8764d987f81673c4c8638d3be6",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-web#packages/dsh-plugin-manager",
+      "url": "https://github.com/zhu1090093659/dsh-web/tree/main/packages/dsh-plugin-manager",
+      "kind": "local-management",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "npm-exact",
+        "local-tgz"
+      ],
+      "note": "管理已安装插件或更新，不要求单独市场投稿；宿主契约已具备。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zhu1090093659/dsh-web/HEAD/packages/dsh-plugin-manager/README.md",
+        "sha256": "56e3a83c9bea230d63164d6002cc16afe0c083260970a3f17958fbff00fc30f8",
+        "read": true,
+        "error": null,
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "zhuoxuanliu53-svg/dsh-plugin-market",
+      "url": "https://github.com/zhuoxuanliu53-svg/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zhuoxuanliu53-svg/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "de53a159282c9af953e48f6939c87f3eb037e0e4e5bd6d8dd142d67256cea32a",
+        "error": null,
+        "evidence": [
+          {
+            "line": 63,
+            "text": "| Curated registry | `https://awesome-dsh-plugin.com/plugins.json` | Bundle plugins (reviewed, shown first) | ETag / 304 | [CC0-1.0](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) |"
+          },
+          {
+            "line": 64,
+            "text": "| GitHub topic | `api.github.com/search/repositories?q=topic:dsh-plugin` | Skill / preset / other discovery (shape-classified, top 200 by stars) | 1-hour TTL | GitHub public repos |"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ZiFan1117/dsh-atom-market",
+      "url": "https://github.com/ZiFan1117/dsh-atom-market",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/ZiFan1117/dsh-atom-market/HEAD/README.md",
+        "read": true,
+        "sha256": "42dccf35bc105c87a8700c2a4f8bd81cba3a1e6a773b1f08015cc3e2a45547e6",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh-subscribe#plugin",
+      "url": "https://github.com/zoahdev/dsh-subscribe/tree/main/plugin",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "访问失败，按用户指示跳过。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zoahdev/dsh-subscribe/HEAD/plugin/README.md",
+        "sha256": null,
+        "read": false,
+        "error": "HTTP 404",
+        "evidence": []
+      },
+      "origin": "awesome-market"
+    },
+    {
+      "name": "zr-promise/dsh-plugin-market",
+      "url": "https://github.com/zr-promise/dsh-plugin-market",
+      "origin": "github-search",
+      "kind": "discovery",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "公开说明已读取；适配标准组合包、仓库/npm 发现与元数据；不扩大宿主版本或 Profile 声明，未运行该市场安装器。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zr-promise/dsh-plugin-market/HEAD/README.md",
+        "read": true,
+        "sha256": "dbbbb16cd1f91c5e974ff6304988074e1c70a3cda7c4756e4ba937183deae1b6",
+        "error": null,
+        "evidence": [
+          {
+            "line": 38,
+            "text": "- **首页收录优化**：除了 `topic:dsh-plugin`，还会合并 `dsh in:name` 高星仓库，避免“没打 topic 但确实是 DSH 插件”的项目漏掉。\r"
+          }
+        ]
+      }
+    },
+    {
+      "name": "zzhi191/dsh-plugin-night-dog",
+      "url": "https://github.com/zzhi191/dsh-plugin-night-dog",
+      "origin": "github-search",
+      "kind": "specialized-or-unrelated",
+      "status": "not-applicable",
+      "adapters": [],
+      "note": "股票/营销等非插件市场，或技能、主题、MCP、提示词、专属作者目录等资源形态；不作为本 Provider 发行渠道。",
+      "source": {
+        "url": "https://raw.githubusercontent.com/zzhi191/dsh-plugin-night-dog/HEAD/README.md",
+        "read": true,
+        "sha256": "35a892d84c6c328d623dcd1f40392b1697d47f96e896343033a6472248d28d12",
+        "error": null,
+        "evidence": []
+      }
+    },
+    {
+      "name": "dsh.so",
+      "url": "https://www.dsh.so/",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "浏览器最终可正常读取提交页：DSH 信号、安装说明、SPDX 许可和源码扫描契约已具备；不伪造其安全扫描或 L1-L5 结论。",
+      "source": {
+        "url": "https://www.dsh.so/zh/submit/",
+        "read": true
+      }
+    },
+    {
+      "name": "DSH Get",
+      "url": "https://www.dshget.com/categories/market",
+      "kind": "web-catalog",
+      "status": "adapted",
+      "adapters": [
+        "root-manifest",
+        "github-topic",
+        "npm-exact",
+        "manual-form"
+      ],
+      "note": "页面可读，公开 GitHub topic 发现入口可见；适配发现和标准包契约，不宣称站点审核通过。",
+      "source": {
+        "url": "https://dshget.com/categories/market",
+        "read": true
+      }
+    },
+    {
+      "name": "DSHHub.co",
+      "url": "https://www.dshhub.co/",
+      "kind": "unavailable",
+      "status": "skipped",
+      "adapters": [],
+      "note": "公开数据请求失败或超时；按用户指示跳过。",
+      "source": {
+        "url": "https://www.dshhub.co/",
+        "read": false
+      }
+    },
+    {
+      "name": "dshplugin.io",
+      "url": "https://www.dshplugin.io/zh",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "旧台账或 README 线索，当前规则未取得；按用户新范围不计入已适配市场。",
+      "source": {
+        "url": "https://www.dshplugin.io/zh",
+        "read": false
+      }
+    },
+    {
+      "name": "DSH Bundle 目录",
+      "url": "https://www.xxnmkk.xyz",
+      "origin": "nexus",
+      "kind": "prior-lead",
+      "status": "skipped",
+      "adapters": [],
+      "note": "导航中的旧网站线索，当前未取得可核对规范；按用户要求跳过。",
+      "source": {
+        "url": "https://www.xxnmkk.xyz",
+        "read": false
+      }
+    }
+  ],
+  "search": {
+    "source": "https://api.github.com/search/repositories?q=topic%3Adsh-plugin+market+in%3Aname%2Cdescription&per_page=100",
+    "retrievedAt": "2026-10-15T09:55:35.653Z",
+    "total": 142,
+    "returned": 142,
+    "newCandidates": 119,
+    "incomplete": false
+  },
+  "navigation": {
+    "source": "https://github.com/TeaClearInkII/DSH-Marketplaces-Nexus/blob/main/docs/marketplaces.json",
+    "sourceGenerated": "2026-08-17T11:28:29Z",
+    "total": 52,
+    "newReadmes": 25,
+    "read": 24
+  },
+  "packageVersion": "0.1.2",
+  "pinnedSourceVersion": "0.1.1"
+}

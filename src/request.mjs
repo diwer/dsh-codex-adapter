@@ -84,7 +84,8 @@ export function buildRequest(options,{images=new Map()}={}) {
       input.push({role:message.role, content:inputContent(message.content,images)});
     } else unsupported('Unsupported message role.');
   }
-  const body = {model:options.model, input, store:false, stream:true};
+  // Stateless reasoning must return the ciphertext required by itemToBlock/replay.
+  const body = {model:options.model, input, store:false, stream:true, include:['reasoning.encrypted_content']};
   if (instructions.length) body.instructions = instructions.join('\n\n');
   if (options.reasoningEffort !== undefined) body.reasoning = {effort:options.reasoningEffort};
   if (options.tools?.length) {

@@ -11,20 +11,23 @@ export async function* readSse(body, { signal, maxEventBytes = 8 * 1024 * 1024 }
   const check = () => {
     if (signal?.aborted) throw new AdapterError('The request was cancelled.', 'ABORTED');
   };
-  const line = value => {
+  const line = (value, width) => {
     if (value === '') {
       const payload = data.length ? { data: data.join('\n'), event: eventName } : undefined;
       data = []; bytes = 0; eventName = '';
       return payload;
     }
+    // Bound all wire fields, not just data. Account before retaining event names
+    // or discarding comments/unknown fields; blank dispatch lines reset the budget.
+    bytes += Buffer.byteLength(value) + width;
+    if (bytes > maxEventBytes) throw protocol('A provider event exceeded the configured size limit.');
     if (value.startsWith(':')) return;
     const separator = value.indexOf(':');
     const field = separator < 0 ? value : value.slice(0, separator);
     let content = separator < 0 ? '' : value.slice(separator + 1);
     if (content.startsWith(' ')) content = content.slice(1);
-    if (field === 'data') { data.push(content); bytes += Buffer.byteLength(content) + 1; }
+    if (field === 'data') data.push(content);
     if (field === 'event') eventName = content;
-    if (bytes > maxEventBytes) throw protocol('A provider event exceeded the configured size limit.');
   };
   try {
     check();
@@ -36,11 +39,13 @@ export async function* readSse(body, { signal, maxEventBytes = 8 * 1024 * 1024 }
       while ((at = pending.search(/[\r\n]/)) >= 0) {
         if (!done && pending[at] === '\r' && at === pending.length - 1) break;
         const width = pending[at] === '\r' && pending[at + 1] === '\n' ? 2 : 1;
-        const payload = line(pending.slice(0, at));
+        const payload = line(pending.slice(0, at), width);
         pending = pending.slice(at + width);
         if (payload) yield payload;
       }
-      if (Buffer.byteLength(pending) + bytes > maxEventBytes) throw protocol('A provider event exceeded the configured size limit.');
+      // A lone CR may be the first byte of the blank dispatch delimiter.
+      const pendingBytes = pending === '\r' ? 0 : Buffer.byteLength(pending);
+      if (pendingBytes + bytes > maxEventBytes) throw protocol('A provider event exceeded the configured size limit.');
       if (done) break;
     }
     // SSE dispatch requires a blank line. An unterminated final event is a truncation.

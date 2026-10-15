@@ -1,5 +1,6 @@
 import {setTimeout as sleep} from 'node:timers/promises';
 import {prepareImages} from './images.mjs';
+import {catalogReasoning,resolvedReasoning,isResponsesEffort} from './model-capabilities.mjs';
 import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
 import { buildRequest } from './request.mjs';
 import { readSse, parseEvent } from './sse.mjs';
@@ -52,7 +53,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       this.attachments = attachments;
       for (const value of Object.values(this.capabilities)) {
         if (value.contextWindow !== undefined) limits(value.contextWindow, undefined, 'contextWindow');
-        if (value.reasoningEfforts !== undefined && (!Array.isArray(value.reasoningEfforts) || !value.reasoningEfforts.length || value.reasoningEfforts.some(e => typeof e !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(e)) || new Set(value.reasoningEfforts).size !== value.reasoningEfforts.length)) throw new AdapterError('reasoningEfforts must be unique nonempty identifiers.', 'INVALID_CONFIG');
+        if (value.reasoningEfforts !== undefined && (!Array.isArray(value.reasoningEfforts) || !value.reasoningEfforts.length || value.reasoningEfforts.some(e => !isResponsesEffort(e)) || new Set(value.reasoningEfforts).size !== value.reasoningEfforts.length)) throw new AdapterError('reasoningEfforts must be unique supported Responses effort identifiers.', 'INVALID_CONFIG');
       }
     }
     providerInfo(provider) { this.route(provider); return {id:PROVIDER, name:'ChatGPT plan (Sign in with ChatGPT)'}; }
@@ -97,7 +98,8 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
           if (typeof model?.slug !== 'string' || !model.slug || typeof model.display_name !== 'string') throw protocol('The account model catalog contained an invalid entry.');
           const modalities=model.input_modalities??['text'];
           if(!Array.isArray(modalities)||!modalities.length||modalities.some(value=>!['text','image'].includes(value))||new Set(modalities).size!==modalities.length)throw protocol('The account model catalog contained invalid input modalities.');
-          return {provider:PROVIDER, id:model.slug, name:model.display_name, inputModalities:[...modalities], visibility:model.visibility};
+          const reasoning=catalogReasoning(model);
+          return {provider:PROVIDER, id:model.slug, name:model.display_name, inputModalities:[...modalities], visibility:model.visibility,...reasoning?{reasoning}:{}};
         });
       } catch (error) { throw this.wrap(error, scoped, secret); }
     }
@@ -113,7 +115,8 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       const {visibility, ...result} = found;
       const configured = this.capabilities[model];
       if (configured?.contextWindow) result.context = {contextWindow:configured.contextWindow};
-      if (configured?.reasoningEfforts) result.reasoning = {efforts:configured.reasoningEfforts.map(id => ({id, name:id}))};
+      const reasoning=resolvedReasoning(result.reasoning,configured);
+      if(reasoning)result.reasoning=reasoning;
       return result;
     }
     async *stream(options) {
@@ -121,7 +124,11 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       let secret;
       try {
         this.route(options.provider);
-        if (options.reasoningEffort !== undefined && !this.capabilities[options.model]?.reasoningEfforts?.includes(options.reasoningEffort)) throw new AdapterError('Configure verified reasoning efforts for this model before selecting one.', 'UNSUPPORTED_CAPABILITY');
+        if (options.reasoningEffort !== undefined) {
+          const configured=this.capabilities[options.model]?.reasoningEfforts;
+          const efforts=configured??(await this.resolveModel(options.provider,options.model,signal)).reasoning?.efforts.map(effort=>effort.id);
+          if(!efforts?.includes(options.reasoningEffort))throw new AdapterError('The selected model does not support this reasoning effort. Choose a level offered by the model picker.', 'UNSUPPORTED_CAPABILITY');
+        }
         const prepared=await prepareImages(options,typeof this.attachments==='function'?this.attachments():this.attachments,signal);
         const body = buildRequest(prepared.options,{images:prepared.images});
         const headers = await this.headers(signal);

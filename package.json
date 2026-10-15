@@ -1,9 +1,9 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.0-alpha.9",
-  "description": "DeepSeek Harness adapter for the documented Sign in with ChatGPT Responses API flow; not an OpenAI-endorsed product",
+  "version": "0.1.3",
+  "description": "Use your ChatGPT subscription in DeepSeek Harness. Sign in, choose GPT, and work with images and built-in tools.",
   "type": "module",
-  "private": true,
+  "private": false,
   "engines": {
     "node": ">=22.19"
   },
@@ -20,7 +20,14 @@
     "test:runtime": "node --test test-runtime/*.test.mjs",
     "test:desktop": "node scripts/test-desktop.mjs",
     "test:protocol": "node scripts/test-protocol.mjs",
-    "test:protocol:diagnostic": "node scripts/test-protocol.mjs --diagnostic"
+    "test:protocol:diagnostic": "node scripts/test-protocol.mjs --diagnostic",
+    "market:check": "node scripts/market-check.mjs",
+    "market:prepare": "node scripts/prepare-market-release.mjs",
+    "market:discover": "node scripts/discover-markets.mjs",
+    "docs:build": "node scripts/build-docs.mjs",
+    "market:build": "node scripts/build-markets.mjs",
+    "market:audit": "npm run market:discover && node scripts/audit-markets.mjs",
+    "market:report": "node scripts/report-markets.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",
@@ -30,7 +37,8 @@
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.4",
     "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.4"
+    "@deepseek-ai/schemastery": "3.18.4",
+    "ajv": "^8.17.1"
   },
   "main": "./src/desktop-plugin.mjs",
   "files": [
@@ -38,7 +46,20 @@
     "lib",
     "cordis.patch.yml",
     "README.md",
-    "docs"
+    "README.en.md",
+    "LICENSE",
+    "docs/AUTH.md",
+    "docs/COMPATIBILITY.md",
+    "docs/SOURCES.md",
+    "docs/PRIVACY.md",
+    "RELEASE_NOTES.md",
+    "docs/INSTALLATION.md",
+    "scripts/install-release.mjs",
+    "docs/DEVELOPMENT.md",
+    "docs/MARKET_PUBLISHING.md",
+    "docs/AI_SEARCH.md",
+    "docs/KNOWN_MARKETS.md",
+    "docs/REASONING.md"
   ],
   "dsh": {
     "bundle": {
@@ -50,9 +71,74 @@
         "@deepseek-ai/dsh-client-ui-slots"
       ],
       "platform": "web"
+    },
+    "catalog": {
+      "category": "provider",
+      "summary": {
+        "en": "Use your ChatGPT subscription in Harness: sign in without an API key, switch GPT/DeepSeek, and work with images and built-in tools.",
+        "zh": "登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。"
+      },
+      "capabilities": [
+        "llm",
+        "connection",
+        "attachments",
+        "agentDefaultModel"
+      ]
+    },
+    "compatibility": {
+      "dsh": "0.2.0-rc.2",
+      "profiles": [
+        "desktop"
+      ]
     }
   },
   "dependencies": {
     "undici": "8.11.2"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "dsh-plugins",
+    "deepseek-harness",
+    "dsh",
+    "cordis-plugin",
+    "chatgpt",
+    "gpt",
+    "codex",
+    "llm-provider",
+    "oauth",
+    "desktop",
+    "vision"
+  ],
+  "disclosure": {
+    "cloud": true,
+    "network": [
+      "https://auth.openai.com",
+      "https://api.openai.com"
+    ],
+    "offlineMode": false,
+    "apiKeys": [],
+    "credentials": {
+      "type": "OAuth with PKCE",
+      "storage": "file-0600",
+      "directoryMode": "0700",
+      "encryptedAtRest": false,
+      "logged": false
+    },
+    "permissions": [
+      "network: OpenAI authorization and inference",
+      "filesystem: plugin-owned credential directory",
+      "attachments: selected conversation images through the host",
+      "settings: optional default model preference"
+    ],
+    "retention": "Local authorization persists until logout; request store=false; upstream retention is governed by OpenAI."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diwer/dsh-codex-adapter.git"
+  },
+  "homepage": "https://github.com/diwer/dsh-codex-adapter#readme",
+  "bugs": {
+    "url": "https://github.com/diwer/dsh-codex-adapter/issues"
   }
 }

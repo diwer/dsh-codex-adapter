@@ -38,13 +38,14 @@ test('streams multiple interleaved tool calls and requests host execution only o
   assert.deepEqual(chunks.at(-1).replayState.blocks.map(x=>x.item.call_id),['call_1','call_2']);
 });
 test('reasoning summary and encrypted final state round-trip',async()=>{
-  const item=reasonItem();const {adapter}=makeAdapter([
+  const item=reasonItem();const {adapter,calls}=makeAdapter([
     {type:'response.output_item.added',output_index:0,item:{...item,status:'in_progress',summary:[],encrypted_content:'incomplete'}},
     {type:'response.reasoning_summary_text.delta',output_index:0,item_id:'rs_1',summary_index:0,delta:'Checking'},
     {type:'response.output_item.done',output_index:0,item},complete([item]),
   ]);
   const chunks=await collect(adapter.stream(options()));assert.equal(chunks.at(-1).replayState.blocks[0].item.encrypted_content,item.encrypted_content);
   assert.equal(chunks.filter(x=>x.type==='reasoning-delta').map(x=>x.text).join(''),item.summary[0].text);
+  assert.deepEqual(JSON.parse(calls[0].init.body).include,['reasoning.encrypted_content']);
 });
 test('preserves refusal output as text',async()=>{
   const item={...textItem(),content:[{type:'refusal',refusal:'I cannot do that.'}]};const {adapter}=makeAdapter([complete([item])]);
@@ -83,7 +84,7 @@ test('model discovery preserves server order and filters hidden entries',async()
   assert.equal(calls[0].url,`${API_ORIGIN}/models`);assert.equal(calls[0].init.redirect,'error');
   await assert.rejects(()=>adapter.resolveModel(PROVIDER,'missing'),{code:'MODEL_UNAVAILABLE'});
 });
-test('malformed model catalogs fail visibly',async()=>{
+test('subscription discovery rejects a standard API catalog instead of guessing account eligibility',async()=>{
   const adapter=new Adapter({session:{async accessToken(){return 'fake';}},fetchImpl:async()=>Response.json({data:[{id:'model'}]})});
   await assert.rejects(()=>adapter.listModels(PROVIDER),{code:'PROTOCOL_ERROR'});
 });
@@ -205,4 +206,30 @@ test('a partial tool block is never retried or accepted as complete',async()=>{
 test('cancellation during empty-stream retry wait prevents a second request',async()=>{
  let calls=0;const controller=new AbortController();const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>{calls++;setTimeout(()=>controller.abort(),30);return response([]);}});
  await assert.rejects(()=>collect(adapter.stream(options({signal:controller.signal}))),{code:'ABORTED'});assert.equal(calls,1);
+});
+
+test('account reasoning metadata reaches model resolution and the exact selected request effort',async()=>{
+  const bodies=[];const adapter=new Adapter({session:{async accessToken(){return 'FAKE_ACCESS_TOKEN';}},fetchImpl:async(url,init)=>{
+    if(url.endsWith('/models'))return Response.json({models:[{slug:'test-model',display_name:'Test',visibility:'list',supported_reasoning_levels:[{effort:'low'},{effort:'high'},{effort:'max'},{effort:'ultra'}],default_reasoning_level:'low'}]});
+    bodies.push(JSON.parse(init.body));return response([complete()]);
+  }});
+  const model=await adapter.resolveModel(PROVIDER,'test-model');
+  assert.deepEqual(model.reasoning.efforts.map(e=>e.id),['low','high','max']);assert.equal(model.reasoning.defaultEffort,'low');
+  for(const effort of ['low','high','max'])await collect(adapter.stream(options({reasoningEffort:effort})));
+  assert.deepEqual(bodies.map(body=>body.reasoning.effort),['low','high','max']);
+  await assert.rejects(()=>collect(adapter.stream(options({reasoningEffort:'none'}))),{code:'UNSUPPORTED_CAPABILITY'});
+  assert.equal(bodies.length,3);
+});
+test('reasoning validation rechecks the current account instead of reusing another account catalog',async()=>{
+  let effort='high',inference=0;const adapter=new Adapter({session:{async accessToken(){return 'FAKE_ACCESS_TOKEN';}},fetchImpl:async url=>{
+    if(url.endsWith('/models'))return Response.json({models:[{slug:'test-model',display_name:'Test',visibility:'list',supported_reasoning_levels:[{effort}]}]});
+    inference++;return response([complete()]);
+  }});
+  await adapter.resolveModel(PROVIDER,'test-model');effort='low';
+  await assert.rejects(()=>collect(adapter.stream(options({reasoningEffort:'high'}))),{code:'UNSUPPORTED_CAPABILITY'});
+  assert.equal(inference,0);await collect(adapter.stream(options({reasoningEffort:'low'})));assert.equal(inference,1);
+});
+
+test('configured effort overrides cannot enable values rejected by Responses',()=>{
+  assert.throws(()=>new Adapter({session:{accessToken:async()=>'fake'},modelCapabilities:{model:{reasoningEfforts:['low','ultra']}}}),{code:'INVALID_CONFIG'});
 });

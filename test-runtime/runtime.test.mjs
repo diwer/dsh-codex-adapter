@@ -83,3 +83,26 @@ test('real DSH runtime handles two model turns with one tool result and replay',
     assert.equal(bodies[1].input[1].type,'function_call');assert.equal(bodies[1].input[1].call_id,'call_1');assert.equal(bodies[1].input[2].type,'function_call_output');
   } finally {adapter.dispose();await runtime.dispose();}
 });
+
+test('native DSH reasoning selection resolves account defaults and sends the selected effort',async()=>{
+  const ctx=new Context();const runtime=ctx.plugin(LlmRuntime);const bodies=[];
+  const adapter=new ChatGPTPlanAdapter({session,fetchImpl:async(url,init)=>{
+    if(url.endsWith('/models'))return Response.json({models:[{slug:'test-model',display_name:'Test',visibility:'list',supported_reasoning_levels:[{effort:'low',description:'Fast'},{effort:'high',description:'Deep'},{effort:'max'},{effort:'ultra'}],default_reasoning_level:'low'}]});
+    bodies.push(JSON.parse(init.body));return response([complete([textItem()])]);
+  }});
+  try{
+    await runtime.await();ctx.llm.registerAdapter([PROVIDER],adapter);
+    const model=await ctx.llm.resolveModelInfo(PROVIDER,'test-model');
+    assert.deepEqual(model.reasoning.efforts.map(e=>e.id),['low','high','max']);assert.equal(model.reasoning.defaultEffort,'low');
+    const defaults=await ctx.llm.resolveCallConfig({provider:PROVIDER,model:'test-model'});
+    assert.equal(defaults.reasoningEffort,'low');
+    for(const effort of ['low','high','max']){
+      const config=await ctx.llm.resolveCallConfig({provider:PROVIDER,model:'test-model',reasoningEffort:effort});
+      const chunks=await collect(ctx.llm.stream(options(config)));
+      assert.equal(chunks.at(-1).reason.kind,'stop');assert.equal(bodies.at(-1).reasoning.effort,effort);
+    }
+    const before=bodies.length;
+    await assert.rejects(()=>ctx.llm.resolveCallConfig({provider:PROVIDER,model:'test-model',reasoningEffort:'none'}),{code:'UNSUPPORTED_REASONING_EFFORT'});
+    assert.equal(bodies.length,before);
+  }finally{adapter.dispose();await runtime.dispose();}
+});

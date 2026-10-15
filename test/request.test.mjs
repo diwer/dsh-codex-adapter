@@ -6,7 +6,7 @@ import { options, textItem, reasonItem, toolItem, complete } from './helpers.mjs
 
 test('subscription request uses array input and no stored-response continuation',()=>{
   const request=buildRequest(options({system:'Be helpful.'}));
-  assert.deepEqual(request,{model:'test-model',input:[{role:'user',content:'Hello'}],store:false,stream:true,instructions:'Be helpful.'});
+  assert.deepEqual(request,{model:'test-model',input:[{role:'user',content:'Hello'}],store:false,stream:true,include:['reasoning.encrypted_content'],instructions:'Be helpful.'});
 });
 test('leading DSH system prompt maps to instructions, never system items',()=>{
   const request=buildRequest(options({messages:[{role:'system',content:[{type:'text',text:'S'}]},{role:'developer',content:[{type:'text',text:'D'}]},{role:'user',content:[{type:'text',text:'U'}]}]}));
@@ -73,5 +73,5 @@ test('DeepSeek to GPT preserves text and tools while excluding provider-private 
 });
 test('GPT model switches validate replay before projecting answers and tools',()=>{
  const output=[reasonItem(),textItem('answer'),toolItem()];const chunks=new ResponseStream({model:'old-model',toolNames:['read_file']}).accept(complete(output));const message={role:'assistant',source:{provider:'openai-chatgpt-plan',replayState:chunks.at(-1).replayState},content:chunks.filter(x=>x.type==='block-end').map(x=>x.block)};
- const request=buildRequest(options({messages:[message]}));assert.equal(request.input.length,2);assert.equal(request.input[0].content[0].text,'answer');assert.equal(request.input[1].call_id,'call_1');assert.equal(JSON.stringify(request).includes('encrypted_content'),false);message.content[1].text='modified';assert.throws(()=>buildRequest(options({messages:[message]})),{code:'PROTOCOL_ERROR'});
+ const request=buildRequest(options({messages:[message]}));assert.equal(request.input.length,2);assert.equal(request.input[0].content[0].text,'answer');assert.equal(request.input[1].call_id,'call_1');assert.equal(JSON.stringify(request.input).includes('encrypted_content'),false);assert.equal(JSON.stringify(request.input).includes(reasonItem().encrypted_content),false);message.content[1].text='modified';assert.throws(()=>buildRequest(options({messages:[message]})),{code:'PROTOCOL_ERROR'});
 });
