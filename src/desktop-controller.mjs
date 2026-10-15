@@ -1,4 +1,5 @@
 import {AuthError,LOGIN_TIMEOUT_MS} from './auth/index.mjs';
+import {formatAuthError} from './auth/errors.mjs';
 
 /** Account selection belongs to this plugin's protected store, never to another client. */
 export class DesktopAccountController {
@@ -43,7 +44,7 @@ export class DesktopAccountController {
         await this.store.transaction(state=>{if(this.disposed||controller.signal.aborted)throw new AuthError('cancelled');state.selectedAccountId=account.accountId;});
       }catch(error){
         const safe=error instanceof AuthError?error:new AuthError('invalid_response');
-        if(!controller.signal.aborted)this.lastError={code:safe.code,message:safe.code==='expired_attempt'?'授权等待已超时，本机回调已关闭。请重新发起授权，不要刷新旧回调页面。':safe.message};
+        if(!controller.signal.aborted)this.lastError={code:safe.code,...safe.stage?{stage:safe.stage}:{},...safe.status?{status:safe.status}:{},message:safe.code==='expired_attempt'?'授权等待已超时，本机回调已关闭。请重新发起授权，不要刷新旧回调页面。':formatAuthError(safe)};
         rejectUrl(safe);
       }finally{if(this.pending===pending)this.pending=null;this.onChange();}
     })();

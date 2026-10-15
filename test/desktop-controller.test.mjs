@@ -27,6 +27,12 @@ test('desktop OAuth failures report a safe error and permit a new attempt',async
   const f=fixture();await f.controller.beginLogin();const task=f.controller.pending.task;f.reject(new Error('FAKE_SECRET_MUST_NOT_LEAK'));await task;
   assert.doesNotMatch(JSON.stringify(await f.controller.status()),/FAKE_SECRET/);assert.equal((await f.controller.status()).phase,'attention');await f.controller.beginLogin();assert.equal(f.loginCalls(),2);await f.controller.cancelLogin();
 });
+
+test('desktop status retains safe failure stage and HTTP status for troubleshooting',async()=>{
+  const f=fixture();await f.controller.beginLogin();const task=f.controller.pending.task;
+  f.reject(new AuthError('http_error',{status:403,stage:'discovery'}));await task;
+  const status=await f.controller.status();assert.equal(status.error.stage,'discovery');assert.equal(status.error.status,403);assert.match(status.error.message,/HTTP 403/);assert.match(status.error.message,/proxy/);
+});
 test('desktop multiple accounts require an explicit selection and reject unknown IDs',async()=>{
   const f=fixture([{accountId:A,signedIn:true,planUsageEnabled:true},{accountId:B,signedIn:true,planUsageEnabled:true}]);await assert.rejects(()=>f.controller.selectedAccount(),error=>error.code==='account_mismatch');
   await f.controller.selectAccount(A);assert.equal(await f.controller.selectedAccount(),A);await assert.rejects(()=>f.controller.selectAccount('c'.repeat(43)),error=>error.code==='invalid_options');

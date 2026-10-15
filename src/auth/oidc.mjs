@@ -62,17 +62,20 @@ export function createOfficialTransport(fetchImpl) {
         await response.body?.cancel();
         return {};
       }
-      const data = await readJson(response);
+      let data;
+      try { data = await readJson(response); }
+      catch (error) { if (response.status !== 200) throw new AuthError('http_error', {status:response.status}); throw error; }
       if (response.status !== 200) {
         const code = typeof data.error === 'string' ? data.error : data.error?.code;
         // Exact machine codes only; never retain provider text, raw bodies, or causes.
-        const error = new AuthError(isTerminalRefresh(code) ? 'invalid_grant' : code === 'invalid_client' ? 'invalid_client' : 'invalid_response', { status: response.status });
+        const error = new AuthError(isTerminalRefresh(code) ? 'invalid_grant' : code === 'invalid_client' ? 'invalid_client' : 'http_error', { status: response.status });
         throw error;
       }
       return data;
     } catch (error) {
-      if (signal?.aborted) throw new AuthError('cancelled');
-      throw error instanceof AuthError ? error : new AuthError('network_error');
+      const stage=url===ENDPOINTS.discovery?'discovery':url===ENDPOINTS.jwks?'jwks':url===ENDPOINTS.token?'token':'revocation';
+      if (signal?.aborted) throw new AuthError('cancelled',{stage});
+      throw new AuthError(error instanceof AuthError?error.code:'network_error',{status:error instanceof AuthError?error.status:undefined,stage});
     }
   };
 }
@@ -133,7 +136,7 @@ export function createOidcValidator({ request, now }) {
         || (subject !== undefined && claims.sub !== subject)) throw new AuthError('invalid_id_token');
       return { issuer: claims.iss, subject: claims.sub, email: typeof claims.email === 'string' && claims.email.length <= 320 ? claims.email : null };
     } catch (error) {
-      if (error instanceof AuthError && ['cancelled', 'network_error', 'invalid_discovery'].includes(error.code)) throw error;
+      if (error instanceof AuthError && ['cancelled', 'network_error', 'http_error', 'invalid_discovery'].includes(error.code)) throw error;
       throw new AuthError('invalid_id_token');
     }
   }

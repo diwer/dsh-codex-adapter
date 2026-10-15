@@ -2,6 +2,13 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## v0.1.4
+
+- 修复授权回调后的网络请求忽略代理环境变量，导致身份校验或令牌交换失败的问题。
+- 支持 HTTP(S)_PROXY、NO_PROXY 和 HTTP(S) 类型的 ALL_PROXY；桌面无环境变量时可配置 proxyUrl。
+- 保留系统与 Node 证书信任和 TLS 校验，代理连接与目标连接均验证证书。
+- 登录失败页与设置页显示安全的错误码、失败阶段和 HTTP 状态，便于定位；不显示授权码、令牌或服务原始响应。
+
 ## v0.1.3
 
 - 插件启用后在窗口右下角展示「大肥鱼指挥 Codex」头像，停用时自动移除。

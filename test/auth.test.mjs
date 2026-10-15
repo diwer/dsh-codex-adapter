@@ -122,6 +122,25 @@ test('access_denied callback validates state and never exchanges', async () => {
   assert.equal(f.calls.length, 0);
 });
 
+for(const [endpoint,stage] of [[URLS.discovery,'discovery'],[URLS.token,'token'],[URLS.jwks,'jwks']])test(`blocked ${stage} reports safe HTTP status and stage without saving credentials`,async()=>{
+  const f=fixture({fetchOverride:async url=>url===endpoint?new Response('<html>DO-NOT-LEAK-SECRET fake-code</html>',{status:403,headers:{'content-type':'text/html'}}):undefined});
+  await assert.rejects(signedIn(f),error=>{codeIs('http_error')(error);assert.equal(error.status,403);assert.equal(error.stage,stage);return true;});
+  assert.deepEqual(await f.auth.accounts(),[]);
+});
+
+test('loopback failure page identifies blocked discovery without leaking callback secrets',async()=>{
+  const f=fixture({fetchOverride:async url=>url===URLS.discovery?new Response('DO-NOT-LEAK-SECRET',{status:403}):undefined});
+  let callbackResponse;
+  await assert.rejects(f.auth.login({onAuthorize:async value=>{
+    const authorize=new URL(value);const callback=new URL(authorize.searchParams.get('redirect_uri'));
+    callback.search=new URLSearchParams({state:authorize.searchParams.get('state'),code:'fake-code',client_id:'oaiapp_fake'}).toString();
+    callbackResponse=fetch(callback).then(async response=>{assert.equal(response.status,400);return response.text();});
+  }}),codeIs('http_error'));
+  const page=await callbackResponse;
+  assert.match(page,/http_error; discovery; HTTP 403/);assert.match(page,/proxy settings/);
+  assert.doesNotMatch(page,/DO-NOT-LEAK|fake-code|oaiapp_fake|state=/);
+});
+
 for (const [name, options] of [
   ['nonce', { claims: { nonce: 'wrong-nonce' } }],
   ['audience', { claims: { aud: 'oaiapp_other' } }],

@@ -1,10 +1,25 @@
 import {getCACertificates} from 'node:tls';
-import {Agent,fetch} from 'undici';
+import {EnvHttpProxyAgent,fetch} from 'undici';
+import {AuthError} from './auth/errors.mjs';
 
 /** Per-plugin TLS trust: Node roots plus OS-trusted certificates; no global dispatcher changes. */
-export function createDesktopFetch({getCertificates=getCACertificates,AgentClass=Agent,fetchImpl=fetch}={}){
+export function createDesktopFetch({proxyUrl='',getCertificates=getCACertificates,AgentClass=EnvHttpProxyAgent,fetchImpl=fetch}={}){
+  if(typeof proxyUrl!=='string')throw new AuthError('invalid_options');
+  if(proxyUrl){
+    try{const proxy=new URL(proxyUrl);if(!['http:','https:'].includes(proxy.protocol)||!proxy.hostname||proxy.pathname!=='/'||proxy.search||proxy.hash)throw new Error();}
+    catch{throw new AuthError('invalid_options');}
+  }
   const ca=[...new Set([...getCertificates('default'),...getCertificates('system')])];
-  const dispatcher=new AgentClass({connect:{ca,rejectUnauthorized:true}});
+  const tls={ca,rejectUnauthorized:true};
+  // Explicit configuration supports GUI launches without proxy environment variables.
+  // EnvHttpProxyAgent retains HTTP(S)_PROXY / NO_PROXY semantics, including lowercase.
+  const allProxy=process.env.all_proxy??process.env.ALL_PROXY;
+  const fallback=/^https?:\/\//i.test(allProxy??'')?allProxy:undefined;
+  const dispatcher=new AgentClass({connect:tls,requestTls:tls,proxyTls:tls,
+    ...(proxyUrl?{httpProxy:proxyUrl,httpsProxy:proxyUrl,noProxy:''}:{
+      httpProxy:process.env.http_proxy??process.env.HTTP_PROXY??fallback,
+      httpsProxy:process.env.https_proxy??process.env.HTTPS_PROXY??process.env.http_proxy??process.env.HTTP_PROXY??fallback,
+    })});
   let closed=false;
   return {
     async fetch(url,init={}){

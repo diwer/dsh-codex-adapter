@@ -14,6 +14,7 @@ export const name='dsh-codex-official-adapter';
 export const inject=['llm','connection'];
 export const Config=Schema.object({
   credentialDirectory:Schema.string().default(path.join(homedir(),'.dsh','plugin-data',name,'auth')),
+  proxyUrl:Schema.string().default('').description('可选 HTTP(S) 代理地址，例如 http://127.0.0.1:7890；留空读取 HTTP(S)_PROXY / NO_PROXY 环境变量。'),
   authorizationTimeoutMs:Schema.number().step(1).min(60000).max(3600000).default(1800000),
   requestTimeoutMs:Schema.number().step(1).min(1).default(300000),
   maxEventBytes:Schema.number().step(1).min(1).default(8388608),
@@ -25,7 +26,7 @@ export const Config=Schema.object({
 /** Mounted in the desktop Profile with the desktop's authenticated Connection fence. */
 export function apply(ctx,config){
   const store=new FileCredentialStore({directory:config.credentialDirectory});
-  const transport=createDesktopFetch();
+  const transport=createDesktopFetch({proxyUrl:config.proxyUrl});
   const auth=createAuthClient({store,fetchImpl:transport.fetch,authorizationTimeoutMs:config.authorizationTimeoutMs});
   const controller=new DesktopAccountController({auth,store,onChange:()=>ctx.emit('llm/adapters-updated')});
   const adapter=new ChatGPTPlanAdapter({...config,session:controller,fetchImpl:transport.fetch,attachments:()=>ctx.get('attachments')});

@@ -1,6 +1,7 @@
 const MESSAGES = Object.freeze({
   cancelled: 'Authentication was cancelled.',
   network_error: 'The authentication service could not be reached. Try again.',
+  http_error: 'The authentication service returned an HTTP error. Check your network and proxy settings, then sign in again.',
   invalid_response: 'The authentication service returned an invalid response.',
   invalid_discovery: 'The authentication service configuration was not accepted.',
   invalid_id_token: 'The ID token could not be verified. Sign in again.',
@@ -25,12 +26,18 @@ const MESSAGES = Object.freeze({
 
 /** Intentionally excludes provider response bodies, tokens, URLs, and native causes. */
 export class AuthError extends Error {
-  constructor(code, { status } = {}) {
+  constructor(code, { status, stage } = {}) {
     super(MESSAGES[code] ?? MESSAGES.invalid_response);
     this.name = 'AuthError';
     this.code = Object.hasOwn(MESSAGES, code) ? code : 'invalid_response';
     if (Number.isInteger(status) && status >= 100 && status <= 599) this.status = status;
+    if (['discovery','token','jwks','revocation'].includes(stage)) this.stage = stage;
   }
+}
+
+export function formatAuthError(error) {
+  const safe=safeError(error);
+  return `${safe.message} (${[safe.code,safe.stage,safe.status?`HTTP ${safe.status}`:null].filter(Boolean).join('; ')})`;
 }
 
 export function safeError(error, fallback = 'invalid_response') {

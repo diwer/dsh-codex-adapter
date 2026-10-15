@@ -1,7 +1,7 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { createServer } from 'node:http';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { AuthError, safeError } from './errors.mjs';
+import { AuthError, safeError, formatAuthError } from './errors.mjs';
 import { createOfficialTransport, createOidcValidator, ENDPOINTS, equalSecret } from './oidc.mjs';
 export { AuthError } from './errors.mjs';
 export { MemoryCredentialStore, FileCredentialStore } from './store.mjs';
@@ -240,7 +240,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
         res.end('Sign-in complete. You can close this window.');
         end({ account });
       } catch (error) {
-        res.writeHead(400); res.end('Sign-in failed. Return to the application and try again.');
+        res.writeHead(400); res.end(`Sign-in failed. ${formatAuthError(error)}\nReturn to the application and start a new sign-in. Do not refresh this callback page.`);
         if (error.code === 'invalid_grant' && codeRestarts++ === 0 && !signal?.aborted) {
           try {
             attempt = await attempt.restart();
