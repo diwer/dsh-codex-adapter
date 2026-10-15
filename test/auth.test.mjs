@@ -4,6 +4,7 @@ import { generateKeyPairSync, sign } from 'node:crypto';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
+import { runInNewContext } from 'node:vm';
 import { createAuthClient, MemoryCredentialStore, FileCredentialStore, AuthError, REQUESTED_SCOPES } from '../src/auth/index.mjs';
 
 const { privateKey, publicKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
@@ -131,14 +132,14 @@ for(const [endpoint,stage] of [[URLS.discovery,'discovery'],[URLS.token,'token']
 test('loopback failure page identifies blocked discovery without leaking callback secrets',async()=>{
   const f=fixture({fetchOverride:async url=>url===URLS.discovery?new Response('DO-NOT-LEAK-SECRET',{status:403}):undefined});
   let callbackResponse;
-  await assert.rejects(f.auth.login({onAuthorize:async value=>{
+  await assert.rejects(f.auth.login({returnToHarness:true,onAuthorize:async value=>{
     const authorize=new URL(value);const callback=new URL(authorize.searchParams.get('redirect_uri'));
     callback.search=new URLSearchParams({state:authorize.searchParams.get('state'),code:'fake-code',client_id:'oaiapp_fake'}).toString();
     callbackResponse=fetch(callback).then(async response=>{assert.equal(response.status,400);return response.text();});
   }}),codeIs('http_error'));
   const page=await callbackResponse;
   assert.match(page,/http_error; discovery; HTTP 403/);assert.match(page,/proxy settings/);
-  assert.doesNotMatch(page,/DO-NOT-LEAK|fake-code|oaiapp_fake|state=/);
+  assert.doesNotMatch(page,/DO-NOT-LEAK|fake-code|oaiapp_fake|state=|dsh:\/\/|<script/);
 });
 
 test('loopback diagnostics prove listener startup, callback receipt, HTTP progress and exact rejected token field',async()=>{
@@ -302,6 +303,68 @@ test('loopback login emits only authorize URL and closes listener after callback
   assert.equal(account.signedIn, true);
   assert.doesNotMatch(emitted.href, /id_token_hint|fake-refresh|fake-access/);
   await assert.rejects(fetch(emitted.searchParams.get('redirect_uri')));
+});
+
+test('desktop callback opens Harness only after saving credentials, with a manual fallback and no secrets', async () => {
+  const f = fixture();
+  let callbackResponse;
+  let redirectUri;
+  let authorizationNonce;
+  let authorizationState;
+  const account = await f.auth.login({ returnToHarness: true, onAuthorize: value => {
+    const authorize = new URL(value);
+    authorizationNonce = authorize.searchParams.get('nonce');
+    authorizationState = authorize.searchParams.get('state');
+    f.setNonce(authorizationNonce);
+    redirectUri = authorize.searchParams.get('redirect_uri');
+    const callback = new URL(redirectUri);
+    callback.search = new URLSearchParams({ state: authorize.searchParams.get('state'), code: 'fake-code', client_id: 'oaiapp_fake' }).toString();
+    callbackResponse = fetch(callback).then(async response => ({ response, page: await response.text(), accounts: await f.auth.accounts() }));
+  } });
+  const { response, page, accounts } = await callbackResponse;
+  assert.equal(account.signedIn, true);
+  assert.equal(accounts[0].accountId, account.accountId);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'text/html; charset=utf-8');
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+  assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+  assert.match(page, /<a href="dsh:\/\/open">打开 DeepSeek Harness<\/a>/);
+  assert.doesNotMatch(page, /fake-access|fake-refresh|fake-code|fake-subject|fake@example|oaiapp_fake|state=/);
+  assert.equal(page.includes(authorizationNonce), false);
+  assert.equal(page.includes(authorizationState), false);
+  const [, nonce, script] = page.match(/<script nonce="([A-Za-z0-9_-]+)">([\s\S]*?)<\/script>/);
+  const policy = response.headers.get('content-security-policy');
+  assert.ok(policy.includes(`script-src 'nonce-${nonce}'`));
+  assert.match(policy, /default-src 'none'/);
+  assert.match(policy, /frame-ancestors 'none'/);
+  const navigation = [];
+  runInNewContext(script, {
+    history: { replaceState: (...args) => navigation.push(['clean', ...args]) },
+    window: { location: { replace: value => navigation.push(['open', value]) } },
+  });
+  assert.deepEqual(navigation, [['clean', null, '', '/auth/callback'], ['open', 'dsh://open']]);
+  await assert.rejects(fetch(redirectUri));
+});
+
+test('desktop invalid-state callback cannot open Harness or save credentials', async () => {
+  const f = fixture();
+  let callbackResponse;
+  await assert.rejects(f.auth.login({ returnToHarness: true, onAuthorize: value => {
+    const callback = new URL(new URL(value).searchParams.get('redirect_uri'));
+    callback.search = new URLSearchParams({ state: 'wrong', code: 'fake-code', client_id: 'oaiapp_fake' }).toString();
+    callbackResponse = fetch(callback).then(async response => ({ status: response.status, page: await response.text() }));
+  } }), codeIs('invalid_state'));
+  const { status, page } = await callbackResponse;
+  assert.equal(status, 400);
+  assert.doesNotMatch(page, /dsh:\/\/|<script|fake-code/);
+  assert.deepEqual(await f.auth.accounts(), []);
+  assert.equal(f.calls.length, 0);
+});
+
+test('login return destination cannot be supplied as an arbitrary URL', async () => {
+  const f = fixture();
+  await assert.rejects(f.auth.login({ returnToHarness: 'https://untrusted.invalid', onAuthorize() { assert.fail('must not start'); } }), codeIs('invalid_options'));
 });
 
 test('already-aborted signals never start login or expose a token', async () => {

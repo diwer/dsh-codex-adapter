@@ -5,7 +5,8 @@ import {MemoryCredentialStore,AuthError} from '../src/auth/index.mjs';
 const A='a'.repeat(43),B='b'.repeat(43);
 function fixture(accounts=[]){
   const store=new MemoryCredentialStore();let finish,reject,loginCalls=0,changes=0;
-  const auth={accounts:async()=>accounts,session:id=>({accessToken:async()=>{assert.equal(id,A);return 'FAKE_ACCESS_TOKEN';},logout:async()=>{accounts.find(x=>x.accountId===id).signedIn=false;return {remoteRevoked:true};}}),login:async({signal,onAuthorize})=>{
+  const auth={accounts:async()=>accounts,session:id=>({accessToken:async()=>{assert.equal(id,A);return 'FAKE_ACCESS_TOKEN';},logout:async()=>{accounts.find(x=>x.accountId===id).signedIn=false;return {remoteRevoked:true};}}),login:async({signal,onAuthorize,returnToHarness})=>{
+    assert.equal(returnToHarness,true);
     loginCalls++;await onAuthorize('https://auth.openai.com/api/accounts/authorize?state=fake'+loginCalls,{expiresAt:Date.now()+600000});
     return new Promise((resolve,fail)=>{finish=account=>{accounts.push(account);resolve(account);};reject=fail;signal.addEventListener('abort',()=>fail(new AuthError('cancelled')),{once:true});if(signal.aborted)fail(new AuthError('cancelled'));});
   }};

@@ -34,7 +34,7 @@ export class DesktopAccountController {
     const pending={controller,url,task:null,expiresAt:Date.now()+LOGIN_TIMEOUT_MS};this.pending=pending;
     pending.task=(async()=>{
       try{
-        const account=await this.auth.login({signal:controller.signal,onAuthorize:(value,metadata)=>{
+        const account=await this.auth.login({signal:controller.signal,returnToHarness:true,onAuthorize:(value,metadata)=>{
           const parsed=new URL(value);if(parsed.origin!=='https://auth.openai.com'||parsed.pathname!=='/api/accounts/authorize')throw new AuthError('invalid_options');
           pending.activeUrl=value;
           if(Number.isFinite(metadata?.expiresAt))pending.expiresAt=metadata.expiresAt;

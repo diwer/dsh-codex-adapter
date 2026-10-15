@@ -34,3 +34,5 @@ Source was inspected read-only in a separate ignored reference directory. No ups
 ## Installed desktop target
 
 Desktop adaptation was inspected against `/Applications/DeepSeek Harness.app` 0.2.0-rc.2 and its shipped ASAR modules, not inferred from the newer pinned upstream revision above. The package’s LLM/Cordis/Schemastery peers match the shipped versions. `npm run test:desktop` resolves those modules from the actual application and executes with its Electron Node 24.18.1.
+
+The installed app's `Contents/Info.plist` registers the `dsh` URL scheme. Its `app.asar/lib/main.js` handles exactly `dsh://open` and `dsh://open/` by focusing the primary window; the desktop OAuth success page uses the former without parameters.

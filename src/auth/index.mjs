@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { AuthError, safeError, formatAuthError } from './errors.mjs';
 import { createOfficialTransport, createOidcValidator, ENDPOINTS, equalSecret } from './oidc.mjs';
+import { harnessSuccessPage } from './callback-page.mjs';
 export { AuthError } from './errors.mjs';
 export { MemoryCredentialStore, FileCredentialStore } from './store.mjs';
 
@@ -220,8 +221,8 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
     return Object.freeze({ accessToken, status, logout });
   }
 
-  async function login({ accountId, onAuthorize, signal, port = 0, promptConsent = false } = {}) {
-    if (typeof onAuthorize !== 'function' || !Number.isInteger(port) || port < 0 || port > 65535) throw new AuthError('invalid_options');
+  async function login({ accountId, onAuthorize, signal, port = 0, promptConsent = false, returnToHarness = false } = {}) {
+    if (typeof onAuthorize !== 'function' || !Number.isInteger(port) || port < 0 || port > 65535 || typeof returnToHarness !== 'boolean') throw new AuthError('invalid_options');
     if (signal?.aborted) throw new AuthError('cancelled');
     const flowController = new AbortController();
     signal = signal ? AbortSignal.any([signal, flowController.signal]) : flowController.signal;
@@ -240,6 +241,7 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       res.setHeader('content-type', 'text/plain; charset=utf-8');
       res.setHeader('cache-control', 'no-store');
       res.setHeader('referrer-policy', 'no-referrer');
+      res.setHeader('x-content-type-options', 'nosniff');
       res.setHeader('content-security-policy', "default-src 'none'; frame-ancestors 'none'");
       if (!attempt || settled || handlingCallback || req.method !== 'GET' || !req.url?.startsWith('/auth/callback?') || req.url.length > 16_384) { res.writeHead(404); res.end('Not found.'); return; }
       const redirectUri = `http://127.0.0.1:${server.address().port}/auth/callback`;
@@ -249,7 +251,12 @@ export function createAuthClient({ store, fetchImpl = globalThis.fetch, agentNam
       try {
         const account = await attempt.complete(`${new URL(redirectUri).origin}${req.url}`, { signal });
         log({event:'credentials_saved',stage:'credential_store'});
-        res.end('Sign-in complete. You can close this window.');
+        if (returnToHarness) {
+          const page = harnessSuccessPage();
+          res.setHeader('content-type', 'text/html; charset=utf-8');
+          res.setHeader('content-security-policy', page.contentSecurityPolicy);
+          res.end(page.html);
+        } else res.end('Sign-in complete. You can close this window.');
         end({ account });
       } catch (error) {
         res.writeHead(400); res.end(`Sign-in failed. ${formatAuthError(error)}\nReturn to the application and start a new sign-in. Do not refresh this callback page.`);
