@@ -1,47 +1,52 @@
 {
   "repository": "https://github.com/diwer/dsh-codex-adapter",
-  "commit": "3e9a48ff1d53154dd46c3ed22803a0a77066b901",
-  "checkedAt": "2026-10-15T10:02:38.039Z",
+  "commit": "2e9935ba8f7879961b1c4c38214cfc1aba629e7f",
+  "checkedAt": "2026-10-15T10:35:03.027069+00:00",
   "packageName": "dsh-codex-official-adapter",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "bundlePatch": "./cordis.patch.yml",
   "sourceContractValidated": true,
   "scope": "Published source file and bundle contract only; not runtime acceptance or third-party maintainer verification. Local uncommitted changes are not included.",
   "evidence": [
     {
       "path": "package.json",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/package.json",
-      "sha256": "19cda254e803079bfe3c7d9441df75daf6d034dd0fb0d9d0863d0f88ba4ef2be"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/package.json",
+      "sha256": "ccfa0bce540caeff0d82e90c1b160ad4bb047fb180fac979aa99cd5687fe6392"
     },
     {
       "path": "cordis.patch.yml",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/cordis.patch.yml",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/cordis.patch.yml",
       "sha256": "d265534f5f7b69baaaab905a6eedcf17559cfa27fcddc68c9c9134cbe769f24e"
     },
     {
       "path": "src/desktop-plugin.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/desktop-plugin.mjs",
-      "sha256": "7c71764151bddbfc470767976cd6d183307b94552c533812408459f9bf4bdfcd"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/desktop-plugin.mjs",
+      "sha256": "5c1a2aad9de0c2b476a91b770fecc57786b0a5ec39cf337146457bf998701d8f"
     },
     {
       "path": "src/adapter.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/adapter.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/adapter.mjs",
       "sha256": "75637f6a7462848c9a1a2e35703175f8c4cd84ef48792e950abe52342cb3fec7"
     },
     {
       "path": "src/model-capabilities.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/model-capabilities.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/model-capabilities.mjs",
       "sha256": "ebfd9c52bac0e53a336adfb295362d00729ffe68ab2876eaee1206a1b0c94fb2"
     },
     {
       "path": "src/auth/index.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/auth/index.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/auth/index.mjs",
       "sha256": "8259b1e497f6bd28bbc0a4268d2e0a63783d6f7c877593ab69559461bab4405b"
     },
     {
       "path": "lib/client.js",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/lib/client.js",
-      "sha256": "17216b2fdb5454a8e875eafbd74f11f79c9c3ccf125d62dec1d5107664803851"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/lib/client.js",
+      "sha256": "c2878bf904871d56dff071cf4b7033c047bd83ebcdce0da1aa241463fd020f33"
+    },
+    {
+      "path": "lib/assets/big-fish-codex.png",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/lib/assets/big-fish-codex.png",
+      "sha256": "c3055b0411a7b67769d2f72b5391db3d7c2803c74591fee12e618b6a9fd5dcd0"
     }
   ]
 }
