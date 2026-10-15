@@ -54,6 +54,35 @@ test('disconnected settings connects through the existing authenticated endpoint
     assert.deepEqual(call.body,{});assert.equal(call.init.credentials,'same-origin');assert.equal(call.init.cache,'no-store');
   }finally{ui.unmount();}
 });
+test('signed-out registration history does not duplicate the connected account',async()=>{
+  const status=ready();status.accounts.unshift({accountId:'old-registration',email:'demo@example.test',signedIn:false,planUsageEnabled:false});
+  const ui=await mount(status,{login:async()=>({url:'https://auth.openai.com/api/accounts/authorize?test=1'})});
+  try{
+    assert.equal((text(ui.tree).match(/demo@example.test/g)||[]).length,1);
+    assert.doesNotMatch(text(ui.tree),/已退出/);
+    assert.equal(nodes(ui.tree,node=>node.type==='button'&&text(node)==='退出').length,1);
+    await ui.click(button(ui,'添加账户'));
+    assert.deepEqual(ui.calls.find(call=>call.action==='login').body,{newAccount:true});
+  }finally{ui.unmount();}
+});
+test('signed-out settings show a clean connection state and allow a different account',async()=>{
+  const status={phase:'not-signed-in',accounts:[{accountId:'old',email:'old@example.test',signedIn:false,planUsageEnabled:false}]};
+  const ui=await mount(status,{login:async()=>({url:'https://auth.openai.com/api/accounts/authorize?test=1'})});
+  try{
+    assert.doesNotMatch(text(ui.tree),/old@example.test|已退出/);
+    assert.match(text(ui.tree),/连接账户，即可开始/);
+    await ui.click(button(ui,'连接 ChatGPT'));assert.deepEqual(ui.calls.find(call=>call.action==='login').body,{});
+    await ui.click(button(ui,'使用其他账户'));assert.deepEqual(ui.calls.filter(call=>call.action==='login').at(-1).body,{newAccount:true});
+  }finally{ui.unmount();}
+});
+test('distinct signed-in registrations sharing an email remain separate accounts',async()=>{
+  const status=ready();status.accounts.push({accountId:'b',email:'demo@example.test',signedIn:true,planUsageEnabled:true});
+  const ui=await mount(status);
+  try{
+    assert.equal((text(ui.tree).match(/demo@example.test/g)||[]).length,2);
+    assert.ok(button(ui,'切换账户'));
+  }finally{ui.unmount();}
+});
 test('default GPT preference is an accessible switch and keeps the preference contract',async()=>{
   const status=ready();const ui=await mount(status,{preferences:async({enabled})=>{status.defaultGptEnabled=enabled;return {};}});
   try{

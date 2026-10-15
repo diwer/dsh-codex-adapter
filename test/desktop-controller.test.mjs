@@ -4,14 +4,15 @@ import {DesktopAccountController} from '../src/desktop-controller.mjs';
 import {MemoryCredentialStore,AuthError} from '../src/auth/index.mjs';
 const A='a'.repeat(43),B='b'.repeat(43);
 function fixture(accounts=[]){
-  const store=new MemoryCredentialStore();let finish,reject,loginCalls=0,changes=0;
-  const auth={accounts:async()=>accounts,session:id=>({accessToken:async()=>{assert.equal(id,A);return 'FAKE_ACCESS_TOKEN';},logout:async()=>{accounts.find(x=>x.accountId===id).signedIn=false;return {remoteRevoked:true};}}),login:async({signal,onAuthorize,returnToHarness})=>{
+  const store=new MemoryCredentialStore();let finish,reject,loginCalls=0,changes=0;const loginOptions=[];
+  const auth={accounts:async()=>accounts,session:id=>({accessToken:async()=>{assert.equal(id,A);return 'FAKE_ACCESS_TOKEN';},logout:async()=>{accounts.find(x=>x.accountId===id).signedIn=false;return {remoteRevoked:true};}}),login:async({signal,onAuthorize,returnToHarness,accountId})=>{
     assert.equal(returnToHarness,true);
+    loginOptions.push({accountId});
     loginCalls++;await onAuthorize('https://auth.openai.com/api/accounts/authorize?state=fake'+loginCalls,{expiresAt:Date.now()+600000});
-    return new Promise((resolve,fail)=>{finish=account=>{accounts.push(account);resolve(account);};reject=fail;signal.addEventListener('abort',()=>fail(new AuthError('cancelled')),{once:true});if(signal.aborted)fail(new AuthError('cancelled'));});
+    return new Promise((resolve,fail)=>{finish=account=>{const existing=accounts.findIndex(value=>value.accountId===account.accountId);if(existing===-1)accounts.push(account);else accounts[existing]=account;resolve(account);};reject=fail;signal.addEventListener('abort',()=>fail(new AuthError('cancelled')),{once:true});if(signal.aborted)fail(new AuthError('cancelled'));});
   }};
   const controller=new DesktopAccountController({auth,store,onChange:()=>changes++});
-  return {controller,store,finish:account=>finish(account),reject:error=>reject(error),loginCalls:()=>loginCalls,changes:()=>changes};
+  return {controller,store,loginOptions,finish:account=>finish(account),reject:error=>reject(error),loginCalls:()=>loginCalls,changes:()=>changes};
 }
 test('desktop unauthenticated account selection fails explicitly and never falls back',async()=>{
   const f=fixture();assert.equal((await f.controller.status()).phase,'not-signed-in');await assert.rejects(()=>f.controller.accessToken(),error=>error.code==='not_signed_in');
@@ -50,4 +51,46 @@ test('desktop expired authorization clears its link and explains callback closur
 test('desktop explicit restart cancels the old attempt and provides a new URL',async()=>{
   const f=fixture();const first=await f.controller.beginLogin();const old=f.controller.pending;const second=await f.controller.restartLogin();
   assert.equal(old.controller.signal.aborted,true);assert.notEqual(first.url,second.url);assert.equal(f.loginCalls(),2);assert.equal((await f.controller.status()).authorizationUrl,second.url);await f.controller.dispose();
+});
+
+test('logout and reconnect reuse the selected registration without adding an account',async()=>{
+  const f=fixture([{accountId:A,email:'same@example.test',signedIn:true,planUsageEnabled:true}]);
+  await f.controller.selectAccount(A);
+  for(let attempt=0;attempt<2;attempt++){
+    await f.controller.logout(A);
+    await f.controller.beginLogin();
+    assert.equal(f.loginOptions.at(-1).accountId,A);
+    const task=f.controller.pending.task;
+    f.finish({accountId:A,email:'same@example.test',signedIn:true,planUsageEnabled:true});await task;
+    const status=await f.controller.status();
+    assert.equal(status.accounts.length,1);assert.equal(status.selectedAccountId,A);assert.equal(status.phase,'ready');
+  }
+});
+
+test('reconnect chooses the selected registration among old signed-out records',async()=>{
+  const f=fixture([{accountId:A,signedIn:false},{accountId:B,signedIn:false}]);
+  await f.store.transaction(state=>{state.selectedAccountId=B;});
+  await f.controller.beginLogin();assert.equal(f.loginOptions[0].accountId,B);await f.controller.cancelLogin();
+});
+
+test('a sole saved registration can reconnect without a saved selection',async()=>{
+  const f=fixture([{accountId:A,signedIn:false}]);
+  await f.controller.beginLogin();assert.equal(f.loginOptions[0].accountId,A);await f.controller.cancelLogin();
+});
+
+test('other-account login and its restart do not bind to the signed-out identity',async()=>{
+  const f=fixture([{accountId:A,signedIn:false}]);
+  await f.store.transaction(state=>{state.selectedAccountId=A;});
+  await f.controller.beginLogin({newAccount:true});
+  await f.controller.restartLogin();
+  assert.deepEqual(f.loginOptions,[{accountId:undefined},{accountId:undefined}]);
+  const task=f.controller.pending.task;f.finish({accountId:B,signedIn:true,planUsageEnabled:true});await task;
+  assert.equal((await f.controller.status()).selectedAccountId,B);
+});
+
+test('adding an account while connected never reuses the active identity',async()=>{
+  const f=fixture([{accountId:A,signedIn:true,planUsageEnabled:true}]);
+  await f.controller.selectAccount(A);await f.controller.beginLogin({newAccount:true});
+  assert.equal(f.loginOptions[0].accountId,undefined);await f.controller.cancelLogin();
+  await assert.rejects(f.controller.beginLogin({newAccount:'true'}),error=>error.code==='invalid_options');
 });

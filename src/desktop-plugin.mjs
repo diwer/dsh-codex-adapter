@@ -49,7 +49,7 @@ export function apply(ctx,config){
   const routes={
     status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,pluginVersion,diagnostics:diagnostics.status(),...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
     preferences:{method:'POST',run:body=>{if(!defaults)throw new AuthError('invalid_options');return defaults.setEnabled(body.enabled);}},
-    login:{method:'POST',run:()=>controller.beginLogin()},
+    login:{method:'POST',run:body=>controller.beginLogin(body)},
     restart:{method:'POST',run:()=>controller.restartLogin()},
     cancel:{method:'POST',run:()=>controller.cancelLogin()},
     select:{method:'POST',run:body=>controller.selectAccount(body.accountId)},
@@ -65,8 +65,8 @@ export function apply(ctx,config){
           if(request.headers.get('content-type')?.split(';')[0].trim()!=='application/json')return Response.json({error:{message:'请使用 JSON 请求。'}},{status:415,headers});
           const text=await request.text();if(text.length>4096)return Response.json({error:{message:'请求过大。'}},{status:413,headers});
           body=JSON.parse(text);if(!body||typeof body!=='object'||Array.isArray(body))throw new AuthError('invalid_options');
-          const allowed=action==='preferences'?['enabled']:['select','logout'].includes(action)?['accountId']:[];
-          if(Object.keys(body).some(key=>!allowed.includes(key))||(action==='preferences'&&typeof body.enabled!=='boolean'))throw new AuthError('invalid_options');
+          const allowed=action==='preferences'?['enabled']:action==='login'?['newAccount']:['select','logout'].includes(action)?['accountId']:[];
+          if(Object.keys(body).some(key=>!allowed.includes(key))||(action==='preferences'&&typeof body.enabled!=='boolean')||(action==='login'&&Object.hasOwn(body,'newAccount')&&typeof body.newAccount!=='boolean'))throw new AuthError('invalid_options');
         }
         return Response.json({value:await run(body)},{headers});
       }catch(error){

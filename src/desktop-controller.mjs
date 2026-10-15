@@ -24,17 +24,27 @@ export class DesktopAccountController {
     if(typeof accountId!=='string'||!await this.auth.accounts().then(accounts=>accounts.some(account=>account.accountId===accountId)))throw new AuthError('invalid_options');
     await this.store.transaction(state=>{state.selectedAccountId=accountId;});this.lastError=null;this.onChange();return this.status();
   }
-  async beginLogin(){
+  async reconnectAccount(){
+    const accounts=await this.auth.accounts();
+    if(accounts.some(account=>account.signedIn))return undefined;
+    const selected=await this.store.transaction(state=>state.selectedAccountId);
+    return accounts.find(account=>account.accountId===selected)?.accountId??(accounts.length===1?accounts[0].accountId:undefined);
+  }
+  async beginLogin({newAccount=false}={}){
+    if(typeof newAccount!=='boolean')throw new AuthError('invalid_options');
     if(this.disposed)throw new AuthError('cancelled');
     if(this.pending)return {url:this.pending.activeUrl??await this.pending.url};
     this.lastError=null;
     const controller=new AbortController();
     let resolveUrl,rejectUrl;
     const url=new Promise((resolve,reject)=>{resolveUrl=resolve;rejectUrl=reject;});
-    const pending={controller,url,task:null,expiresAt:Date.now()+LOGIN_TIMEOUT_MS};this.pending=pending;
+    const pending={controller,url,task:null,newAccount,expiresAt:Date.now()+LOGIN_TIMEOUT_MS};this.pending=pending;
     pending.task=(async()=>{
       try{
-        const account=await this.auth.login({signal:controller.signal,returnToHarness:true,onAuthorize:(value,metadata)=>{
+        // Reuse the saved registration on reconnect; other-account flows stay unbound.
+        const accountId=newAccount?undefined:await this.reconnectAccount();
+        if(this.disposed||controller.signal.aborted)throw new AuthError('cancelled');
+        const account=await this.auth.login({accountId,signal:controller.signal,returnToHarness:true,onAuthorize:(value,metadata)=>{
           const parsed=new URL(value);if(parsed.origin!=='https://auth.openai.com'||parsed.pathname!=='/api/accounts/authorize')throw new AuthError('invalid_options');
           pending.activeUrl=value;
           if(Number.isFinite(metadata?.expiresAt))pending.expiresAt=metadata.expiresAt;
@@ -51,7 +61,7 @@ export class DesktopAccountController {
     return {url:await url};
   }
   async cancelLogin(){const pending=this.pending;if(pending){pending.controller.abort();await pending.task;}return this.status();}
-  async restartLogin(){await this.cancelLogin();return this.beginLogin();}
+  async restartLogin(){const newAccount=this.pending?.newAccount??false;await this.cancelLogin();return this.beginLogin({newAccount});}
   async logout(accountId){await this.cancelLogin();const result=await this.auth.session(accountId).logout();this.lastError=null;this.onChange();return {remoteRevoked:result.remoteRevoked,...await this.status()};}
   async dispose(){this.disposed=true;const pending=this.pending;if(pending){pending.controller.abort();await pending.task;}}
 }
