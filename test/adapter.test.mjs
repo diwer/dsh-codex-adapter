@@ -207,3 +207,29 @@ test('cancellation during empty-stream retry wait prevents a second request',asy
  let calls=0;const controller=new AbortController();const adapter=new Adapter({session:{accessToken:async()=> 'FAKE'},fetchImpl:async()=>{calls++;setTimeout(()=>controller.abort(),30);return response([]);}});
  await assert.rejects(()=>collect(adapter.stream(options({signal:controller.signal}))),{code:'ABORTED'});assert.equal(calls,1);
 });
+
+test('account reasoning metadata reaches model resolution and the exact selected request effort',async()=>{
+  const bodies=[];const adapter=new Adapter({session:{async accessToken(){return 'FAKE_ACCESS_TOKEN';}},fetchImpl:async(url,init)=>{
+    if(url.endsWith('/models'))return Response.json({models:[{slug:'test-model',display_name:'Test',visibility:'list',supported_reasoning_levels:[{effort:'low'},{effort:'high'},{effort:'max'},{effort:'ultra'}],default_reasoning_level:'low'}]});
+    bodies.push(JSON.parse(init.body));return response([complete()]);
+  }});
+  const model=await adapter.resolveModel(PROVIDER,'test-model');
+  assert.deepEqual(model.reasoning.efforts.map(e=>e.id),['low','high','max']);assert.equal(model.reasoning.defaultEffort,'low');
+  for(const effort of ['low','high','max'])await collect(adapter.stream(options({reasoningEffort:effort})));
+  assert.deepEqual(bodies.map(body=>body.reasoning.effort),['low','high','max']);
+  await assert.rejects(()=>collect(adapter.stream(options({reasoningEffort:'none'}))),{code:'UNSUPPORTED_CAPABILITY'});
+  assert.equal(bodies.length,3);
+});
+test('reasoning validation rechecks the current account instead of reusing another account catalog',async()=>{
+  let effort='high',inference=0;const adapter=new Adapter({session:{async accessToken(){return 'FAKE_ACCESS_TOKEN';}},fetchImpl:async url=>{
+    if(url.endsWith('/models'))return Response.json({models:[{slug:'test-model',display_name:'Test',visibility:'list',supported_reasoning_levels:[{effort}]}]});
+    inference++;return response([complete()]);
+  }});
+  await adapter.resolveModel(PROVIDER,'test-model');effort='low';
+  await assert.rejects(()=>collect(adapter.stream(options({reasoningEffort:'high'}))),{code:'UNSUPPORTED_CAPABILITY'});
+  assert.equal(inference,0);await collect(adapter.stream(options({reasoningEffort:'low'})));assert.equal(inference,1);
+});
+
+test('configured effort overrides cannot enable values rejected by Responses',()=>{
+  assert.throws(()=>new Adapter({session:{accessToken:async()=>'fake'},modelCapabilities:{model:{reasoningEfforts:['low','ultra']}}}),{code:'INVALID_CONFIG'});
+});

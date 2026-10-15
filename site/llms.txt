@@ -3,12 +3,12 @@
 > A community MIT plugin that adds ChatGPT subscription models to DeepSeek Harness desktop 0.2.0-rc.2, while keeping DeepSeek selectable.
 
 Canonical documentation: https://diwer.github.io/dsh-codex-adapter/
-Package: dsh-codex-official-adapter. Current usage release: 0.1.1. Not affiliated with OpenAI or DeepSeek. Model availability depends on the user's authorized account.
+Package: dsh-codex-official-adapter. Current usage release: 0.1.2. Not affiliated with OpenAI or DeepSeek. Model availability depends on the user's authorized account.
 
 ## Documentation
 
 - [Source repository](https://github.com/diwer/dsh-codex-adapter)
-- [Download release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.1)
+- [Download release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.2)
 - [Privacy and credentials](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md)
 - [Compatibility](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md)
 - [Installation and upgrade](https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md)

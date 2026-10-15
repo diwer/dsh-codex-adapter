@@ -5,18 +5,18 @@
 ## Project identity
 
 - Package: dsh-codex-official-adapter
-- Release: 0.1.1
+- Release: 0.1.2
 - Repository: https://github.com/diwer/dsh-codex-adapter
 - License: MIT
 - Supported host: DeepSeek Harness desktop 0.2.0-rc.2; macOS installation tested. Other versions and platforms require separate validation.
 
 ## Capabilities
 
-Uses Sign in with ChatGPT authorization and the Responses API. Account model availability is queried dynamically; no fixed list of models is guaranteed. DeepSeek and GPT remain selectable. New conversations may default to GPT through a setting that can be turned off. Models reporting image input support accept host-managed attachments. DSH executes tools; this provider adapts tool calls and tool results. Supports streaming, cancellation and replay metadata.
+Uses Sign in with ChatGPT authorization and the Responses API. Account model availability is queried dynamically; no fixed list of models is guaranteed. DeepSeek and GPT remain selectable. New conversations may default to GPT through a setting that can be turned off. Models reporting image input support accept host-managed attachments. DSH executes tools; this provider adapts tool calls and tool results. Supports streaming, cancellation, replay metadata and selectable reasoning effort from the account model catalog.
 
 ## Install
 
-Download https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.1/dsh-codex-official-adapter-0.1.1.tgz, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/dsh-codex-official-adapter-0.1.1.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.
+Download https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.2/dsh-codex-official-adapter-0.1.2.tgz, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/dsh-codex-official-adapter-0.1.2.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.
 
 ## Data and limits
 
@@ -28,12 +28,12 @@ Release v0.1.0: 172 offline tests, 88 protocol tests (part of the suite), 7 real
 
 ## Verified installation path
 
-Recommended: clone the repository, then run node scripts/install-release.mjs --dsh /path/to/target/desktop/cli/bin/dsh --profile desktop. The helper checks the pinned v0.1.0 SHA-256 before invoking the official CLI with a local archive and install scripts disabled. It does not delete lockfiles or disable integrity verification. Some desktop URL-install paths still fail with ERR_PNPM_MISSING_TARBALL_INTEGRITY; mirrors may serve a 0.0.0-stage placeholder without dsh.bundle. The remote URL path is not claimed fixed. See https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md.
+Install dsh-codex-official-adapter@0.1.2 from https://registry.npmjs.org/ using the target desktop plugin manager or official CLI. Alternatively run node scripts/install-release.mjs --dsh /path/to/desktop/cli/bin/dsh --profile desktop: it verifies the release SHA256SUMS before installing a local archive. Reasoning levels and defaults load from the selected account model catalog; choose a supported level in the native model menu. See https://github.com/diwer/dsh-codex-adapter/blob/main/docs/REASONING.md.
 
 ## Sources
 
 - Source repository: https://github.com/diwer/dsh-codex-adapter
-- Download release: https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.1
+- Download release: https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.2
 - Privacy and credentials: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md
 - Compatibility: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md
 - Installation and upgrade: https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md

@@ -18,12 +18,12 @@
       "url": "https://github.com/diwer/dsh-codex-adapter",
       "category": "model",
       "description": {
-        "en": "ChatGPT subscription models in DeepSeek Harness desktop, with image input, host tools and DeepSeek/GPT switching.",
-        "zh": "在 DeepSeek Harness 桌面版使用 ChatGPT 订阅模型，支持图片输入、宿主工具和 DeepSeek/GPT 切换。"
+        "en": "ChatGPT subscription models in Harness with adjustable reasoning effort, GPT/DeepSeek switching, images and host tools.",
+        "zh": "在 Harness 使用 ChatGPT 订阅模型，支持思考强度调节、GPT / DeepSeek 切换、图片输入与内置工具。"
       },
-      "version": "0.1.1",
-      "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.1/dsh-codex-official-adapter-0.1.1.tgz",
-      "install": "dsh plugin --profile desktop add https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.1/dsh-codex-official-adapter-0.1.1.tgz",
+      "version": "0.1.2",
+      "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.2/dsh-codex-official-adapter-0.1.2.tgz",
+      "install": "dsh plugin --profile desktop add https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.2/dsh-codex-official-adapter-0.1.2.tgz",
       "added": "2026-10-15",
       "dshPeers": {
         "@deepseek-ai/dsh-llm": "0.2.0-rc.2"

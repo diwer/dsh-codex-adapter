@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ChatGPT subscription model provider for DeepSeek Harness desktop, with image input and host tool calling. Community plugin; not affiliated with OpenAI or DeepSeek.",
   "type": "module",
   "private": false,
@@ -57,7 +57,8 @@
     "market/host-compatibility-2026-10-15.json",
     "docs/MARKET_RUNTIME_ACCEPTANCE.md",
     "docs/INSTALLATION.md",
-    "scripts/install-release.mjs"
+    "scripts/install-release.mjs",
+    "docs/REASONING.md"
   ],
   "dsh": {
     "bundle": {
@@ -73,8 +74,8 @@
     "catalog": {
       "category": "provider",
       "summary": {
-        "en": "ChatGPT subscription models in DeepSeek Harness desktop, with image input, host tools and DeepSeek/GPT switching.",
-        "zh": "在 DeepSeek Harness 桌面版使用 ChatGPT 订阅模型，支持图片输入、宿主工具和 DeepSeek/GPT 切换。"
+        "en": "ChatGPT subscription models in Harness with adjustable reasoning effort, GPT/DeepSeek switching, images and host tools.",
+        "zh": "在 Harness 使用 ChatGPT 订阅模型，支持思考强度调节、GPT / DeepSeek 切换、图片输入与内置工具。"
       },
       "capabilities": [
         "llm",

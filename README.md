@@ -8,43 +8,20 @@
 
 [已知市场逐项台账](docs/KNOWN_MARKETS.md) · [市场实装及 GPT 工具验收](docs/MARKET_RUNTIME_ACCEPTANCE.md)
 
-当前发行版本为 **v0.1.1**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 及镜像的实际可下载状态以安装验证为准；各市场收录独立推进。
+当前发行版本为 **v0.1.2**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 及镜像的实际可下载状态以安装验证为准；各市场收录独立推进。
 
 ## 安装与登录
 
-使用 npm 官方源安装修订版：`dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.1 --ignore-scripts --registry=https://registry.npmjs.org/`。桌面版请选择对应应用自带的 dsh CLI。若镜像仍返回占位包，请使用官方源；遇到远程包完整性问题时使用下述固定 v0.1.0 的兼容安装路径，其运行功能与 v0.1.1 相同。
+1. 在 **Plugins → Add plugin** 输入 `dsh-codex-official-adapter@0.1.2`，Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 Install。
+2. 等当前任务结束，完全退出并重开 Harness。
+3. 打开 **设置 → ChatGPT 订阅 → 连接 ChatGPT**，在 OpenAI 页面完成授权。
+4. 新建会话，在 **ChatGPT plan (Sign in with ChatGPT)** 下选择模型。
 
-推荐使用仓库内的校验安装脚本，避免远程压缩包解析缓存缺少 `integrity` 时反复安装失败：
+## 调节思考强度
 
-```sh
-git clone https://github.com/diwer/dsh-codex-adapter.git
-cd dsh-codex-adapter
-node scripts/install-release.mjs \
-  --dsh "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  --profile desktop
-```
+点击输入框右下角的模型按钮 → **推理等级**，选择当前模型支持的档位。默认值与可用选项自动读取账户模型目录，无需额外插件或手写配置。
 
-脚本下载固定 v0.1.0 Release，验证固定 SHA-256，再调用官方 CLI 安装本地压缩包；不删除锁文件、不关闭完整性检查，也不自动退出应用。测试版或其他安装位置需将 `--dsh` 改为对应应用自带 CLI，避免装入错误 Profile。需要 Node.js >=22.19。
-
-**已知问题：** 裸 npm 包名可能命中镜像中的 `0.0.0-stage` 占位包；GitHub Release URL 在部分宿主安装路径中报 `ERR_PNPM_MISSING_TARBALL_INTEGRITY`。此前“独立 CLI 安装成功”不代表这些 UI 路径已修复。处理步骤及当前验收范围见[安装故障与校验安装](docs/INSTALLATION.md)。
-
-本地包通过桌面版自带的 DSH 插件管理器安装，包声明匹配桌面版运行时的依赖，不需要版本豁免，不升级桌面应用。
-
-```sh
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add --ignore-scripts \
-  /absolute/path/to/dsh-codex-official-adapter-0.1.0.tgz
-```
-
-1. 在 Harness 的插件清单确认 `dsh-codex-official-adapter` 已启用。
-2. 打开“设置 → ChatGPT 订阅”，点击 **连接 ChatGPT**（已连接时显示“添加账户”）。
-3. 在浏览器中打开插件提供的授权链接。由本人完成 OpenAI 登录和权限审核，本机授权等待默认 30 分钟，页面显示剩余时间。
-4. 授权成功后页面显示“已连接”，点击“刷新模型”查看可用模型。
-5. 在新建会话的模型选择器中，选择 **ChatGPT plan (Sign in with ChatGPT)** 下的实际账户模型。
-
-等待时间可通过插件配置 `authorizationTimeoutMs` 设置，单位为毫秒，范围为 1–60 分钟；默认 `1800000`（30 分钟）。回调监听和本地 state 校验使用同一时限。OpenAI 自身的登录会话及授权码有效期由 OpenAI 管理。
-
-这个 Provider 不替换现有 DeepSeek 默认模型。未登录时返回空模型列表；对已选模型发起请求仍会明确报错，绝不自动改用其他 Provider 或付费 API。
+[思考强度使用说明](docs/REASONING.md) · [其他安装方式与排错](docs/INSTALLATION.md)
 
 ## 账户与安全
 

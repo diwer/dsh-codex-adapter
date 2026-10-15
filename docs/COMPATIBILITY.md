@@ -24,7 +24,7 @@ Desktop update on 2026-10-14: stage 2 passed against the desktop app’s actual 
 - Rejected: unsupported generation controls, undeclared/wrong-namespace tools, malformed JSON arguments, missing encrypted reasoning state, unsupported output kinds, incomplete/failed stream terminal events, ambiguous EOF.
 - DSH's non-native tool-history bookkeeping can remain after runtime projection; the adapter uses the complete projected declarations and does not transmit that bookkeeping.
 - The runtime preserves the account catalog input_modalities. Image-capable routes read normalized images through the mounted Harness attachment service and encode Responses input_image content. Offloaded images retain explicit text. Arbitrary file paths and remote URLs are not accepted as attachment inputs; non-image files keep the Harness text projection.
-- Context size and selectable reasoning metadata are opt-in per model. No guessed catalog capabilities are advertised.
+- Reasoning levels and defaults are read automatically from the selected account model catalog and filtered to the Responses API effort enum. Explicit reasoningEfforts configuration remains available as an override. Context size remains opt-in per model.
 - Subscription discovery retains the account-specific `models` / `slug` / `display_name` / `visibility` contract. A standard API `data` / `id` catalog is not used to infer subscription eligibility.
 - `maxEventBytes` bounds UTF-8 wire bytes between SSE blank dispatch lines, including field names, values, comments, unknown fields and their line endings. The blank dispatch delimiter is excluded; each new frame resets the budget.
 
