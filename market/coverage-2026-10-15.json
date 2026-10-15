@@ -264,7 +264,8 @@
       "assessment": "README 信号推断，未验证其当前索引或安装器",
       "listed": false,
       "installationTested": false,
-      "readmeSha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d"
+      "readmeSha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d",
+      "sourceNote": "Subpackage README verified separately to avoid repository-name filename collision."
     },
     {
       "name": "dsh-plugin-suite#dsh-plugin-updater",
@@ -277,7 +278,8 @@
       "assessment": "README 信号推断，未验证其当前索引或安装器",
       "listed": false,
       "installationTested": false,
-      "readmeSha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d"
+      "readmeSha256": "83378481fa03a953a7f8785f58df116d4f3a46cf436e3642373d3bdca3220b37",
+      "sourceNote": "Subpackage README verified separately to avoid repository-name filename collision."
     },
     {
       "name": "dsh-skills-marketplace",

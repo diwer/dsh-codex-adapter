@@ -6,9 +6,25 @@
 
 [使用文档](https://diwer.github.io/dsh-codex-adapter/) · [AI 可读说明 llms.txt](https://diwer.github.io/dsh-codex-adapter/llms.txt)
 
+[已知市场逐项台账](docs/KNOWN_MARKETS.md) · [市场实装及 GPT 工具验收](docs/MARKET_RUNTIME_ACCEPTANCE.md)
+
 当前使用版本为 **v0.1.0 Release**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 与各市场收录另行推进。
 
 ## 安装与登录
+
+推荐使用仓库内的校验安装脚本，避免远程压缩包解析缓存缺少 `integrity` 时反复安装失败：
+
+```sh
+git clone https://github.com/diwer/dsh-codex-adapter.git
+cd dsh-codex-adapter
+node scripts/install-release.mjs \
+  --dsh "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
+  --profile desktop
+```
+
+脚本下载固定 v0.1.0 Release，验证固定 SHA-256，再调用官方 CLI 安装本地压缩包；不删除锁文件、不关闭完整性检查，也不自动退出应用。测试版或其他安装位置需将 `--dsh` 改为对应应用自带 CLI，避免装入错误 Profile。需要 Node.js >=22.19。
+
+**已知问题：** 裸 npm 包名可能命中镜像中的 `0.0.0-stage` 占位包；GitHub Release URL 在部分宿主安装路径中报 `ERR_PNPM_MISSING_TARBALL_INTEGRITY`。此前“独立 CLI 安装成功”不代表这些 UI 路径已修复。处理步骤及当前验收范围见[安装故障与校验安装](docs/INSTALLATION.md)。
 
 本地包通过桌面版自带的 DSH 插件管理器安装，包声明匹配桌面版运行时的依赖，不需要版本豁免，不升级桌面应用。
 

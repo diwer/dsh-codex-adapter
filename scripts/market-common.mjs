@@ -3,7 +3,7 @@ import path from 'node:path';
 
 export const PUBLIC_ROOTS = ['src','lib','test','test-runtime','scripts','market','site','.github','examples',
   'package.json','package-lock.json','cordis.patch.yml','README.md','README.en.md','RELEASE_NOTES.md','LICENSE','.gitignore',
-  'docs/AUTH.md','docs/COMPATIBILITY.md','docs/SOURCES.md','docs/PRIVACY.md','docs/MARKET_PUBLISHING.md'];
+  'docs/AUTH.md','docs/COMPATIBILITY.md','docs/SOURCES.md','docs/PRIVACY.md','docs/MARKET_PUBLISHING.md','docs/KNOWN_MARKETS.md','docs/AI_SEARCH.md','docs/MARKET_RUNTIME_ACCEPTANCE.md','docs/INSTALLATION.md'];
 export const TOPICS = ['dsh-plugin','deepseek-harness','dsh','cordis-plugin','chatgpt','codex','llm-provider'];
 export function repositoryIdentity(value) {
   const match = /^https:\/\/github\.com\/([A-Za-z0-9](?:[A-Za-z0-9-]*))\/([A-Za-z0-9_.-]+?)(?:\.git)?\/?$/.exec(value ?? '');

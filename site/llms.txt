@@ -13,6 +13,7 @@ Package: dsh-codex-official-adapter. Current usage release: 0.1.0. Not affiliate
 - [Compatibility](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md)
 - [Installation and upgrade](https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md)
 - [Market coverage](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/MARKET_PUBLISHING.md)
+- [Verified installer and URL-install limitations](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md)
 - [Full plain-text documentation](https://diwer.github.io/dsh-codex-adapter/llms-full.txt)
 
 ## Boundaries

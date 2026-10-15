@@ -1,0 +1,24 @@
+{
+  "package": "dsh-codex-official-adapter",
+  "dsh": {
+    "catalog": {
+      "category": "provider",
+      "summary": {
+        "en": "ChatGPT subscription models in DeepSeek Harness desktop, with image input, host tools and DeepSeek/GPT switching.",
+        "zh": "在 DeepSeek Harness 桌面版使用 ChatGPT 订阅模型，支持图片输入、宿主工具和 DeepSeek/GPT 切换。"
+      },
+      "capabilities": [
+        "llm",
+        "connection",
+        "attachments",
+        "agentDefaultModel"
+      ]
+    },
+    "compatibility": {
+      "dsh": "0.2.0-rc.2",
+      "profiles": [
+        "desktop"
+      ]
+    }
+  }
+}
