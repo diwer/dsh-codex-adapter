@@ -5,7 +5,7 @@
 ## Project identity
 
 - Package: dsh-codex-official-adapter
-- Release: 0.1.0
+- Release: 0.1.1
 - Repository: https://github.com/diwer/dsh-codex-adapter
 - License: MIT
 - Supported host: DeepSeek Harness desktop 0.2.0-rc.2; macOS installation tested. Other versions and platforms require separate validation.
@@ -16,7 +16,7 @@ Uses Sign in with ChatGPT authorization and the Responses API. Account model ava
 
 ## Install
 
-Download https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.0/dsh-codex-official-adapter-0.1.0.tgz, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/dsh-codex-official-adapter-0.1.0.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.
+Download https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.1/dsh-codex-official-adapter-0.1.1.tgz, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/dsh-codex-official-adapter-0.1.1.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.
 
 ## Data and limits
 
@@ -33,7 +33,7 @@ Recommended: clone the repository, then run node scripts/install-release.mjs --d
 ## Sources
 
 - Source repository: https://github.com/diwer/dsh-codex-adapter
-- Download release: https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.0
+- Download release: https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.1
 - Privacy and credentials: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md
 - Compatibility: https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md
 - Installation and upgrade: https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md

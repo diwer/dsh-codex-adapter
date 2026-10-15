@@ -8,9 +8,11 @@
 
 [已知市场逐项台账](docs/KNOWN_MARKETS.md) · [市场实装及 GPT 工具验收](docs/MARKET_RUNTIME_ACCEPTANCE.md)
 
-当前使用版本为 **v0.1.0 Release**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 与各市场收录另行推进。
+当前发行版本为 **v0.1.1**，仅声明支持 DeepSeek Harness 桌面版 0.2.0-rc.2。安装包见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)，安装及升级说明见 [Release 说明](RELEASE_NOTES.md)。npm 及镜像的实际可下载状态以安装验证为准；各市场收录独立推进。
 
 ## 安装与登录
+
+使用 npm 官方源安装修订版：`dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.1 --ignore-scripts --registry=https://registry.npmjs.org/`。桌面版请选择对应应用自带的 dsh CLI。若镜像仍返回占位包，请使用官方源；遇到远程包完整性问题时使用下述固定 v0.1.0 的兼容安装路径，其运行功能与 v0.1.1 相同。
 
 推荐使用仓库内的校验安装脚本，避免远程压缩包解析缓存缺少 `integrity` 时反复安装失败：
 

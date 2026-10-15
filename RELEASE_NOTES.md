@@ -1,3 +1,13 @@
+# v0.1.1 安装与文档修订
+
+日期：2026-10-15。运行功能与 v0.1.0 相同；此次补充安装辅助脚本、安装故障说明、市场逐项台账和 AI 可读文档。兼容范围仍为桌面 0.2.0-rc.2。
+
+推荐明确版本并使用官方源：`dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.1 --ignore-scripts --registry=https://registry.npmjs.org/`。请使用目标应用自带 CLI。npm 发布不等于镜像同步、市场收录或用户界面验收。
+
+遇到远程 tgz 缺少 integrity 时，使用[校验安装说明](docs/INSTALLATION.md)。辅助脚本仍固定 v0.1.0 及其已发布 SHA-256；它是兼容路径，不声称安装 v0.1.1。保留原 Tag 和发行附件，不删除锁文件或关闭校验。
+
+---
+
 # v0.1.0 Release
 
 日期：2026-10-15。供 DeepSeek Harness 桌面版 **0.2.0-rc.2** 使用的发行版本。[源代码](https://github.com/diwer/dsh-codex-adapter) · [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。npm 发布与市场收录不计入本版发布结论。

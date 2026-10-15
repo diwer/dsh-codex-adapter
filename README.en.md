@@ -6,11 +6,13 @@ A community model provider for **DeepSeek Harness desktop 0.2.0-rc.2** using Sig
 
 ## Install
 
+For v0.1.1, use the target desktop official CLI: `dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.1 --ignore-scripts --registry=https://registry.npmjs.org/`. Mirrors may lag. The helper below remains pinned to the verified v0.1.0 archive as a compatibility fallback; v0.1.1 has the same runtime behavior.
+
 Recommended: clone this repository and run `node scripts/install-release.mjs --dsh "/path/to/the/target/desktop/runtime/cli/bin/dsh" --profile desktop` (Node >=22.19). The helper downloads the pinned v0.1.0 release, checks its pinned SHA-256, then passes a local archive to the official CLI with install scripts disabled. It does not delete lockfiles, bypass integrity checks, or restart the app.
 
 Some desktop URL installs fail with `ERR_PNPM_MISSING_TARBALL_INTEGRITY`; mirrors may still serve a `0.0.0-stage` placeholder without `dsh.bundle`. A successful isolated CLI test does not establish that the desktop URL installer works. See [installation troubleshooting](docs/INSTALLATION.md).
 
-The usage release is **v0.1.0**. Get the package from [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases) and see [release notes](RELEASE_NOTES.md). npm publication and marketplace listings are separate. A local package can also be generated with `npm run market:prepare`. Install the resulting `.tgz` through the desktop plugin manager, or:
+The current release is **v0.1.1**. Get the package from [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases) and see [release notes](RELEASE_NOTES.md). npm publication and marketplace listings are separate. A local package can also be generated with `npm run market:prepare`. Install the resulting `.tgz` through the desktop plugin manager, or:
 
 ```sh
 dsh plugin --profile desktop add ./dsh-codex-official-adapter-0.1.0.tgz

@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ChatGPT subscription model provider for DeepSeek Harness desktop, with image input and host tool calling. Community plugin; not affiliated with OpenAI or DeepSeek.",
   "type": "module",
   "private": false,
