@@ -2,7 +2,19 @@
 
 核对时间：2026-10-15，北京时间。投稿、上游合并和市场上线分别记录；没有把格式适配视为市场认证。
 
-## npm
+## v0.1.3 最新版本同步
+
+- [npm v0.1.3](https://www.npmjs.com/package/dsh-codex-official-adapter/v/0.1.3) 与 [GitHub Release v0.1.3](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.3) 均可下载，安装包 SHA-256 一致：`42c7b7ff85315a088de97b52113ab9fb15a2e21850c54fde8fd0b5bb0a3c7caa`。
+- 19 个运行文件与发布源码 `2e9935ba8f7879961b1c4c38214cfc1aba629e7f` 一致；固定源码市场材料已按该版本重新核验、生成。
+- 原有 6 个作者可维护 PR 均更新为 v0.1.3；6 个收录 Issue 的安装与发布说明已更新。未把待审更新视为已经上线。
+- ydhrdh 的安装目标已从旧源码切为 npm `dsh-codex-official-adapter@0.1.3`；awesome 更新 tarball；Radar 更新登记行；216 更新固定 commit。
+- dsh-plugins、cyber-moshen、1024 的记录没有独立版本字段，保持其仓库/npm 身份和 schema，通过源仓库或 npm latest 获取版本，不添加上游不支持的字段。1024 是否已刷新网页缓存尚未独立确认。
+- Ericwong 的原 Issue 编辑后，自动 intake 已刷新原 PR 的源码记录，未新建重复 PR。
+- dsh.pub 已合并记录只允许 `schemaVersion` 与 `repository`，不允许覆盖既有坐标；已在[原 PR 请求刷新](https://github.com/dsh-pub/dsh-pub/pull/137#issuecomment-6190135871)，待其同步，未声称该站已显示 v0.1.3。
+- dsh.so 按 npm v0.1.3 扫描与格式校验通过，但提交服务返回“尚未配置——请联系 dsh.so 维护者”，未取得新版成功回执；其公开投稿追踪仓库也返回 404。用户确认无替代入口，按异常渠道保留阻塞记录，不能视为更新完成。
+- 定时任务改为每次读取 npm latest 与真实 Release 后跟进当前版本，不固定旧版。
+
+## v0.1.2 历史发布核验
 
 - CLI 登录成功；npm 官方源 `dsh-codex-official-adapter@0.1.2` 可下载，未重复发布。
 - [npm v0.1.2](https://www.npmjs.com/package/dsh-codex-official-adapter/v/0.1.2) 与 [GitHub Release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.2) 的包 SHA-256 一致：`52a303182f481ad1f11f3735016d116485638062c9ad3f6b4bd9af4ce0e1ecc5`。
