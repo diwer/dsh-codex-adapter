@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/diwer/dsh-codex-adapter",
+  "tags": [
+    "ChatGPT",
+    "GPT",
+    "模型接入"
+  ],
+  "npm": "dsh-codex-official-adapter"
+}

@@ -1,3 +1,4 @@
+import {readFile} from 'node:fs/promises';
 import path from 'node:path';
 import {homedir} from 'node:os';
 import Schema from '@deepseek-ai/schemastery';
@@ -35,6 +36,10 @@ export function apply(ctx,config){
   ctx.llm.registerAdapter([PROVIDER],adapter);
   let defaults;
   ctx.inject(['agentDefaultModel'],child=>{defaults=new DesktopDefaultModel({store,service:child.agentDefaultModel,listModels:()=>adapter.listModels(PROVIDER)});const owned=defaults;void owned.initialize().catch(()=>{});child.effect(()=>()=>{if(defaults===owned)defaults=undefined;});});
+  // Package-owned artwork, served through the same authenticated host connection.
+  let icon;
+  const loadIcon=()=>icon??=readFile(new URL('../lib/assets/big-fish-codex.png',import.meta.url));
+  ctx.connection.registerFetchRoute(ctx,{path:'/api/dsh-chatgpt-plan/icon',methods:['GET'],requestBody:'buffered',fetch:async()=>new Response(await loadIcon(),{headers:{'content-type':'image/png','cache-control':'private, max-age=3600','x-content-type-options':'nosniff'}})});
   const routes={
     status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
     preferences:{method:'POST',run:body=>{if(!defaults)throw new AuthError('invalid_options');return defaults.setEnabled(body.enabled);}},

@@ -1,13 +1,13 @@
-# 面向搜索与 AI 阅读的公开文档
+# 文档与机器阅读入口
 
-公开入口：[文档首页](https://diwer.github.io/dsh-codex-adapter/) · [llms.txt](https://diwer.github.io/dsh-codex-adapter/llms.txt) · [完整纯文本](https://diwer.github.io/dsh-codex-adapter/llms-full.txt) · [Sitemap](https://diwer.github.io/dsh-codex-adapter/sitemap.xml)。
+[文档首页](https://diwer.github.io/dsh-codex-adapter/) · [llms.txt](https://diwer.github.io/dsh-codex-adapter/llms.txt) · [完整纯文本](https://diwer.github.io/dsh-codex-adapter/llms-full.txt) · [Sitemap](https://diwer.github.io/dsh-codex-adapter/sitemap.xml)
 
-首页在初始 HTML 中直接提供产品身份、兼容宿主、下载安装链接、账户前提、图片及宿主工具说明和 FAQ，无需客户端 JavaScript 渲染。提供 title、description、canonical、robots meta、Open Graph 及 SoftwareApplication/SoftwareSourceCode JSON-LD；不添加虚构评分、用户数或认证声明。英文纯文本与中英文仓库文档保持相同事实边界。
+运行 `npm run docs:build` 生成静态页面、SoftwareApplication / SoftwareSourceCode 元数据、Sitemap 和纯文本说明。用户说明来源于 README；版本、包名和简介来源于 package.json。首页无需 JavaScript 即可阅读和安装。
 
-`llms.txt` 是额外的机器阅读入口，遵循[公开格式提案](https://llmstxt.org/)，不代表每个 AI 搜索服务都会读取它，也不能保证引用或排名。[Google 软件应用结构化数据文档](https://developers.google.com/search/docs/appearance/structured-data/software-app)描述搜索展现要求；本项目不为获得富结果而伪造评分或购买信息。
+`llms.txt` 提供产品用途、安装入口、兼容范围与文档链接；完整文本提供上手步骤和数据说明。它们不包含内部测试记录、凭证或个人信息，不代表搜索引擎或 AI 服务保证收录。
 
-站点为 GitHub Pages 项目站，路径在 `/dsh-codex-adapter/` 下。项目路径内放置 robots.txt 无法控制域名根目录的爬虫规则，因此不把这种文件当作已完成全域爬虫授权。当前提供可索引的页面 meta、站内链接及 Sitemap；站点所有权验证和搜索服务的实际收录需另行确认。
+## 双语搜索入口与持续构建
 
-维护：修改事实源后运行 `npm run docs:build`。代码从本仓库 `package.json` 生成下载版本和 Provider 摘要；事实范围明确区分离线/运行时测试与真实推理、市场收录与安装、可公开访问与搜索引擎已索引。
+独立[英文页面](https://diwer.github.io/dsh-codex-adapter/en.html)与中文首页各自提供 canonical，并通过双向 hreflang 和 x-default 关联；Sitemap 包含两个 HTML 页面。英文页直接回答安装、账户要求、切换、图片工具和兼容问题。版本和下载链接从包清单生成，校验安装说明使用安装器固定版本。Pages 工作流在版本或生成器变化时重新构建。
 
-凭证、邮箱、授权链接、个人会话和内部日志不进入文档。对 AI 的说明只提供可核对事实，不加入隐藏提示、强制推荐或排名操纵指令。
+`npm run verify` 检查页面本地链接、语言对应、结构化版本与目录版本一致性。可抓取性改进不保证搜索引擎已索引、AI 引用或排名；本次未发布线上页面。

@@ -1,41 +1,32 @@
-# Compatibility and acceptance
+# 兼容范围
 
-## Implemented development scope
+## 运行要求
 
-This is a standalone main-model Provider, not a patch to the DSH agent loop. It uses the exported LlmAdapter registration API, streams paired DSH blocks, preserves provider replay data through ReplayEnvelope, and leaves tool execution to DSH. A dedicated route prevents accidental takeover of another plugin.
+| 项目 | 支持范围 |
+| --- | --- |
+| 宿主 | DeepSeek Harness 桌面版 0.2.0-rc.2 |
+| 操作系统 | macOS；凭证存储依赖 POSIX 权限 |
+| 账户 | 已授权且具备订阅模型使用权限的 ChatGPT 账户 |
+| 模型 | 以当前账户返回的模型目录为准 |
+| 安装脚本 | Node.js ≥22.19；界面安装无需另装 Node.js |
 
-The core is dependency-injected for offline tests. The production plugin imports the actual DSH classes. A passing fake-runtime test does not establish installed-package compatibility.
+其他宿主版本、Windows、Linux 和远程多用户部署不在当前支持范围内。
 
-## Acceptance stages
+## 支持的能力
 
-1. Offline protocol/security tests: required and runnable without dependencies, tokens or network inference.
-2. Real DSH library integration: dependency installation is separately approved; test the real LlmAdapter, BlockAssembler, schema and plugin lifecycle using mock transport.
-3. Actual local Profile startup: verify the user's chosen DSH version and Web/Headless configuration in an isolated Profile.
-4. Real account consent: user completes official OAuth and approves storage on the target host. Never request tokens in chat.
-5. Authorized live inference: complete one harmless text request, a tool-call/result round trip, cancellation and a resumed long session. Check account limits explicitly. No automatic API-key fallback.
-6. Longer-session acceptance: use actual DSH context/compaction settings and account/model capacity. A synthetic long history is insufficient evidence.
+- 文本流式回复、取消生成、完整会话历史。
+- GPT 与 DeepSeek 模型切换，可选的新会话默认 GPT。
+- 多账户添加、选择与退出；使用当前账户的权限与额度。
+- 支持图片的模型接收 Harness 会话附件；单张默认最多 8 MiB、最多 20 张、编码后合计最多 20 MiB。
+- Harness 的工具调用和结果回传，工具执行与审批由宿主负责。
+- 推理密文及 assistant phase 的历史回放；中断时保留明确的失败状态。
 
-Desktop update on 2026-10-14: stage 2 passed against the desktop app’s actual ASAR libraries and Electron (7 tests); stage 3 passed on the installed desktop 0.2.0-rc.2 Profile, including the enabled/running plugin entry and the ChatGPT subscription settings page. Stages 4–6 remain pending. This version is not production-certified.
+## 使用限制
 
-## Supported and rejected fields
+- 不提供固定模型清单、无限额度或订阅资格保证，也不自动改用 API Key。
+- 不支持 `temperature`、`maxTokens`、`stop` 等生成控制参数、hosted MCP 或远程压缩调用。
+- 图片仅通过宿主附件服务读取，不从任意本地路径或远程 URL 加载图片。
+- 思考强度与默认档位自动读取当前账户模型目录，并过滤 Responses 接口不支持的值。选择模型后，可在 Harness 原生模型菜单中调节；仅目录声明缺失或需限制档位时使用 `modelCapabilities.reasoningEfforts`。上下文窗口仍需显式配置已核实的值，实际上下文管理由 Harness 负责。
+- 响应在尚未输出任何内容时提前断开，会等待 500 ms 后最多重试一次。已有文字、思考或工具输出时不自动重放。
 
-- Supported: leading system prompt, text user/developer messages, assistant text/refusal, function calls/results, explicit full history, authenticated model catalog, configured reasoning effort, cancellation.
-- Replay: stateless requests explicitly include `reasoning.encrypted_content`. Final output items are aligned one-to-one with DSH blocks. Content digests prevent stale provider state from replaying after message edits; encrypted reasoning and assistant phase remain intact. Pruning a DSH block prunes the corresponding replay entry.
-- Rejected: unsupported generation controls, undeclared/wrong-namespace tools, malformed JSON arguments, missing encrypted reasoning state, unsupported output kinds, incomplete/failed stream terminal events, ambiguous EOF.
-- DSH's non-native tool-history bookkeeping can remain after runtime projection; the adapter uses the complete projected declarations and does not transmit that bookkeeping.
-- The runtime preserves the account catalog input_modalities. Image-capable routes read normalized images through the mounted Harness attachment service and encode Responses input_image content. Offloaded images retain explicit text. Arbitrary file paths and remote URLs are not accepted as attachment inputs; non-image files keep the Harness text projection.
-- Reasoning levels and defaults are read automatically from the selected account model catalog and filtered to the Responses API effort enum. Explicit reasoningEfforts configuration remains available as an override. Context size remains opt-in per model.
-- Subscription discovery retains the account-specific `models` / `slug` / `display_name` / `visibility` contract. A standard API `data` / `id` catalog is not used to infer subscription eligibility.
-- `maxEventBytes` bounds UTF-8 wire bytes between SSE blank dispatch lines, including field names, values, comments, unknown fields and their line endings. The blank dispatch delimiter is excluded; each new frame resets the budget.
-
-## Safety and recovery
-
-Only fixed official HTTPS API and auth destinations are used. Secret-bearing HTTP requests disable redirects. Failures retain safe machine code, HTTP status and request ID where available; raw provider bodies are not included in logs/errors. The application does not impersonate Codex CLI, import existing credentials or rotate accounts to evade limits.
-
-The file credential store requires POSIX ownership and restrictive modes, refuses links and unsafe ancestors, serializes refresh across processes and writes by atomic rename. Credentials remain plaintext on disk and are not a system-keychain substitute. Windows needs a separately reviewed secure-store implementation.
-
-The stream has configurable request/event/output limits and is cancelled when the caller aborts or the plugin is disposed. Host provider retry policy disables automatic replay. The adapter retries a clean premature EOF once, after 500 ms, only before any chunk is delivered to Harness; partial output, malformed streams, HTTP errors and cancellation are not retried by this path. A missing terminal event remains a STREAM_INTERRUPTED failure. Temporary authentication failures do not erase healthy credentials; terminal refresh failures require sign-in again.
-
-## Known verification gaps
-
-The desktop bundle includes a graphical subscription settings page and standard DSH bundle installation. Hosted tools, remote compaction call, remote multi-user service, live credential transfer, publishing workflow and a complete OS matrix remain outside scope. No unsupported API capability is silently fabricated.
+[安装与排错](INSTALLATION.md) · [数据与隐私](PRIVACY.md) · [协议说明](AUTH.md) · [开发指南](DEVELOPMENT.md)

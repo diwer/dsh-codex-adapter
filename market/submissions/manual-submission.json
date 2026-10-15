@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/diwer/dsh-codex-adapter",
+  "package": "dsh-codex-official-adapter",
+  "version": "0.1.3",
+  "description": {
+    "en": "Use your ChatGPT subscription in Harness: sign in without an API key, switch GPT/DeepSeek, and work with images and built-in tools.",
+    "zh": "登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。"
+  },
+  "license": "MIT",
+  "compatibility": {
+    "dsh": "0.2.0-rc.2",
+    "profiles": [
+      "desktop"
+    ]
+  },
+  "install": "dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.3 --registry=https://registry.npmjs.org/",
+  "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.3/dsh-codex-official-adapter-0.1.3.tgz",
+  "privacy": "https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md",
+  "submitted": false,
+  "reviewed": false
+}

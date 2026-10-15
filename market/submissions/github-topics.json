@@ -2,6 +2,7 @@
   "repository": "diwer/dsh-codex-adapter",
   "topics": [
     "dsh-plugin",
+    "dsh-plugins",
     "deepseek-harness",
     "dsh",
     "cordis-plugin",

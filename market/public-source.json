@@ -1,0 +1,47 @@
+{
+  "repository": "https://github.com/diwer/dsh-codex-adapter",
+  "commit": "3e9a48ff1d53154dd46c3ed22803a0a77066b901",
+  "checkedAt": "2026-10-15T10:02:38.039Z",
+  "packageName": "dsh-codex-official-adapter",
+  "version": "0.1.2",
+  "bundlePatch": "./cordis.patch.yml",
+  "sourceContractValidated": true,
+  "scope": "Published source file and bundle contract only; not runtime acceptance or third-party maintainer verification. Local uncommitted changes are not included.",
+  "evidence": [
+    {
+      "path": "package.json",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/package.json",
+      "sha256": "19cda254e803079bfe3c7d9441df75daf6d034dd0fb0d9d0863d0f88ba4ef2be"
+    },
+    {
+      "path": "cordis.patch.yml",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/cordis.patch.yml",
+      "sha256": "d265534f5f7b69baaaab905a6eedcf17559cfa27fcddc68c9c9134cbe769f24e"
+    },
+    {
+      "path": "src/desktop-plugin.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/desktop-plugin.mjs",
+      "sha256": "7c71764151bddbfc470767976cd6d183307b94552c533812408459f9bf4bdfcd"
+    },
+    {
+      "path": "src/adapter.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/adapter.mjs",
+      "sha256": "75637f6a7462848c9a1a2e35703175f8c4cd84ef48792e950abe52342cb3fec7"
+    },
+    {
+      "path": "src/model-capabilities.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/model-capabilities.mjs",
+      "sha256": "ebfd9c52bac0e53a336adfb295362d00729ffe68ab2876eaee1206a1b0c94fb2"
+    },
+    {
+      "path": "src/auth/index.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/src/auth/index.mjs",
+      "sha256": "8259b1e497f6bd28bbc0a4268d2e0a63783d6f7c877593ab69559461bab4405b"
+    },
+    {
+      "path": "lib/client.js",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/3e9a48ff1d53154dd46c3ed22803a0a77066b901/lib/client.js",
+      "sha256": "17216b2fdb5454a8e875eafbd74f11f79c9c3ccf125d62dec1d5107664803851"
+    }
+  ]
+}

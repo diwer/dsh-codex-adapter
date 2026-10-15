@@ -1,10 +1,10 @@
 import {lstat, readFile, readdir} from 'node:fs/promises';
 import path from 'node:path';
 
-export const PUBLIC_ROOTS = ['src','lib','test','test-runtime','scripts','market','site','.github','examples',
+export const PUBLIC_ROOTS = ['src','lib','test','test-runtime','scripts','market/submissions','market/schemas','market/coverage.json','market/public-source.json','site','.github','examples',
   'package.json','package-lock.json','cordis.patch.yml','README.md','README.en.md','RELEASE_NOTES.md','LICENSE','.gitignore',
-  'docs/AUTH.md','docs/COMPATIBILITY.md','docs/SOURCES.md','docs/PRIVACY.md','docs/MARKET_PUBLISHING.md','docs/KNOWN_MARKETS.md','docs/AI_SEARCH.md','docs/MARKET_RUNTIME_ACCEPTANCE.md','docs/INSTALLATION.md','docs/REASONING.md'];
-export const TOPICS = ['dsh-plugin','deepseek-harness','dsh','cordis-plugin','chatgpt','codex','llm-provider'];
+  'docs/AUTH.md','docs/COMPATIBILITY.md','docs/SOURCES.md','docs/PRIVACY.md','docs/MARKET_PUBLISHING.md','docs/DEVELOPMENT.md','docs/KNOWN_MARKETS.md','docs/AI_SEARCH.md','docs/INSTALLATION.md','docs/REASONING.md','docs/MARKET_SUBMISSION_STATUS.md'];
+export const TOPICS = ['dsh-plugin','dsh-plugins','deepseek-harness','dsh','cordis-plugin','chatgpt','codex','llm-provider'];
 export function repositoryIdentity(value) {
   const match = /^https:\/\/github\.com\/([A-Za-z0-9](?:[A-Za-z0-9-]*))\/([A-Za-z0-9_.-]+?)(?:\.git)?\/?$/.exec(value ?? '');
   if (!match || ['.','..'].includes(match[2])) throw new Error('需要真实的 GitHub 仓库根地址：https://github.com/OWNER/REPOSITORY');

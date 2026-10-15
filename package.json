@@ -1,7 +1,7 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.2",
-  "description": "ChatGPT subscription model provider for DeepSeek Harness desktop, with image input and host tool calling. Community plugin; not affiliated with OpenAI or DeepSeek.",
+  "version": "0.1.3",
+  "description": "Use your ChatGPT subscription in DeepSeek Harness. Sign in, choose GPT, and work with images and built-in tools.",
   "type": "module",
   "private": false,
   "engines": {
@@ -24,7 +24,10 @@
     "market:check": "node scripts/market-check.mjs",
     "market:prepare": "node scripts/prepare-market-release.mjs",
     "market:discover": "node scripts/discover-markets.mjs",
-    "docs:build": "node scripts/build-docs.mjs"
+    "docs:build": "node scripts/build-docs.mjs",
+    "market:build": "node scripts/build-markets.mjs",
+    "market:audit": "npm run market:discover && node scripts/audit-markets.mjs",
+    "market:report": "node scripts/report-markets.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",
@@ -34,7 +37,8 @@
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.4",
     "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.4"
+    "@deepseek-ai/schemastery": "3.18.4",
+    "ajv": "^8.17.1"
   },
   "main": "./src/desktop-plugin.mjs",
   "files": [
@@ -48,16 +52,13 @@
     "docs/COMPATIBILITY.md",
     "docs/SOURCES.md",
     "docs/PRIVACY.md",
-    "docs/MARKET_PUBLISHING.md",
-    "market/discovery-2026-10-15.json",
-    "market/coverage-2026-10-15.json",
     "RELEASE_NOTES.md",
-    "docs/AI_SEARCH.md",
-    "docs/KNOWN_MARKETS.md",
-    "market/host-compatibility-2026-10-15.json",
-    "docs/MARKET_RUNTIME_ACCEPTANCE.md",
     "docs/INSTALLATION.md",
     "scripts/install-release.mjs",
+    "docs/DEVELOPMENT.md",
+    "docs/MARKET_PUBLISHING.md",
+    "docs/AI_SEARCH.md",
+    "docs/KNOWN_MARKETS.md",
     "docs/REASONING.md"
   ],
   "dsh": {
@@ -74,8 +75,8 @@
     "catalog": {
       "category": "provider",
       "summary": {
-        "en": "ChatGPT subscription models in Harness with adjustable reasoning effort, GPT/DeepSeek switching, images and host tools.",
-        "zh": "在 Harness 使用 ChatGPT 订阅模型，支持思考强度调节、GPT / DeepSeek 切换、图片输入与内置工具。"
+        "en": "Use your ChatGPT subscription in Harness: sign in without an API key, switch GPT/DeepSeek, and work with images and built-in tools.",
+        "zh": "登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。"
       },
       "capabilities": [
         "llm",
@@ -97,6 +98,7 @@
   "license": "MIT",
   "keywords": [
     "dsh-plugin",
+    "dsh-plugins",
     "deepseek-harness",
     "dsh",
     "cordis-plugin",

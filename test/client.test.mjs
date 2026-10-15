@@ -19,8 +19,8 @@ async function mount(initial,handlers={}){
     useCallback(fn,deps){const index=cursor++;if(!same(hooks[index]?.deps,deps))hooks[index]={fn,deps};return hooks[index].fn;},
     useEffect(fn,deps){const index=cursor++;if(!same(hooks[index]?.deps,deps)){const previous=hooks[index];hooks[index]={deps,cleanup:previous?.cleanup};effects.push(()=>{previous?.cleanup?.();hooks[index].cleanup=fn();});}},
   };
-  const context={window:{__ModuleLoader__:{load({factory}){const plugin=factory(id=>{assert.equal(id,'react');return React;});plugin.apply({slots:{inject(slot,register){assert.equal(slot,'settings.section');register();},register(metadata,component){assert.equal(metadata.id,'chatgpt-plan');Settings=component;}}});}}},
-    fetch:async(url,init)=>{const action=url.split('/').at(-1);const body=init.body?JSON.parse(init.body):undefined;calls.push({action,body,init});const value=handlers[action]?await handlers[action](body):action==='status'?status:undefined;return {ok:true,json:async()=>({value})};},
+  const context={window:{__ModuleLoader__:{load({factory}){const plugin=factory(id=>{assert.equal(id,'react');return React;});plugin.apply({slots:{inject(slot,register){assert.ok(['settings.section','shell.overlay'].includes(slot));register();},register(metadata,component){if(metadata.name==='settings.section'){assert.equal(metadata.id,'chatgpt-plan');Settings=component;}}}});}}},
+    fetch:async(url,init)=>{const action=url.split('/').at(-1);const body=init.body?JSON.parse(init.body):undefined;calls.push({action,body,init});const value=handlers[action]?await handlers[action](body):action==='status'?status:action==='models'?[]:undefined;return {ok:true,json:async()=>({value})};},
     navigator:{clipboard:{writeText:async value=>{calls.push({action:'clipboard',value});}}},
     setInterval(fn){interval=fn;return 1;},clearInterval(){interval=undefined;},
   };
@@ -79,14 +79,14 @@ test('pending authorization offers a safe link, copy feedback, restart and cance
 });
 test('expired authorization never exposes the stale link',async()=>{
   const ui=await mount({phase:'signing-in',accounts:[],authorizationUrl:'https://auth.openai.com/api/accounts/authorize?expired=1',expiresAt:Date.now()-1000});
-  try{assert.equal(nodes(ui.tree,node=>node.type==='a').length,0);assert.ok(button(ui,'重新授权'));assert.match(text(ui.tree),/授权等待已结束/);}finally{ui.unmount();}
+  try{assert.equal(nodes(ui.tree,node=>node.type==='a'&&node.props.href?.startsWith('https://auth.openai.com/')).length,0);assert.ok(button(ui,'重新授权'));assert.match(text(ui.tree),/授权等待已结束/);}finally{ui.unmount();}
 });
 test('model refresh has an explicit empty state and resets when the selected account changes',async()=>{
   let models=[];const ui=await mount(ready(),{models:async()=>models});
   try{
     await ui.click(button(ui,'刷新模型'));assert.match(text(ui.tree),/当前账户暂无可用模型/);
     models=[{id:'model-one',name:'Model One'}];await ui.click(button(ui,'刷新模型'));assert.match(text(ui.tree),/Model One/);
-    ui.setStatus({...ready(),selectedAccountId:'b'});await ui.poll();assert.doesNotMatch(text(ui.tree),/Model One/);
+    models=[];models=[{id:'model-two',name:'Model Two'}];ui.setStatus({...ready(),selectedAccountId:'b'});await ui.poll();assert.doesNotMatch(text(ui.tree),/Model One/);assert.match(text(ui.tree),/Model Two/);
   }finally{ui.unmount();}
 });
 test('switching accounts and logout retain account IDs and remote-revocation warnings',async()=>{
@@ -104,4 +104,69 @@ test('status failures expose an actionable error and allow retry',async()=>{
     assert.match(text(nodes(ui.tree,node=>node.props.role==='alert')[0]),/连接暂不可用/);
     failed=false;await ui.click(button(ui,'重试连接状态'));assert.equal(nodes(ui.tree,node=>node.props.role==='alert').length,0);assert.ok(button(ui,'添加账户'));
   }finally{ui.unmount();}
+});
+
+test('connected models load automatically once per selected account, not on every status poll',async()=>{
+  const ui=await mount(ready(),{models:async()=>[{id:'auto',name:'Automatic Model'}]});
+  try{
+    assert.match(text(ui.tree),/Automatic Model/);
+    assert.equal(ui.calls.filter(call=>call.action==='models').length,1);
+    await ui.poll();await ui.poll();
+    assert.equal(ui.calls.filter(call=>call.action==='models').length,1);
+  }finally{ui.unmount();}
+});
+test('a recovered status poll clears its own error without clearing action failures',async()=>{
+  let failed=true;
+  const ui=await mount(null,{status:async()=>{if(failed)throw Error('暂时离线');return ready();},preferences:async()=>{throw Error('偏好保存失败');}});
+  try{
+    assert.match(text(ui.tree),/暂时离线/);failed=false;await ui.poll();
+    assert.doesNotMatch(text(ui.tree),/暂时离线/);
+    await ui.click(nodes(ui.tree,node=>node.props.role==='switch')[0]);await ui.poll();
+    assert.match(text(ui.tree),/偏好保存失败/);
+  }finally{ui.unmount();}
+});
+test('automatic model load failures provide a model retry that actually fetches models',async()=>{
+  let failed=true;
+  const ui=await mount(ready(),{models:async()=>{if(failed)throw Error('模型服务暂不可用');return [{id:'retry',name:'Recovered Model'}];}});
+  try{
+    assert.match(text(ui.tree),/模型加载失败/);failed=false;
+    await ui.click(button(ui,'重试加载模型'));
+    assert.match(text(ui.tree),/Recovered Model/);assert.doesNotMatch(text(ui.tree),/模型加载失败/);
+  }finally{ui.unmount();}
+});
+test('an old account model response cannot replace the newly selected account catalog',async()=>{
+  let finishOld;const old=new Promise(resolve=>{finishOld=resolve;});let requests=0;
+  const ui=await mount(ready(),{models:async()=>++requests===1?old:[{id:'b-model',name:'Account B Model'}]});
+  try{
+    ui.setStatus({...ready(),selectedAccountId:'b'});await ui.poll();
+    assert.match(text(ui.tree),/Account B Model/);
+    finishOld([{id:'a-model',name:'Account A Model'}]);await ui.flush();
+    assert.match(text(ui.tree),/Account B Model/);assert.doesNotMatch(text(ui.tree),/Account A Model/);
+  }finally{finishOld([]);ui.unmount();}
+});
+test('logout refreshes account state even when remote revocation is not confirmed',async()=>{
+  let status=ready();const ui=await mount(status,{status:async()=>status,logout:async()=>{status={phase:'not-signed-in',accounts:[],defaultGptEnabled:true};return {remoteRevoked:false};}});
+  try{
+    await ui.click(button(ui,'退出'));
+    assert.ok(button(ui,'连接 ChatGPT'));assert.equal(button(ui,'刷新模型'),undefined);
+    assert.match(text(ui.tree),/远程撤销尚未确认/);
+  }finally{ui.unmount();}
+});
+
+test('mascot registers in the shell independently of account settings and never captures clicks',()=>{
+  const registered=new Map(),owners=[];
+  const React={createElement:(type,props,...children)=>({type,props:props??{},children:children.flat(Infinity)})};
+  vm.runInNewContext(source,{window:{__ModuleLoader__:{load({factory}){
+    factory(()=>React).apply({slots:{inject(slot,callback){owners.push(slot);callback();},register(options,component){registered.set(options.name,{options,component});}}});
+  }}}});
+  assert.deepEqual(owners,['shell.overlay','settings.section']);
+  const {options,component}=registered.get('shell.overlay');
+  assert.equal(options.id,'chatgpt-plan-mascot');
+  const tree=component();
+  assert.equal(tree.props['aria-label'],'大肥鱼指挥 Codex');
+  const img=nodes(tree,node=>node.type==='img')[0];
+  assert.equal(img.props.src,'/api/dsh-chatgpt-plan/icon');assert.equal(img.props.draggable,false);
+  const css=nodes(tree,node=>node.type==='style')[0].children[0];
+  assert.match(css,/position:fixed/);assert.match(css,/right:max\(16px/);assert.match(css,/bottom:max\(16px/);
+  assert.match(css,/pointer-events:none!important/);
 });

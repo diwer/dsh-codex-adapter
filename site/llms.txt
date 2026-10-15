@@ -1,21 +1,22 @@
 # DSH ChatGPT Adapter
 
-> A community MIT plugin that adds ChatGPT subscription models to DeepSeek Harness desktop 0.2.0-rc.2, while keeping DeepSeek selectable.
+> Use your ChatGPT subscription in DeepSeek Harness. No API key required.
 
-Canonical documentation: https://diwer.github.io/dsh-codex-adapter/
-Package: dsh-codex-official-adapter. Current usage release: 0.1.2. Not affiliated with OpenAI or DeepSeek. Model availability depends on the user's authorized account.
+- Package: dsh-codex-official-adapter@0.1.3
+- Supported host: DeepSeek Harness desktop 0.2.0-rc.2 on macOS.
+- Install: Plugins → Add plugin → dsh-codex-official-adapter@0.1.3; select https://registry.npmjs.org/; click Install; fully quit and reopen Harness.
+- Connect: Settings → ChatGPT 订阅 → 连接 ChatGPT → 打开授权页面. Complete OpenAI sign-in and consent. Models load automatically.
+- Use: choose an account model under ChatGPT plan (Sign in with ChatGPT).
+- Features: GPT/DeepSeek switching, image-capable models, host tools, multiple accounts, optional GPT default for new conversations.
+- Requirements: an eligible ChatGPT account; models and usage limits depend on that account.
+- Data: conversation text, selected images and tool results go to OpenAI. Credentials are unencrypted local files restricted to the current user. Independent MIT community project; not affiliated with OpenAI or DeepSeek.
 
 ## Documentation
 
-- [Source repository](https://github.com/diwer/dsh-codex-adapter)
-- [Download release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.2)
-- [Privacy and credentials](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md)
-- [Compatibility](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md)
-- [Installation and upgrade](https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md)
-- [Market coverage](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/MARKET_PUBLISHING.md)
-- [Verified installer and URL-install limitations](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md)
-- [Full plain-text documentation](https://diwer.github.io/dsh-codex-adapter/llms-full.txt)
-
-## Boundaries
-
-Installation is validated on macOS desktop 0.2.0-rc.2. Older Web hosts and other platforms are not implied compatible. Marketplace listing and AI-search indexing must be checked separately; neither is guaranteed by this file. Credentials are plaintext local files with restrictive permissions.
+- [快速开始](https://github.com/diwer/dsh-codex-adapter#快速开始)
+- [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md)
+- [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md)
+- [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md)
+- [版本说明](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.3)
+- [源码](https://github.com/diwer/dsh-codex-adapter)
+- [Full documentation](https://diwer.github.io/dsh-codex-adapter/llms-full.txt)

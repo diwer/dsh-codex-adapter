@@ -1,29 +1,103 @@
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
-const pkg=JSON.parse(await readFile('package.json','utf8'));
-const base='https://diwer.github.io/dsh-codex-adapter/';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+
 const repo='https://github.com/diwer/dsh-codex-adapter';
-const release=`${repo}/releases/tag/v${pkg.version}`;
-const download=`${repo}/releases/download/v${pkg.version}/${pkg.name}-${pkg.version}.tgz`;
-const title='DSH ChatGPT Adapter — DeepSeek Harness 桌面版 GPT 订阅模型插件';
-const description='在 DeepSeek Harness 桌面版 0.2.0-rc.2 使用 ChatGPT 订阅模型，支持思考强度调节、DeepSeek/GPT 切换、图片输入及宿主工具调用。开源 MIT 社区插件。';
-const facts=`# DSH ChatGPT Adapter\n\n> Community ChatGPT subscription model provider for DeepSeek Harness desktop. Not affiliated with OpenAI or DeepSeek.\n\n## Project identity\n\n- Package: ${pkg.name}\n- Release: ${pkg.version}\n- Repository: ${repo}\n- License: MIT\n- Supported host: DeepSeek Harness desktop 0.2.0-rc.2; macOS installation tested. Other versions and platforms require separate validation.\n\n## Capabilities\n\nUses Sign in with ChatGPT authorization and the Responses API. Account model availability is queried dynamically; no fixed list of models is guaranteed. DeepSeek and GPT remain selectable. New conversations may default to GPT through a setting that can be turned off. Models reporting image input support accept host-managed attachments. DSH executes tools; this provider adapts tool calls and tool results. Supports streaming, cancellation, replay metadata and selectable reasoning effort from the account model catalog.\n\n## Install\n\nDownload ${download}, keep the tgz intact, and add it in the desktop plugin manager. Alternatively: dsh plugin --profile desktop add --ignore-scripts /absolute/path/to/${pkg.name}-${pkg.version}.tgz. Fully exit and reopen Harness after installation. Connect your own account in Settings → ChatGPT subscription. The local authorization callback waits 30 minutes by default.\n\n## Data and limits\n\nThis is not a free ChatGPT subscription or an API-key relay. The plugin is free MIT software; an eligible authorized account and its subscription availability are separate. Requests and selected conversation images/tool results go to OpenAI. OAuth credentials use plugin-owned plaintext files, directory 0700 and files 0600. The plugin does not read credentials from Codex or other apps. No API-key fallback or model availability guarantee. See the privacy document before connecting.\n\n## Verification\n\nRelease v0.1.0: 172 offline tests, 88 protocol tests (part of the suite), 7 real desktop runtime tests and isolated-package install/load checks passed. These are not a claim that every account/model or long-context compression scenario has been live-tested. Marketplace submission, listing, search availability and installation are separate states.\n`;
-const links=[['Source repository',repo],['Download release',release],['Privacy and credentials',`${repo}/blob/main/docs/PRIVACY.md`],['Compatibility',`${repo}/blob/main/docs/COMPATIBILITY.md`],['Installation and upgrade',`${repo}/blob/main/RELEASE_NOTES.md`],['Market coverage',`${repo}/blob/main/docs/MARKET_PUBLISHING.md`]];
-links.push(['Verified installer and URL-install limitations',`${repo}/blob/main/docs/INSTALLATION.md`]);
-const installAdvice=`\n## Verified installation path\n\nInstall ${pkg.name}@${pkg.version} from https://registry.npmjs.org/ using the target desktop plugin manager or official CLI. Alternatively run node scripts/install-release.mjs --dsh /path/to/desktop/cli/bin/dsh --profile desktop: it verifies the release SHA256SUMS before installing a local archive. Reasoning levels and defaults load from the selected account model catalog; choose a supported level in the native model menu. See ${repo}/blob/main/docs/REASONING.md.\n`;
-const llms=`# DSH ChatGPT Adapter\n\n> A community MIT plugin that adds ChatGPT subscription models to DeepSeek Harness desktop 0.2.0-rc.2, while keeping DeepSeek selectable.\n\nCanonical documentation: ${base}\nPackage: ${pkg.name}. Current usage release: ${pkg.version}. Not affiliated with OpenAI or DeepSeek. Model availability depends on the user's authorized account.\n\n## Documentation\n\n${links.map(([name,url])=>`- [${name}](${url})`).join('\n')}\n- [Full plain-text documentation](${base}llms-full.txt)\n\n## Boundaries\n\nInstallation is validated on macOS desktop 0.2.0-rc.2. Older Web hosts and other platforms are not implied compatible. Marketplace listing and AI-search indexing must be checked separately; neither is guaranteed by this file. Credentials are plaintext local files with restrictive permissions.\n`;
-const structured={'@context':'https://schema.org','@type':['SoftwareApplication','SoftwareSourceCode'],name:'DSH ChatGPT Adapter',alternateName:pkg.name,url:base,description,applicationCategory:'DeveloperApplication',operatingSystem:'macOS with DeepSeek Harness desktop 0.2.0-rc.2',softwareVersion:pkg.version,license:`${repo}/blob/main/LICENSE`,codeRepository:repo,programmingLanguage:'JavaScript',downloadUrl:download,isAccessibleForFree:true,author:{'@type':'Organization',name:'DSH ChatGPT Adapter contributors',url:repo}};
-const faq=[['这是什么插件？','为 DeepSeek Harness 桌面版增加 ChatGPT 订阅模型 Provider 的社区开源插件；不是 OpenAI 或 DeepSeek 官方认证产品。'],['DeepSeek 和 GPT 可以切换吗？','两种 Provider 保持并存；可以在会话模型选择器切换，新会话默认 GPT 的设置可以关闭。'],['支持图片和文件编辑吗？','支持目录中声明图片能力的模型；图片经 Harness 附件服务读取。文件编辑、搜索和终端等工具由宿主执行，本插件适配工具协议。'],['需要 API Key 吗？','本路由使用独立的 Sign in with ChatGPT 授权，不自动回退到付费 API Key；需要本人拥有可用账户及相应订阅权限。'],['安装后需要重启吗？','需要等待当前任务结束，完全退出并重新打开 Harness，再在设置中连接账户。'],['市场一定可以搜索到吗？','不能保证。不同市场的数据源、审核、同步周期和兼容过滤各自独立，市场覆盖文档记录实际进度。']];
-faq.push(['远程 URL 安装提示缺少 integrity 怎么办？','部分宿主仍会复现此问题。请使用仓库 scripts/install-release.mjs：先按发行页 SHA-256 校验，再由官方 CLI 安装本地包。不要删除整个锁文件或关闭完整性检查，详见校验安装文档。']);
-await mkdir('site',{recursive:true});
-await writeFile('site/llms.txt',llms);await writeFile('site/llms-full.txt',facts+installAdvice+'\n## Sources\n\n'+links.map(([n,u])=>`- ${n}: ${u}`).join('\n')+'\n');
-await writeFile('site/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${base}</loc></url></urlset>\n`);
-await writeFile('site/.nojekyll','');
-await mkdir('site/market',{recursive:true});
-const pluginEntry={name:pkg.name,owner:'diwer',url:repo,category:'model',description:pkg.dsh.catalog.summary,version:pkg.version,
-  tarball:download,install:`dsh plugin --profile desktop add ${download}`,added:'2026-10-15',
-  dshPeers:Object.fromEntries(Object.entries(pkg.peerDependencies).filter(([name])=>name.startsWith('@deepseek-ai/dsh-')))};
-await writeFile('site/market/plugins.json',JSON.stringify({name:'DSH ChatGPT Adapter author catalog',url:base,source:repo,updated:'2026-10-15',
-  notice:'First-party author catalog. Not the awesome-dsh-plugin community registry; inclusion here is not third-party review.',
-  count:1,categories:{model:{en:'Models & Providers',zh:'模型与账号接入'}},plugins:[pluginEntry]},null,2)+'\n');
-await writeFile('site/index.html',`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><meta name="description" content="${description}"><meta name="robots" content="index,follow,max-snippet:-1"><link rel="canonical" href="${base}"><link rel="alternate" type="text/plain" href="${base}llms.txt" title="LLM documentation"><meta property="og:type" content="website"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${base}"><meta property="og:locale" content="zh_CN"><script type="application/ld+json">${JSON.stringify(structured).replaceAll('<','\\u003c')}</script><style>body{font:17px/1.75 system-ui,sans-serif;color:#172435;background:#f5f8fc;margin:0}main{max-width:880px;margin:auto;padding:48px 24px}h1{font-size:36px;line-height:1.3}h2{margin-top:38px}a{color:#1556ae}nav{display:flex;flex-wrap:wrap;gap:18px}.card{background:white;padding:24px;border-radius:14px;margin:24px 0}code{overflow-wrap:anywhere}footer{color:#526477;font-size:14px}dt{font-weight:650;margin-top:20px}dd{margin-left:0}li{margin:8px 0}</style></head><body><main><p>DeepSeek Harness · Community plugin · MIT</p><h1>在 Harness 桌面版使用 ChatGPT 订阅模型</h1><p>${description}</p><nav><a href="${download}">下载安装包 v${pkg.version}</a><a href="${release}">发行说明与校验文件</a><a href="${repo}">GitHub 源码</a><a href="llms.txt">AI 可读文档</a></nav><section class="card"><h2>兼容与能力</h2><ul><li>目标宿主：DeepSeek Harness 桌面版 0.2.0-rc.2；macOS 已做安装及运行时验证。</li><li>独立 ChatGPT 账户授权，默认等待 30 分钟；模型目录以账户实际返回为准。</li><li>DeepSeek/GPT 切换，支持图片能力模型和宿主文件、搜索、终端等工具协议。</li><li>插件本身免费开源；用户的订阅资格、额度和模型可用性另行决定。</li></ul><p>本插件不是 OpenAI 或 DeepSeek 官方认证产品，不提供共享账号或 API Key 自动回退。</p></section><section><h2>安装与升级</h2><p>下载 <code>${pkg.name}-${pkg.version}.tgz</code>，不要解压。在 Harness 桌面插件管理器中添加本地包。等待任务结束，完全退出并重新打开 Harness，然后进入“设置 → ChatGPT 订阅”授权自己的账户。</p><p><a href="${repo}/blob/main/RELEASE_NOTES.md">完整安装、升级和验证范围</a></p></section><section><h2>常见问题</h2><dl>${faq.map(([q,a])=>`<dt>${q}</dt><dd>${a}</dd>`).join('')}</dl></section><section><h2>数据与安全</h2><p>会话所需文本、图片和工具结果发送到 OpenAI。凭证保存在本插件独立的明文文件内，目录权限 0700、文件权限 0600，不读取其他客户端凭据。<a href="${repo}/blob/main/docs/PRIVACY.md">阅读数据与隐私说明</a>。</p></section><section><h2>开发与证据</h2><p>v0.1.0 的 172 项离线测试、其中 88 项协议回归，以及 7 项桌面运行时联调通过。这不代表所有型号、账户和长会话场景均经过真实推理验收。</p><ul>${links.map(([n,u])=>`<li><a href="${u}">${n}</a></li>`).join('')}</ul><p><a href="llms-full.txt">完整纯文本文档</a> · <a href="sitemap.xml">Sitemap</a></p></section><footer>DSH ChatGPT Adapter contributors · MIT. 本页面可公开读取；不承诺任何搜索引擎或 AI 服务已收录、引用或排名。</footer></main></body></html>`);
-console.log('Generated static documentation, structured metadata, sitemap and LLM text files.');
+const base='https://diwer.github.io/dsh-codex-adapter/';
+const escape=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
+const sourceLink=target=>target.startsWith('#')?target:/^https:\/\//.test(target)?target:`${repo}/blob/main/${target}`;
+
+// Only the small Markdown subset used by the public README. Escape raw HTML first;
+// links are restricted to HTTPS, repository paths and local heading anchors.
+export function renderMarkdown(markdown){
+  const inline=value=>{
+    const code=[];
+    let result=escape(value).replace(/`([^`]+)`/g,(_,text)=>{code.push(`<code>${text}</code>`);return `\u0000${code.length-1}\u0000`;});
+    result=result.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g,(_,label,target)=>/^(?:https:\/\/|#|[\w.-]+(?:\/|$))/.test(target)&&!target.includes(':')||target.startsWith('https://')?`<a href="${sourceLink(target)}">${label}</a>`:label);
+    return result.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\u0000(\d+)\u0000/g,(_,index)=>code[Number(index)]);
+  };
+  const blocks=markdown.trim().split(/\n\s*\n/);
+  return blocks.map(block=>{
+    if(block.startsWith('```'))return `<pre><code>${escape(block.replace(/^```[^\n]*\n/,'').replace(/\n```$/,''))}</code></pre>`;
+    if(/^#{1,3} /.test(block)){const [,marks,title]=/^(#{1,3}) (.*)$/.exec(block);return `<h${marks.length}>${inline(title)}</h${marks.length}>`;}
+    if(block.startsWith('- '))return `<ul>${block.split('\n').map(row=>`<li>${inline(row.replace(/^- /,''))}</li>`).join('')}</ul>`;
+    if(/^\d+\. /.test(block))return `<ol>${block.split('\n').map(row=>`<li>${inline(row.replace(/^\d+\. /,''))}</li>`).join('')}</ol>`;
+    if(block.startsWith('> '))return `<aside>${inline(block.replace(/^> /gm,''))}</aside>`;
+    return `<p>${inline(block.replaceAll('\n',' '))}</p>`;
+  }).join('\n');
+}
+
+export async function buildDocs(root=process.cwd()){
+  const pkg=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
+  const readme=await readFile(path.join(root,'README.md'),'utf8');
+  const english=await readFile(path.join(root,'README.en.md'),'utf8');
+  const installSpec=`${pkg.name}@${pkg.version}`;
+  const download=`${repo}/releases/download/v${pkg.version}/${pkg.name}-${pkg.version}.tgz`;
+  const release=`${repo}/releases/tag/v${pkg.version}`;
+  const section=heading=>{
+    const text=readme.split(`## ${heading}\n`)[1];
+    if(!text)throw new Error(`README 缺少用户说明：${heading}`);
+    return text.split('\n## ')[0].trim();
+  };
+  if(!readme.includes(installSpec))throw new Error('README 安装版本与 package.json 不一致。');
+  const links=[['快速开始',`${repo}#快速开始`],['安装与排错',`${repo}/blob/main/docs/INSTALLATION.md`],['兼容范围',`${repo}/blob/main/docs/COMPATIBILITY.md`],['数据与隐私',`${repo}/blob/main/docs/PRIVACY.md`],['版本说明',release],['源码',repo]];
+  const title='DSH ChatGPT Adapter · 把 ChatGPT 订阅带进 Harness';
+  const description=pkg.dsh.catalog.summary.zh;
+  const structured={'@context':'https://schema.org','@type':['SoftwareApplication','SoftwareSourceCode'],name:'DSH ChatGPT Adapter',alternateName:pkg.name,url:base,description,applicationCategory:'DeveloperApplication',operatingSystem:'macOS with DeepSeek Harness desktop 0.2.0-rc.2',softwareVersion:pkg.version,license:`${repo}/blob/main/LICENSE`,codeRepository:repo,programmingLanguage:'JavaScript',downloadUrl:download,isAccessibleForFree:true};
+  const llms=`# DSH ChatGPT Adapter
+
+> Use your ChatGPT subscription in DeepSeek Harness. No API key required.
+
+- Package: ${installSpec}
+- Supported host: DeepSeek Harness desktop 0.2.0-rc.2 on macOS.
+- Install: Plugins → Add plugin → ${installSpec}; select https://registry.npmjs.org/; click Install; fully quit and reopen Harness.
+- Connect: Settings → ChatGPT 订阅 → 连接 ChatGPT → 打开授权页面. Complete OpenAI sign-in and consent. Models load automatically.
+- Use: choose an account model under ChatGPT plan (Sign in with ChatGPT).
+- Features: GPT/DeepSeek switching, image-capable models, host tools, multiple accounts, optional GPT default for new conversations.
+- Requirements: an eligible ChatGPT account; models and usage limits depend on that account.
+- Data: conversation text, selected images and tool results go to OpenAI. Credentials are unencrypted local files restricted to the current user. Independent MIT community project; not affiliated with OpenAI or DeepSeek.
+
+## Documentation
+
+${links.map(([name,url])=>`- [${name}](${url})`).join('\n')}
+- [Full documentation](${base}llms-full.txt)
+`;
+  const site=path.join(root,'site');await mkdir(path.join(site,'market'),{recursive:true});
+  await writeFile(path.join(site,'llms.txt'),llms);
+  await writeFile(path.join(site,'llms-full.txt'),readme.replace(/\]\(([^)]+)\)/g,(_,target)=>`](${sourceLink(target)})`));
+  await writeFile(path.join(site,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${base}</loc></url><url><loc>${base}en.html</loc></url></urlset>\n`);
+  await writeFile(path.join(site,'.nojekyll'),'');
+  const plugin={name:pkg.name,owner:'diwer',url:repo,category:'model',description:pkg.dsh.catalog.summary,version:pkg.version,tarball:download,
+    install:`dsh plugin --profile desktop add ${installSpec} --ignore-scripts --registry=https://registry.npmjs.org/`,added:'2026-10-15',
+    dshPeers:Object.fromEntries(Object.entries(pkg.peerDependencies).filter(([name])=>name.startsWith('@deepseek-ai/dsh-')))};
+  await writeFile(path.join(site,'market/plugins.json'),JSON.stringify({name:'DSH ChatGPT Adapter author catalog',url:base,source:repo,notice:'Author catalog; not a third-party endorsement.',count:1,categories:{model:{en:'Models & Providers',zh:'模型与账号接入'}},plugins:[plugin]},null,2)+'\n');
+  const html=`<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escape(title)}</title><meta name="description" content="${escape(description)}"><meta name="robots" content="index,follow"><link rel="canonical" href="${base}"><link rel="alternate" hreflang="zh-CN" href="${base}"><link rel="alternate" hreflang="en" href="${base}en.html"><link rel="alternate" hreflang="x-default" href="${base}"><link rel="alternate" type="text/plain" href="${base}llms.txt" title="LLM documentation">
+<meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${base}"><meta property="og:locale" content="zh_CN">
+<script type="application/ld+json">${JSON.stringify(structured).replaceAll('<','\\u003c')}</script>
+<style>
+:root{color-scheme:light;--ink:#142e30;--muted:#526866;--line:#dce5df;--accent:#086c57;--paper:#f8faf6}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}a:focus-visible,button:focus-visible{outline:3px solid #269b80;outline-offset:4px}main,nav,footer{max-width:1040px;margin:auto;padding-left:28px;padding-right:28px}nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}nav a{font-size:14px}nav strong{letter-spacing:-.5px}header{padding:72px 0 44px;max-width:800px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(36px,6vw,64px);line-height:1.16;letter-spacing:-2px;margin:18px 0 24px;font-weight:650}header>p{font-size:18px;color:var(--muted);max-width:680px}h2{font-size:26px;line-height:1.4;letter-spacing:-.6px;margin:0 0 20px}h3{font-size:18px;margin-top:30px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 18px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font:inherit;font-size:14px;cursor:pointer;background:#fff;color:var(--ink)}.primary{background:var(--accent);border-color:var(--accent);color:#fff}.meta{font-size:13px;color:var(--muted);margin-top:20px}section{padding:36px 0;border-top:1px solid var(--line)}#features ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;padding:0;gap:14px}#features li{padding:22px;background:#fff;border:1px solid var(--line);border-radius:10px}#features li:last-child{grid-column:1/-1}#start{max-width:800px}#start pre{display:inline-block;margin:8px 8px 8px 0;vertical-align:middle}pre{padding:16px 18px;background:#edf2ee;border:1px solid var(--line);border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}code{font:13px/1.7 ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}p code{background:#edf2ee;padding:2px 5px;border-radius:4px}aside{font-size:14px;border-left:3px solid #9dc9b9;padding:10px 16px;color:var(--muted)}#faq{max-width:800px}#faq p{margin:20px 0}#privacy{font-size:14px;color:var(--muted);max-width:800px}footer{display:flex;flex-wrap:wrap;gap:20px;border-top:1px solid var(--line);padding-top:22px;padding-bottom:32px;font-size:12px;color:var(--muted)}.skip{position:absolute;top:-80px;left:24px;background:white;padding:8px}.skip:focus{top:8px}@media(max-width:600px){main,nav,footer{padding-left:20px;padding-right:20px}header{padding-top:42px}#features ul{grid-template-columns:1fr}h1{letter-spacing:-1px}nav{align-items:flex-start}nav div{display:flex;gap:14px}.button{width:100%}#start pre{display:block;width:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><a class="skip" href="#start">跳到快速开始</a>
+<nav aria-label="主导航"><strong>DSH ChatGPT Adapter</strong><div><a href="en.html" lang="en">English</a> · <a href="${repo}">GitHub ↗</a></div></nav>
+<main><header><span class="eyebrow">Your subscription. Your workspace.</span><h1>把 ChatGPT 订阅<br>带进 Harness。</h1><p>登录账户，选择 GPT，即可开始工作。<br>无需 API Key，让图片理解与文件、搜索、终端工具一起为你工作。</p><div class="actions"><a class="button primary" href="#start">开始使用 →</a><a class="button" href="${download}">下载安装包 v${escape(pkg.version)}</a></div><p class="meta">Harness 桌面版 0.2.0-rc.2 · macOS · MIT 免费开源</p></header>
+<section id="features"><h2>在熟悉的工作区，多一种选择。</h2>${renderMarkdown(section('为什么使用'))}</section>
+<section id="start"><h2>三步，开始使用。</h2>${renderMarkdown(section('快速开始'))}<button class="button" type="button" id="copy-package" data-copy="${escape(installSpec)}" hidden>复制插件名称</button><p id="copy-feedback" role="status" aria-live="polite"></p></section>
+<section id="faq"><h2>常见问题</h2>${renderMarkdown(section('常见问题'))}</section>
+<section id="privacy"><h2>数据由你决定</h2><p>会话文本、所选图片和工具结果会发送至 OpenAI。登录凭证保存在本机未加密文件中，仅当前用户可读写。模型能力与额度以账户为准。</p><p>独立社区项目，不隶属于 OpenAI 或 DeepSeek。</p><p><a href="${repo}/blob/main/docs/PRIVACY.md">数据与隐私</a> · <a href="${repo}/blob/main/docs/COMPATIBILITY.md">兼容范围</a> · <a href="${repo}/blob/main/docs/INSTALLATION.md">安装与排错</a></p></section></main>
+<footer><span>DSH ChatGPT Adapter · MIT</span><a href="${release}">版本说明</a><a href="${repo}/issues">反馈问题</a><a href="llms.txt">llms.txt</a><a href="llms-full.txt">完整文档</a></footer>
+<script>const copyButton=document.getElementById('copy-package');const feedback=document.getElementById('copy-feedback');copyButton.hidden=false;copyButton.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(copyButton.dataset.copy);feedback.textContent='已复制，在 Add plugin 中粘贴即可。';}catch{feedback.textContent='请手动复制：'+copyButton.dataset.copy;}});const firstPackage=document.querySelector('#start pre');if(firstPackage)firstPackage.after(copyButton);</script>
+</body></html>\n`;
+  await writeFile(path.join(site,'index.html'),html);
+  const englishDescription=pkg.description;
+  const englishHead=html.slice(0,html.indexOf('<body>')).replace('lang="zh-CN"','lang="en"')
+    .replace(escape(title),'DSH ChatGPT Adapter · Your subscription in Harness')
+    .replaceAll(escape(description),escape(englishDescription))
+    .replace(`rel="canonical" href="${base}"`,`rel="canonical" href="${base}en.html"`)
+    .replace('content="zh_CN"','content="en_US"');
+  const englishBody=english.replace(/^# .*\n/,'').replace(/^\[中文\].*$/m,'').replace(/^ {1,3}(```)/gm,'$1');
+  const en=`${englishHead}<body><nav aria-label="Main navigation"><strong>DSH ChatGPT Adapter</strong><div><a href="./" lang="zh-CN">中文</a> · <a href="${repo}">GitHub ↗</a></div></nav><main><header><span class="eyebrow">Your subscription. Your workspace.</span><h1>ChatGPT, meet Harness.</h1><p>No API key. Your account, your models, your workspace.</p><div class="actions"><a class="button primary" href="${download}">Download v${escape(pkg.version)}</a><a class="button" href="${repo}/blob/main/docs/INSTALLATION.md">Installation help</a></div></header><section>${renderMarkdown(englishBody)}</section></main><footer>DSH ChatGPT Adapter · MIT · <a href="llms.txt">llms.txt</a></footer></body></html>\n`;
+  await writeFile(path.join(site,'en.html'),en);
+  return {version:pkg.version,installSpec};
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href){await buildDocs();console.log('已生成用户文档、静态首页与作者目录。');}

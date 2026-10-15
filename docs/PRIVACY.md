@@ -18,4 +18,4 @@ OAuth 凭证保存在本插件独立目录，默认 `~/.dsh/plugin-data/dsh-code
 
 先在“设置 → ChatGPT 订阅”退出账户：插件尝试撤销远程刷新会话并清理本地凭证。如果远程撤销未确认，到 ChatGPT 设置中断开该应用。卸载插件不会自动等同于远程撤销，宿主会话也不会因此删除。通过桌面插件管理器卸载，或执行 `dsh plugin --profile desktop remove dsh-codex-official-adapter`。
 
-内部开发试跑的原始日志只存放在开发工作区 `outputs/test-reports/`，不随发布包分发。报告问题时请删除邮箱、会话正文、授权链接和凭证。
+报告问题时请删除邮箱、会话正文、授权链接和凭证。

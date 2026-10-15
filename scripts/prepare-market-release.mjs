@@ -1,3 +1,4 @@
+import {marketArtifacts} from './build-markets.mjs';
 import {mkdir,copyFile,readFile,writeFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -21,11 +22,15 @@ try {
     manifest.repository={type:'git',url:`git+${repo.url}.git`};
     manifest.homepage=`${repo.url}#readme`;manifest.bugs={url:`${repo.url}/issues`};
     await writeFile(packageFile,JSON.stringify(manifest,null,2)+'\n');
-    await writeFile(path.join(output,`${repo.owner}__${repo.name}.yml`),awesomeEntry(manifest,repo.url));
+    const submissionFiles=marketArtifacts(manifest);
+    await writeFile(path.join(output,`${repo.owner}__${repo.name}.yml`),submissionFiles[`awesome-${repo.owner}__${repo.name}.yml`]);
     const lock=JSON.parse(await readFile(path.join(source,'package-lock.json'),'utf8'));
     lock.packages[''].license=manifest.license;
     await writeFile(path.join(source,'package-lock.json'),JSON.stringify(lock,null,2)+'\n');
   }
+  const publicSource=JSON.parse(await readFile(path.join(root,'market/public-source.json'),'utf8'));
+  const preparedSubmissions=marketArtifacts(manifest,{publicSource:publicSource.repository===(repo?.url??manifest.repository.url.replace(/^git\+/, '').replace(/\.git$/, ''))?publicSource:undefined});
+  for(const [file,content]of Object.entries(preparedSubmissions)){const target=path.join(output,'submissions',file);await mkdir(path.dirname(target),{recursive:true});await writeFile(target,content);}
   const packed=spawnSync('npm',['pack','--ignore-scripts','--json','--pack-destination',output],{cwd:source,encoding:'utf8',maxBuffer:8*1024*1024});
   await writeFile(path.join(output,'pack.log'),packed.stdout+packed.stderr,{mode:0o600});
   if(packed.status!==0) throw new Error('npm pack 未成功，参见输出目录 pack.log');
