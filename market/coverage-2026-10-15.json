@@ -1,0 +1,1011 @@
+{
+  "checkedAt": "2026-10-15",
+  "scope": "81 条社区 market 分类，79 份 README 可读取；关键词只用于发现数据源，不作为收录或兼容证明",
+  "readmeFetched": 79,
+  "entries": [
+    {
+      "name": "ybkk-AIOS",
+      "url": "https://github.com/01men/ybkk-AIOS",
+      "readmeFetched": false,
+      "readmeUrl": "https://raw.githubusercontent.com/01men/ybkk-AIOS/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false
+    },
+    {
+      "name": "dsh-plugin-mall",
+      "url": "https://github.com/1e0zj/dsh-plugin-mall",
+      "npm": "@1e0zj/dsh-plugin-mall",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/1e0zj/dsh-plugin-mall/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "545150f30307914dbc61ac49f21b0d2ef530ce381160b7a6cf56ab8b009a1b9a"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/2768651338/dsh-plugin-manager",
+      "npm": "@txc2768651338/dsh-plugin-manager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/2768651338/dsh-plugin-manager/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "17ff0fbc88d11d887a6c5a41ef3a6490700e63eef2723b20ae40241232b400da"
+    },
+    {
+      "name": "dsh-feed",
+      "url": "https://github.com/863683348/dsh-feed",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-feed/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "43bb7916a7f2d3b2b13b3881da7c031c064da3d146f114c740282f9136656ee9"
+    },
+    {
+      "name": "dsh-insight",
+      "url": "https://github.com/863683348/dsh-insight",
+      "npm": "dsh-insight",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-insight/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "dcc97bfb82cfaa1bbed7c738412ea68021a2e9852d60327442be6e34e8760c2f"
+    },
+    {
+      "name": "dsh-need-finder",
+      "url": "https://github.com/863683348/dsh-need-finder",
+      "npm": "dsh-need-finder",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-need-finder/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "459cdd8ceb9f8a79c552ab5062668a95519554577f16f7ffdc498d07194530e7"
+    },
+    {
+      "name": "dsh-plugin-audit",
+      "url": "https://github.com/863683348/dsh-plugin-audit",
+      "npm": "dsh-audit",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-plugin-audit/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "bacb799f2ec9536b9a49a8445978a3fa7d4dff9a6672f3f3c5e99fabf4610008"
+    },
+    {
+      "name": "dsh-plugin-recommend",
+      "url": "https://github.com/863683348/dsh-plugin-recommend",
+      "npm": "dsh-plugin-recommend",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-plugin-recommend/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b13f0c6ac81072fe46d605eb87b557c44dfa5544f4bd9cd36b0cf39fde9ae428"
+    },
+    {
+      "name": "dsh-plugin-scorecard",
+      "url": "https://github.com/863683348/dsh-plugin-scorecard",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-plugin-scorecard/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "a8935c641b2ef7afd23b6cc5e4a96f9ae10476d1d87b7e35582a74a5064991e2"
+    },
+    {
+      "name": "dsh-recipe",
+      "url": "https://github.com/863683348/dsh-recipe",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/863683348/dsh-recipe/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2a0d8ac2e6295ae4cb54cb476f7eb302fa45887ba81a06b25034439a8ef3eb4b"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/99galaxy/dsh-plugin-market",
+      "npm": "@99galaxy/dsh-plugin-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/99galaxy/dsh-plugin-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b75bf43a487a606e440a482301e90dc16789c59283a988a8d68e879a49325a33"
+    },
+    {
+      "name": "dsh-forge",
+      "url": "https://github.com/alex04130/dsh-forge",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/alex04130/dsh-forge/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "40a712ab67b13b1cd2d19cc4a3b709278c6e79881f5933ecd972348f97a1b634"
+    },
+    {
+      "name": "dsh-plugin-console",
+      "url": "https://github.com/AlexYin-Tongji/dsh-plugin-console",
+      "npm": "dsh-plugin-console",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/AlexYin-Tongji/dsh-plugin-console/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "29ae86a62c740b4ecba9086a05e0bc510712ca81f61d8605228b42859d1bedda"
+    },
+    {
+      "name": "dsh-find-plugin",
+      "url": "https://github.com/awesome-dsh-plugin/dsh-find-plugin",
+      "npm": "dsh-find-plugin",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/awesome-dsh-plugin/dsh-find-plugin/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "857cc287bc750c6a32b944a8d62db6e78a8f03a8fcfc59fafc0fdd5d8594fe91"
+    },
+    {
+      "name": "huahua-dsh-plugin-orchestra",
+      "url": "https://github.com/azure5100/huahua-dsh-plugin-orchestra",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/azure5100/huahua-dsh-plugin-orchestra/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "5120a7f5e41ff025d0ca66b179262ad2d84b6df00775de494213953d4ae64175"
+    },
+    {
+      "name": "dsh-bridge",
+      "url": "https://github.com/beartackler/dsh-bridge",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/beartackler/dsh-bridge/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "cbe774f9115b94e35f4d19fd7904e4e9d798ad91611cc1158ae97ee2fb98be15"
+    },
+    {
+      "name": "DSH-Plugins-Marketplace",
+      "url": "https://github.com/bradeGithub/DSH-Plugins-Marketplace",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/bradeGithub/DSH-Plugins-Marketplace/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2cebe05d829794f703d5f5d28247d7423135815070773b900f9daed4f68b7c99"
+    },
+    {
+      "name": "dsh-pluginmanager",
+      "url": "https://github.com/buhuikongpan/dsh-pluginmanager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/buhuikongpan/dsh-pluginmanager/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "da5f16ed6b58a5394399f58f93d20c14712bac08daa52aa9d09f7f4aaae5ef87"
+    },
+    {
+      "name": "dsh-plugin-advisor",
+      "url": "https://github.com/ChengxiuCDP/dsh-plugin-advisor",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/ChengxiuCDP/dsh-plugin-advisor/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9da02633977e090b64bc263f9e0d25a4b3b73b6aa30e069ed23530fb630d75ed"
+    },
+    {
+      "name": "dsh-plugins#to-english",
+      "url": "https://github.com/CREAIT-nl/dsh-plugins/tree/main/to-english",
+      "npm": "@creait/dsh-to-english",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/CREAIT-nl/dsh-plugins/main/to-english/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "6a924d4bdf812fc23c20701b0d8622530fba6ef7ad465defb45f2e620877d64c"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-center",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-center",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/crTnT/dsh-plugin-suite/main/dsh-plugin-center/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-updater",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-updater",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/crTnT/dsh-plugin-suite/main/dsh-plugin-updater/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b106f075aad89ef6cb273ea31112f647044318b8e822418de06804cbc693882d"
+    },
+    {
+      "name": "dsh-skills-marketplace",
+      "url": "https://github.com/cxdyun/dsh-skills-marketplace",
+      "npm": "dsh-skills-marketplace",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/cxdyun/dsh-skills-marketplace/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "670761bc5c46029cfdddca91c3570fdc89be92e7c5f6e1d2a93b4d17e2876d68"
+    },
+    {
+      "name": "plugin-switch",
+      "url": "https://github.com/cynch18/plugin-switch",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/cynch18/plugin-switch/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "7d428c81611eafdd37b15fad1592f62853876486abff739bde6e1a6f891866fd"
+    },
+    {
+      "name": "dsh-starter-pack",
+      "url": "https://github.com/Dariandai/dsh-starter-pack",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Dariandai/dsh-starter-pack/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "13c997537ebb396159157eade00b44b43ac3a71760e366b65d472ad610231bb8"
+    },
+    {
+      "name": "dsh-agent-plugin-market",
+      "url": "https://github.com/Diluka/dsh-agent-plugin-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Diluka/dsh-agent-plugin-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "d430c1f509335f8511dc242b3e516976925066a83ad043c21314142b6d572583"
+    },
+    {
+      "name": "dsh-market",
+      "url": "https://github.com/dsh-market/dsh-market",
+      "npm": "dshmarket",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/dsh-market/dsh-market/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9bd52037ac51eb20736195e62f925c1bebc467f7a73da2cfd3eba703d0f4d942"
+    },
+    {
+      "name": "dsh-research",
+      "url": "https://github.com/dsh-research/dsh-research",
+      "npm": "dsh-research",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/dsh-research/dsh-research/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "4df20aeee05eef79705458a0f62d9b31bc21bd1fdc03aabccab8fbfa1094e451"
+    },
+    {
+      "name": "dshhub-market",
+      "url": "https://github.com/dshhub-co/dshhub-market",
+      "npm": "dshhub-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/dshhub-co/dshhub-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2a151f49c97810c266bc551f510dc0ee26ec29e440009dbd202b269e963a0079"
+    },
+    {
+      "name": "dsh-plugins-store",
+      "url": "https://github.com/DshMarketPlace/dsh-plugins-store",
+      "npm": "dshmarketplace-plugin",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/DshMarketPlace/dsh-plugins-store/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "d5d8a43cad60959f392c46fc7f59c1ebe46be76712ecc3bd8170cde907d4c62f"
+    },
+    {
+      "name": "dsh-plugin-panel",
+      "url": "https://github.com/Dylan37670/dsh-plugin-panel",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Dylan37670/dsh-plugin-panel/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b416e5a0c12ba3a64fdf495b2866be79b6d013e40cc4ae3f6f31899722738f3d"
+    },
+    {
+      "name": "dsh-find-plugins",
+      "url": "https://github.com/Eray114514/dsh-find-plugins",
+      "npm": "dsh-find-plugins",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Eray114514/dsh-find-plugins/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "npm-keywords",
+        "dsh.so",
+        "dsh.works"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "90442eab8aa161cf148fe96fe6ed6b222b6c9acea78cd2ec27022655b64d5544"
+    },
+    {
+      "name": "dsh-plugin-ops#dsh-plugin-ops-bundle",
+      "url": "https://github.com/f-infinite-z/dsh-plugin-ops/tree/main/packages/bundle",
+      "npm": "dsh-plugin-ops-bundle",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/f-infinite-z/dsh-plugin-ops/main/packages/bundle/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "75f0ceb108da7a8965662dc7046c2d1a80ed516ca22700ee7266d3dde2ebb61c"
+    },
+    {
+      "name": "dsh-cli-store",
+      "url": "https://github.com/Harzva/dsh-cli-store",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Harzva/dsh-cli-store/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "7ac516ce1df8383940ec161694a5bb0f11862d29c245d8c0b4d504423cff46ef"
+    },
+    {
+      "name": "dsh-mall",
+      "url": "https://github.com/hoyyang/dsh-mall",
+      "npm": "dsh-mall",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/hoyyang/dsh-mall/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "17f4bae32624deb1d44a6e081a01b31b7f2456a7baacd93aa65b8fe09dbc515a"
+    },
+    {
+      "name": "dsh-store",
+      "url": "https://github.com/huguangyu666/dsh-store",
+      "npm": "dsh-store",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/huguangyu666/dsh-store/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "awesome-community-registry",
+        "npm-keywords"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "c2323498610003177752b3c800a7820f6aca59fde232f1566cd7a7e1508e1f9e"
+    },
+    {
+      "name": "dsh-plugin-scout",
+      "url": "https://github.com/icefall7/dsh-plugin-scout",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/icefall7/dsh-plugin-scout/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "7a41161f8b596e034e2cb51294c84a0f5078fff9fb5f011bfbd0446112c0bae4"
+    },
+    {
+      "name": "find-dsh-plugins",
+      "url": "https://github.com/JazzuLu/find-dsh-plugins",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/JazzuLu/find-dsh-plugins/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "dsh.so"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "1157228ab9089af52649b62cba500b57df68582bccc72b5498c228b23fb77f5d"
+    },
+    {
+      "name": "dsh-plugin-manager#cli",
+      "url": "https://github.com/Jesse-njx/dsh-plugin-manager/tree/main/packages/cli",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Jesse-njx/dsh-plugin-manager/main/packages/cli/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "c9c024af41110831cc10a1cbc5923750ae1d16903a628d29dedfc0687f90042c"
+    },
+    {
+      "name": "dsh-dejaview",
+      "url": "https://github.com/jiang4wqy/dsh-dejaview",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/jiang4wqy/dsh-dejaview/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "12f1f9505467a565e722852bcd44dfa58a79b79358f4298a22c16b2f1c7e9536"
+    },
+    {
+      "name": "dsh-unified-market",
+      "url": "https://github.com/jing-hy/dsh-unified-market",
+      "npm": "dsh-unified-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/jing-hy/dsh-unified-market/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "npm-keywords"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "ac6188a5558ff45d23c10b83e279a33b773b612579a6ff44bb1d61760038edbf"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/kimiya1010/dsh-plugin-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/kimiya1010/dsh-plugin-market/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "0208768b91de88ee62266d3d9680db6dd2916adb700958a2fda74bad4676484f"
+    },
+    {
+      "name": "dsh-skin-market",
+      "url": "https://github.com/kingOfSoySauce/dsh-skin-market",
+      "npm": "dsh-skin-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/kingOfSoySauce/dsh-skin-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9b83716cfecb9d033ac12e5c5d57f2984ef98c6b53d8f6bbe24ef1845d12f1e0"
+    },
+    {
+      "name": "dsh-theme-switch",
+      "url": "https://github.com/kinmat-A/dsh-theme-switch",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/kinmat-A/dsh-theme-switch/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "828a6a0e9638657fa37f6e34cf2709702c469343878ddccdb8eae8947300ce2f"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/kkkkkklze/dsh-plugin-manager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/kkkkkklze/dsh-plugin-manager/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "260fc94402400bdcc4eeffce2fd5af5544a4da845dbefceb97444c9234a5b8ab"
+    },
+    {
+      "name": "dsh-vibe-pack",
+      "url": "https://github.com/LeemanCheung/dsh-vibe-pack",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/LeemanCheung/dsh-vibe-pack/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "5fc2b71cdff18a629b082d0ed47d4c2bb4975b77d8fd047c952c3e9e3fa3764c"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/liqichen/dsh-plugin-manager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/liqichen/dsh-plugin-manager/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2d7b1fa85d19e410d71bc6d13a729d750aab42abed28116c36294f184813ae4b"
+    },
+    {
+      "name": "dsh-local-installer",
+      "url": "https://github.com/ljh257110/dsh-local-installer",
+      "npm": "dsh-local-installer",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/ljh257110/dsh-local-installer/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "f51a814d75097b516fe3043a08d65ebf8ab34aa9613f0f1d6a37dfa002e7045b"
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/LKMeng2001/dsh-mcp-market",
+      "npm": "dsh-mcp-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/LKMeng2001/dsh-mcp-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "1703b8d4c102d543795953da70ea59a76b9f95cf0e7cf39d32f920b727a47227"
+    },
+    {
+      "name": "dsh-workshop",
+      "url": "https://github.com/loguhan/dsh-workshop",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/loguhan/dsh-workshop/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "96feb344c61c45c8244a2f5a5341d400cabca5152956748600bb05fa9bf10f1b"
+    },
+    {
+      "name": "dsh-plugins-hub",
+      "url": "https://github.com/maryasov/dsh-plugins-hub",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/maryasov/dsh-plugins-hub/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9565c44502e91e9aa41b5db43486df6fae39dd7a51639318f2600054595e456e"
+    },
+    {
+      "name": "dsh-plugin-center",
+      "url": "https://github.com/Max-Null/dsh-plugin-center",
+      "npm": "@max-null/dsh-plugin-center",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Max-Null/dsh-plugin-center/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "3f4a538298e11184187e39baf6127c2dde16585ab206ccf2d8b64c201299ac3c"
+    },
+    {
+      "name": "dsh-stock-mentions",
+      "url": "https://github.com/mingzeng21/dsh-stock-mentions",
+      "npm": "dsh-stock-mentions",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/mingzeng21/dsh-stock-mentions/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "617e2a12becea57e3e3da82960cac85a27458fa898e9c764f9db83fbd8199fc7"
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/Mrxieyong/dsh-mcp-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Mrxieyong/dsh-mcp-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "16d80fc78ea55ad310f68549a51af626fc0f38154c09b0fa397a563090be4da5"
+    },
+    {
+      "name": "dsh-archive-manager",
+      "url": "https://github.com/MS666666/dsh-archive-manager",
+      "npm": "dsh-archive-manager-plus",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/MS666666/dsh-archive-manager/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "8457abdc4131a253f5d30381f3c6e5139246106e75074d9b65e0a753f91cbc3c"
+    },
+    {
+      "name": "DSH-Plugin-Market",
+      "url": "https://github.com/nanshan1995/DSH-Plugin-Market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/nanshan1995/DSH-Plugin-Market/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "591663f007e025188c63ccc2e2b9e127341df66ba3a2d2774cfccb796499641a"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/nonentity303/dsh-plugin-manager",
+      "npm": "dsh-plugin-manager-pro",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/nonentity303/dsh-plugin-manager/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic",
+        "awesome-community-registry",
+        "dshfind"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "45a3a0748b2f7e57ce1e3f692f1217419ed93f0bc9739d9e1723c99889f583d2"
+    },
+    {
+      "name": "dsh-employee",
+      "url": "https://github.com/open-dshai/dsh-employee",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/open-dshai/dsh-employee/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b7090042a3b30ed0034f8f1e2bd2ceb4e2a3587ac79dab2106fc86cfb767d8c7"
+    },
+    {
+      "name": "dsh-deepatlas",
+      "url": "https://github.com/Oscar-Williams/dsh-deepatlas",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Oscar-Williams/dsh-deepatlas/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "7d74df34afaec5a48de5ac23c56887afbbd24ebbfd85c950a2762d4135248cd3"
+    },
+    {
+      "name": "dsh-plugin-mgr",
+      "url": "https://github.com/oxlyn/dsh-plugin-mgr",
+      "npm": "dsh-plugin-mgr",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/oxlyn/dsh-plugin-mgr/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "69b9eee2f9c249e66800aa0eaa247c3041423532d5a542ec769bbbe38fffe2e3"
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/PetCT/dsh-plugin-marketplace",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/PetCT/dsh-plugin-marketplace/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "c7f2b68c1301024da2475ef54ffc4044ed0bbe117e1e7376a039cb12471ec28a"
+    },
+    {
+      "name": "dsh-skill-market",
+      "url": "https://github.com/pn1024/dsh-skill-market",
+      "npm": "dsh-skill-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/pn1024/dsh-skill-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9a4531a77a3f120a5391184606e26e8f7706ce98637a568771f88f04d03c85c4"
+    },
+    {
+      "name": "dsh-plugin-install",
+      "url": "https://github.com/qinyre/dsh-plugin-install",
+      "npm": "dsh-plugin-install",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/qinyre/dsh-plugin-install/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "4da80696316f01bc7652f62eb3720b8496d937496815895a9aa1f7b8e6851413"
+    },
+    {
+      "name": "dsh-extension-hub",
+      "url": "https://github.com/Relistencode/dsh-extension-hub",
+      "npm": "dsh-extension-hub",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Relistencode/dsh-extension-hub/HEAD/README.md",
+      "sourceSignals": [
+        "awesome-community-registry",
+        "dshfind"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "38433e779dd62918b301188c23fe0bc3ca0787299f48634d52844a614278cb07"
+    },
+    {
+      "name": "dsh-plugin-store",
+      "url": "https://github.com/sandbaseai/dsh-plugin-store",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/sandbaseai/dsh-plugin-store/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "85f2bd2d07ce0907b39beef3fea9dcd766c6b8adda94ff674fdd8249b6014aeb"
+    },
+    {
+      "name": "dsh-webui-market-plugin",
+      "url": "https://github.com/Sanqi-normal/dsh-webui-market-plugin",
+      "npm": "@sanqi-normal/dsh-webui-market-plugin",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Sanqi-normal/dsh-webui-market-plugin/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2531a9b4b6097d23425dd0470e368ca2160ec481666008d8604a2d6e1a20ff74"
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/Scorp1o117/dsh-plugin-marketplace",
+      "npm": "dsh-plugin-marketplace",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Scorp1o117/dsh-plugin-marketplace/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "1c4cafda026e05f87a81ae4f5bfc6ffae99671b174d5fb30c8fb28577d245353"
+    },
+    {
+      "name": "dsh-agent-plugins-market",
+      "url": "https://github.com/Sivan757/dsh-agent-plugins-market",
+      "npm": "dsh-agent-plugins-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Sivan757/dsh-agent-plugins-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "0fbac0199a81c2c93db0fa2824041b1860d2d80450a27984c1bbd1adf4b3236c"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/springbrand-lab/dsh-plugin-market",
+      "npm": "@springbrand/dsh-plugin-marketplace",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/springbrand-lab/dsh-plugin-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "9b55bc9b80082d4d90dab30835b8e17343616f142a65583e05950e1d1b4c9f2b"
+    },
+    {
+      "name": "awesome-dsh",
+      "url": "https://github.com/stakeswky/awesome-dsh",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/stakeswky/awesome-dsh/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b403b6e78a6ede6bbe28615fcb6cefca1ba2b0accc810782dfddb5343d3cdc9f"
+    },
+    {
+      "name": "dsh-plugin-diraud",
+      "url": "https://github.com/tttwh/dsh-plugin-diraud",
+      "npm": "dsh-plugin-diraud",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/tttwh/dsh-plugin-diraud/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "ca8a26493aa523cc0fa5d9306bb5325eff6a1011924ab0886b379cc5c29e891a"
+    },
+    {
+      "name": "dsh-plugin-toggle",
+      "url": "https://github.com/tuogusa/dsh-plugin-toggle",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/tuogusa/dsh-plugin-toggle/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "1e03174c73afa7d068487fcb617fe5148cefb94b1e886ab9745437efc47d3391"
+    },
+    {
+      "name": "universal-plugin-hub",
+      "url": "https://github.com/Ultmebius/universal-plugin-hub",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/Ultmebius/universal-plugin-hub/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "706a77a61a1702093f0659c886eafb061a3848b0a249ba162a799fa2894ec852"
+    },
+    {
+      "name": "plugin-registry#console",
+      "url": "https://github.com/vlln/plugin-registry/tree/main/packages/plugin/console",
+      "npm": "@vlln/plugin-console",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/vlln/plugin-registry/main/packages/plugin/console/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b0e5c3330bcb880c60b51cd9a742b6222141e752842f587ca923a86274dd11ad"
+    },
+    {
+      "name": "experts-management",
+      "url": "https://github.com/weibaohui/experts-management",
+      "npm": "@weibaohui/experts-management",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/weibaohui/experts-management/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "b05b30d0aeba1c349c5a25ab1dfc13cf2f92411f20c6a701b3b776c0be2f4808"
+    },
+    {
+      "name": "dsh-plugin-doctor",
+      "url": "https://github.com/white-sand-grand/dsh-plugin-doctor",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/white-sand-grand/dsh-plugin-doctor/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "5b79e500dca7d1099dd1bd7083aedbb44c6e4a391606b83194944e893150992a"
+    },
+    {
+      "name": "dsh-suite#plugin-manager",
+      "url": "https://github.com/whyihaveyou/dsh-suite/tree/main/packages/plugins/plugin-manager",
+      "npm": "@dsh-suite/plugin-manager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/whyihaveyou/dsh-suite/main/packages/plugins/plugin-manager/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "2fb71df952e88e72fb552e7801ded152724ba497706b0fcc6b948df6f3efd1bc"
+    },
+    {
+      "name": "dsh-expert-market",
+      "url": "https://github.com/yangyizhu8/dsh-expert-market",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/yangyizhu8/dsh-expert-market/HEAD/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "1c20ba0933e0bb4598137f24109867e562225220523b8bc24d73065d520308f2"
+    },
+    {
+      "name": "dsh-plugin-workshop",
+      "url": "https://github.com/yyyyukari/dsh-plugin-workshop",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/yyyyukari/dsh-plugin-workshop/HEAD/README.md",
+      "sourceSignals": [
+        "github-topic"
+      ],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "f85fa1e300141a80c827a27a9bf7ef11352862a5ec9e6ef1b877ed75f5d8e179"
+    },
+    {
+      "name": "dsh-web#packages/dsh-plugin-manager",
+      "url": "https://github.com/zhu1090093659/dsh-web/tree/main/packages/dsh-plugin-manager",
+      "readmeFetched": true,
+      "readmeUrl": "https://raw.githubusercontent.com/zhu1090093659/dsh-web/main/packages/dsh-plugin-manager/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false,
+      "readmeSha256": "539cc7ea79d0659b97d1eb1176dbb8c4e0f0ff7981ed3727ada923606057aa88"
+    },
+    {
+      "name": "dsh-subscribe#plugin",
+      "url": "https://github.com/zoahdev/dsh-subscribe/tree/main/plugin",
+      "npm": "dsh-subscribe",
+      "readmeFetched": false,
+      "readmeUrl": "https://raw.githubusercontent.com/zoahdev/dsh-subscribe/main/plugin/README.md",
+      "sourceSignals": [],
+      "assessment": "README 信号推断，未验证其当前索引或安装器",
+      "listed": false,
+      "installationTested": false
+    }
+  ]
+}

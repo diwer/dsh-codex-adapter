@@ -1,0 +1,374 @@
+{
+  "source": "https://awesome-dsh-plugin.com/plugins.json",
+  "sourceUpdated": "2026-10-14",
+  "sha256": "f443f88ebe23a72342063295032911136075e7cb78b289c31b980c24714b3132",
+  "catalogCount": 4671,
+  "marketCount": 81,
+  "scope": "社区目录 market 分类完整快照；不代表全互联网所有市场均已收录或支持本插件",
+  "plugins": [
+    {
+      "name": "ybkk-AIOS",
+      "url": "https://github.com/01men/ybkk-AIOS"
+    },
+    {
+      "name": "dsh-plugin-mall",
+      "url": "https://github.com/1e0zj/dsh-plugin-mall",
+      "npm": "@1e0zj/dsh-plugin-mall"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/2768651338/dsh-plugin-manager",
+      "npm": "@txc2768651338/dsh-plugin-manager"
+    },
+    {
+      "name": "dsh-feed",
+      "url": "https://github.com/863683348/dsh-feed"
+    },
+    {
+      "name": "dsh-insight",
+      "url": "https://github.com/863683348/dsh-insight",
+      "npm": "dsh-insight"
+    },
+    {
+      "name": "dsh-need-finder",
+      "url": "https://github.com/863683348/dsh-need-finder",
+      "npm": "dsh-need-finder"
+    },
+    {
+      "name": "dsh-plugin-audit",
+      "url": "https://github.com/863683348/dsh-plugin-audit",
+      "npm": "dsh-audit"
+    },
+    {
+      "name": "dsh-plugin-recommend",
+      "url": "https://github.com/863683348/dsh-plugin-recommend",
+      "npm": "dsh-plugin-recommend"
+    },
+    {
+      "name": "dsh-plugin-scorecard",
+      "url": "https://github.com/863683348/dsh-plugin-scorecard"
+    },
+    {
+      "name": "dsh-recipe",
+      "url": "https://github.com/863683348/dsh-recipe"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/99galaxy/dsh-plugin-market",
+      "npm": "@99galaxy/dsh-plugin-market"
+    },
+    {
+      "name": "dsh-forge",
+      "url": "https://github.com/alex04130/dsh-forge"
+    },
+    {
+      "name": "dsh-plugin-console",
+      "url": "https://github.com/AlexYin-Tongji/dsh-plugin-console",
+      "npm": "dsh-plugin-console"
+    },
+    {
+      "name": "dsh-find-plugin",
+      "url": "https://github.com/awesome-dsh-plugin/dsh-find-plugin",
+      "npm": "dsh-find-plugin"
+    },
+    {
+      "name": "huahua-dsh-plugin-orchestra",
+      "url": "https://github.com/azure5100/huahua-dsh-plugin-orchestra"
+    },
+    {
+      "name": "dsh-bridge",
+      "url": "https://github.com/beartackler/dsh-bridge"
+    },
+    {
+      "name": "DSH-Plugins-Marketplace",
+      "url": "https://github.com/bradeGithub/DSH-Plugins-Marketplace"
+    },
+    {
+      "name": "dsh-pluginmanager",
+      "url": "https://github.com/buhuikongpan/dsh-pluginmanager"
+    },
+    {
+      "name": "dsh-plugin-advisor",
+      "url": "https://github.com/ChengxiuCDP/dsh-plugin-advisor"
+    },
+    {
+      "name": "dsh-plugins#to-english",
+      "url": "https://github.com/CREAIT-nl/dsh-plugins/tree/main/to-english",
+      "npm": "@creait/dsh-to-english"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-center",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-center"
+    },
+    {
+      "name": "dsh-plugin-suite#dsh-plugin-updater",
+      "url": "https://github.com/crTnT/dsh-plugin-suite/tree/main/dsh-plugin-updater"
+    },
+    {
+      "name": "dsh-skills-marketplace",
+      "url": "https://github.com/cxdyun/dsh-skills-marketplace",
+      "npm": "dsh-skills-marketplace"
+    },
+    {
+      "name": "plugin-switch",
+      "url": "https://github.com/cynch18/plugin-switch"
+    },
+    {
+      "name": "dsh-starter-pack",
+      "url": "https://github.com/Dariandai/dsh-starter-pack"
+    },
+    {
+      "name": "dsh-agent-plugin-market",
+      "url": "https://github.com/Diluka/dsh-agent-plugin-market"
+    },
+    {
+      "name": "dsh-market",
+      "url": "https://github.com/dsh-market/dsh-market",
+      "npm": "dshmarket"
+    },
+    {
+      "name": "dsh-research",
+      "url": "https://github.com/dsh-research/dsh-research",
+      "npm": "dsh-research"
+    },
+    {
+      "name": "dshhub-market",
+      "url": "https://github.com/dshhub-co/dshhub-market",
+      "npm": "dshhub-market"
+    },
+    {
+      "name": "dsh-plugins-store",
+      "url": "https://github.com/DshMarketPlace/dsh-plugins-store",
+      "npm": "dshmarketplace-plugin"
+    },
+    {
+      "name": "dsh-plugin-panel",
+      "url": "https://github.com/Dylan37670/dsh-plugin-panel"
+    },
+    {
+      "name": "dsh-find-plugins",
+      "url": "https://github.com/Eray114514/dsh-find-plugins",
+      "npm": "dsh-find-plugins"
+    },
+    {
+      "name": "dsh-plugin-ops#dsh-plugin-ops-bundle",
+      "url": "https://github.com/f-infinite-z/dsh-plugin-ops/tree/main/packages/bundle",
+      "npm": "dsh-plugin-ops-bundle"
+    },
+    {
+      "name": "dsh-cli-store",
+      "url": "https://github.com/Harzva/dsh-cli-store"
+    },
+    {
+      "name": "dsh-mall",
+      "url": "https://github.com/hoyyang/dsh-mall",
+      "npm": "dsh-mall"
+    },
+    {
+      "name": "dsh-store",
+      "url": "https://github.com/huguangyu666/dsh-store",
+      "npm": "dsh-store"
+    },
+    {
+      "name": "dsh-plugin-scout",
+      "url": "https://github.com/icefall7/dsh-plugin-scout"
+    },
+    {
+      "name": "find-dsh-plugins",
+      "url": "https://github.com/JazzuLu/find-dsh-plugins"
+    },
+    {
+      "name": "dsh-plugin-manager#cli",
+      "url": "https://github.com/Jesse-njx/dsh-plugin-manager/tree/main/packages/cli"
+    },
+    {
+      "name": "dsh-dejaview",
+      "url": "https://github.com/jiang4wqy/dsh-dejaview"
+    },
+    {
+      "name": "dsh-unified-market",
+      "url": "https://github.com/jing-hy/dsh-unified-market",
+      "npm": "dsh-unified-market"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/kimiya1010/dsh-plugin-market"
+    },
+    {
+      "name": "dsh-skin-market",
+      "url": "https://github.com/kingOfSoySauce/dsh-skin-market",
+      "npm": "dsh-skin-market"
+    },
+    {
+      "name": "dsh-theme-switch",
+      "url": "https://github.com/kinmat-A/dsh-theme-switch"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/kkkkkklze/dsh-plugin-manager"
+    },
+    {
+      "name": "dsh-vibe-pack",
+      "url": "https://github.com/LeemanCheung/dsh-vibe-pack"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/liqichen/dsh-plugin-manager"
+    },
+    {
+      "name": "dsh-local-installer",
+      "url": "https://github.com/ljh257110/dsh-local-installer",
+      "npm": "dsh-local-installer"
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/LKMeng2001/dsh-mcp-market",
+      "npm": "dsh-mcp-market"
+    },
+    {
+      "name": "dsh-workshop",
+      "url": "https://github.com/loguhan/dsh-workshop"
+    },
+    {
+      "name": "dsh-plugins-hub",
+      "url": "https://github.com/maryasov/dsh-plugins-hub"
+    },
+    {
+      "name": "dsh-plugin-center",
+      "url": "https://github.com/Max-Null/dsh-plugin-center",
+      "npm": "@max-null/dsh-plugin-center"
+    },
+    {
+      "name": "dsh-stock-mentions",
+      "url": "https://github.com/mingzeng21/dsh-stock-mentions",
+      "npm": "dsh-stock-mentions"
+    },
+    {
+      "name": "dsh-mcp-market",
+      "url": "https://github.com/Mrxieyong/dsh-mcp-market"
+    },
+    {
+      "name": "dsh-archive-manager",
+      "url": "https://github.com/MS666666/dsh-archive-manager",
+      "npm": "dsh-archive-manager-plus"
+    },
+    {
+      "name": "DSH-Plugin-Market",
+      "url": "https://github.com/nanshan1995/DSH-Plugin-Market"
+    },
+    {
+      "name": "dsh-plugin-manager",
+      "url": "https://github.com/nonentity303/dsh-plugin-manager",
+      "npm": "dsh-plugin-manager-pro"
+    },
+    {
+      "name": "dsh-employee",
+      "url": "https://github.com/open-dshai/dsh-employee"
+    },
+    {
+      "name": "dsh-deepatlas",
+      "url": "https://github.com/Oscar-Williams/dsh-deepatlas"
+    },
+    {
+      "name": "dsh-plugin-mgr",
+      "url": "https://github.com/oxlyn/dsh-plugin-mgr",
+      "npm": "dsh-plugin-mgr"
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/PetCT/dsh-plugin-marketplace"
+    },
+    {
+      "name": "dsh-skill-market",
+      "url": "https://github.com/pn1024/dsh-skill-market",
+      "npm": "dsh-skill-market"
+    },
+    {
+      "name": "dsh-plugin-install",
+      "url": "https://github.com/qinyre/dsh-plugin-install",
+      "npm": "dsh-plugin-install"
+    },
+    {
+      "name": "dsh-extension-hub",
+      "url": "https://github.com/Relistencode/dsh-extension-hub",
+      "npm": "dsh-extension-hub"
+    },
+    {
+      "name": "dsh-plugin-store",
+      "url": "https://github.com/sandbaseai/dsh-plugin-store"
+    },
+    {
+      "name": "dsh-webui-market-plugin",
+      "url": "https://github.com/Sanqi-normal/dsh-webui-market-plugin",
+      "npm": "@sanqi-normal/dsh-webui-market-plugin"
+    },
+    {
+      "name": "dsh-plugin-marketplace",
+      "url": "https://github.com/Scorp1o117/dsh-plugin-marketplace",
+      "npm": "dsh-plugin-marketplace"
+    },
+    {
+      "name": "dsh-agent-plugins-market",
+      "url": "https://github.com/Sivan757/dsh-agent-plugins-market",
+      "npm": "dsh-agent-plugins-market"
+    },
+    {
+      "name": "dsh-plugin-market",
+      "url": "https://github.com/springbrand-lab/dsh-plugin-market",
+      "npm": "@springbrand/dsh-plugin-marketplace"
+    },
+    {
+      "name": "awesome-dsh",
+      "url": "https://github.com/stakeswky/awesome-dsh"
+    },
+    {
+      "name": "dsh-plugin-diraud",
+      "url": "https://github.com/tttwh/dsh-plugin-diraud",
+      "npm": "dsh-plugin-diraud"
+    },
+    {
+      "name": "dsh-plugin-toggle",
+      "url": "https://github.com/tuogusa/dsh-plugin-toggle"
+    },
+    {
+      "name": "universal-plugin-hub",
+      "url": "https://github.com/Ultmebius/universal-plugin-hub"
+    },
+    {
+      "name": "plugin-registry#console",
+      "url": "https://github.com/vlln/plugin-registry/tree/main/packages/plugin/console",
+      "npm": "@vlln/plugin-console"
+    },
+    {
+      "name": "experts-management",
+      "url": "https://github.com/weibaohui/experts-management",
+      "npm": "@weibaohui/experts-management"
+    },
+    {
+      "name": "dsh-plugin-doctor",
+      "url": "https://github.com/white-sand-grand/dsh-plugin-doctor"
+    },
+    {
+      "name": "dsh-suite#plugin-manager",
+      "url": "https://github.com/whyihaveyou/dsh-suite/tree/main/packages/plugins/plugin-manager",
+      "npm": "@dsh-suite/plugin-manager"
+    },
+    {
+      "name": "dsh-expert-market",
+      "url": "https://github.com/yangyizhu8/dsh-expert-market"
+    },
+    {
+      "name": "dsh-plugin-workshop",
+      "url": "https://github.com/yyyyukari/dsh-plugin-workshop"
+    },
+    {
+      "name": "dsh-web#packages/dsh-plugin-manager",
+      "url": "https://github.com/zhu1090093659/dsh-web/tree/main/packages/dsh-plugin-manager"
+    },
+    {
+      "name": "dsh-subscribe#plugin",
+      "url": "https://github.com/zoahdev/dsh-subscribe/tree/main/plugin",
+      "npm": "dsh-subscribe"
+    }
+  ]
+}

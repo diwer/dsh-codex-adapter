@@ -1,0 +1,134 @@
+{
+  "name": "dsh-codex-official-adapter",
+  "version": "0.1.0",
+  "description": "ChatGPT subscription model provider for DeepSeek Harness desktop, with image input and host tool calling. Community plugin; not affiliated with OpenAI or DeepSeek.",
+  "type": "module",
+  "private": false,
+  "engines": {
+    "node": ">=22.19"
+  },
+  "exports": {
+    ".": "./src/desktop-plugin.mjs",
+    "./core": "./src/adapter.mjs",
+    "./auth": "./src/auth/index.mjs",
+    "./client": "./lib/client.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "verify": "npm run check && npm test",
+    "test:runtime": "node --test test-runtime/*.test.mjs",
+    "test:desktop": "node scripts/test-desktop.mjs",
+    "test:protocol": "node scripts/test-protocol.mjs",
+    "test:protocol:diagnostic": "node scripts/test-protocol.mjs --diagnostic",
+    "market:check": "node scripts/market-check.mjs",
+    "market:prepare": "node scripts/prepare-market-release.mjs",
+    "market:discover": "node scripts/discover-markets.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "~3.18.4"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.4",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "3.18.4"
+  },
+  "main": "./src/desktop-plugin.mjs",
+  "files": [
+    "src",
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "docs/AUTH.md",
+    "docs/COMPATIBILITY.md",
+    "docs/SOURCES.md",
+    "docs/PRIVACY.md",
+    "docs/MARKET_PUBLISHING.md",
+    "market/discovery-2026-10-15.json",
+    "market/coverage-2026-10-15.json",
+    "RELEASE_NOTES.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ],
+      "platform": "web"
+    },
+    "catalog": {
+      "category": "provider",
+      "summary": {
+        "en": "ChatGPT subscription models in DeepSeek Harness desktop, with image input, host tools and DeepSeek/GPT switching.",
+        "zh": "在 DeepSeek Harness 桌面版使用 ChatGPT 订阅模型，支持图片输入、宿主工具和 DeepSeek/GPT 切换。"
+      },
+      "capabilities": [
+        "llm",
+        "connection",
+        "attachments",
+        "agentDefaultModel"
+      ]
+    },
+    "compatibility": {
+      "dsh": "0.2.0-rc.2",
+      "profiles": [
+        "desktop"
+      ]
+    }
+  },
+  "dependencies": {
+    "undici": "8.11.2"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "cordis-plugin",
+    "chatgpt",
+    "gpt",
+    "codex",
+    "llm-provider",
+    "oauth",
+    "desktop",
+    "vision"
+  ],
+  "disclosure": {
+    "cloud": true,
+    "network": [
+      "https://auth.openai.com",
+      "https://api.openai.com"
+    ],
+    "offlineMode": false,
+    "apiKeys": [],
+    "credentials": {
+      "type": "OAuth with PKCE",
+      "storage": "file-0600",
+      "directoryMode": "0700",
+      "encryptedAtRest": false,
+      "logged": false
+    },
+    "permissions": [
+      "network: OpenAI authorization and inference",
+      "filesystem: plugin-owned credential directory",
+      "attachments: selected conversation images through the host",
+      "settings: optional default model preference"
+    ],
+    "retention": "Local authorization persists until logout; request store=false; upstream retention is governed by OpenAI."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diwer/dsh-codex-adapter.git"
+  },
+  "homepage": "https://github.com/diwer/dsh-codex-adapter#readme",
+  "bugs": {
+    "url": "https://github.com/diwer/dsh-codex-adapter/issues"
+  }
+}

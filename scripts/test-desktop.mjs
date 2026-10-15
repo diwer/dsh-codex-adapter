@@ -1,0 +1,10 @@
+import {spawnSync} from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const application=process.env.DSH_DESKTOP_EXECUTABLE??'/Applications/DeepSeek Harness.app/Contents/MacOS/DeepSeek Harness';
+const loader=path.join(root,'scripts/desktop-runtime-loader.mjs');
+if(!fs.existsSync(application))throw new Error('Set DSH_DESKTOP_EXECUTABLE to the installed DeepSeek Harness executable.');
+const result=spawnSync(application,['--expose-internals','--import',loader,'--test','test-runtime/desktop.test.mjs','test-runtime/runtime.test.mjs'],{cwd:root,env:{...process.env,ELECTRON_RUN_AS_NODE:'1'},stdio:'inherit'});
+process.exitCode=result.status??1;

@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {prepareImages} from '../src/images.mjs';
+import {buildRequest} from '../src/request.mjs';
+import {options} from './helpers.mjs';
+const ref={attachmentId:'sha256:test',width:120,height:80,name:'probe.png'};
+const image={type:'image',attachment:ref};
+const store={readImageRequest:async()=>({mediaType:'image/png',data:new Uint8Array([1,2,3])})};
+test('mixed text and images preserve order and original durable history',async()=>{const input=options({messages:[{role:'user',content:[{type:'text',text:'read this'},image,{type:'text',text:'then explain'}]}]});const original=structuredClone(input);const prepared=await prepareImages(input,store);const body=buildRequest(prepared.options,{images:prepared.images});assert.deepEqual(body.input[0].content,[{type:'input_text',text:'read this'},{type:'input_image',image_url:'data:image/png;base64,AQID',detail:'auto'},{type:'input_text',text:'then explain'}]);assert.deepEqual(input,original);});
+test('duplicate references resolve once while every occurrence is retained',async()=>{let calls=0;const prepared=await prepareImages(options({messages:[{role:'user',content:[image,image]}]}),{readImageRequest:async()=>{calls++;return store.readImageRequest();}});assert.equal(calls,1);assert.equal(buildRequest(prepared.options,{images:prepared.images}).input[0].content.length,2);});
+test('offloaded images use explicit text without reading attachment bytes',async()=>{const prepared=await prepareImages(options({messages:[{role:'user',content:[{...image,offloaded:true}]}]}));assert.equal(prepared.images.size,0);assert.match(buildRequest(prepared.options).input[0].content,/此前图片已卸载/);});
+test('missing service, invalid media, and unsupported image roles fail before transmission',async()=>{const input=options({messages:[{role:'user',content:[image]}]});await assert.rejects(prepareImages(input),{code:'UNSUPPORTED_CAPABILITY'});await assert.rejects(prepareImages(input,{readImageRequest:async()=>({mediaType:'text/html',data:new Uint8Array([1])})}),{code:'INVALID_IMAGE'});await assert.rejects(prepareImages(options({messages:[{role:'assistant',content:[image]}]}),store),{code:'UNSUPPORTED_CAPABILITY'});});
+test('image count and actual byte limits are bounded',async()=>{await assert.rejects(prepareImages(options({messages:[{role:'user',content:Array(21).fill(image)}]}),store),{code:'IMAGE_LIMIT'});await assert.rejects(prepareImages(options({messages:[{role:'user',content:[image]}]}),{readImageRequest:async()=>({mediaType:'image/png',data:new Uint8Array(8*1024*1024+1)})}),{code:'INVALID_IMAGE'});});
+test('abort after attachment resolution prevents request building',async()=>{const controller=new AbortController();await assert.rejects(prepareImages(options({messages:[{role:'user',content:[image]}]}),{readImageRequest:async()=>{controller.abort();return store.readImageRequest();}},controller.signal),{name:'AbortError'});});
