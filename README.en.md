@@ -28,7 +28,7 @@ Requires **DeepSeek Harness desktop 0.2.0-rc.2 on macOS** and a ChatGPT account 
 1. Open **Plugins → Add plugin** and enter:
 
    ```text
-   dsh-codex-official-adapter@0.1.4
+   dsh-codex-official-adapter@0.1.5
    ```
 
    Select the **official npm registry (https://registry.npmjs.org/)** and click **Install**. Once current tasks finish, fully quit and reopen Harness. If installation fails, see [alternative installation methods](docs/INSTALLATION.md#其他安装方式).
@@ -41,7 +41,7 @@ Requires **DeepSeek Harness desktop 0.2.0-rc.2 on macOS** and a ChatGPT account 
 
 **Which product does this plugin support?** DeepSeek Harness only. It cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. The currently validated host is Harness desktop 0.2.0-rc.2 on macOS.
 
-**How do I use my ChatGPT subscription in DeepSeek Harness?** Install `dsh-codex-official-adapter@0.1.4`, connect your own ChatGPT account in settings, and choose a model under ChatGPT plan. No API key is required. Your account determines model access and usage limits.
+**How do I use my ChatGPT subscription in DeepSeek Harness?** Install `dsh-codex-official-adapter@0.1.5`, connect your own ChatGPT account in settings, and choose a model under ChatGPT plan. No API key is required. Your account determines model access and usage limits.
 
 **Can I install from GitHub?** The source is at `https://github.com/diwer/dsh-codex-adapter`. Installer support varies across hosts and marketplaces; prefer the exact package name and version above.
 

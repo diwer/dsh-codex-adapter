@@ -1,0 +1,13 @@
+{
+  "file": "lib/assets/big-fish-codex.png",
+  "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/b635f282840042560891a6a10317e75d12e29a90/lib/assets/big-fish-codex.png",
+  "sha256": "c3055b0411a7b67769d2f72b5391db3d7c2803c74591fee12e618b6a9fd5dcd0",
+  "mimeType": "image/png",
+  "width": 1254,
+  "height": 1254,
+  "bytes": 2237309,
+  "alt": {
+    "zh": "DSH ChatGPT Adapter：大肥鱼指挥 Codex",
+    "en": "DSH ChatGPT Adapter: Big Fish directing Codex"
+  }
+}

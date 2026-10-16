@@ -2,6 +2,11 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## v0.1.5
+
+- 对齐 npm 官方源最新已发布版本，保持授权回调、代理与账户重连修复。
+- 同步市场安装入口与项目 icon 的公开引用。
+
 ## v0.1.4
 
 - 退出后重新连接复用原账户注册，已退出的历史记录不再占用账户列表；支持单独选择“使用其他账户”。

@@ -1,5 +1,6 @@
 import {readFile,writeFile,mkdir,rm} from 'node:fs/promises';
 import path from 'node:path';
+import {MARKET_ICON} from './market-icon.mjs';
 import {awesomeEntry,repositoryIdentity,TOPICS} from './market-common.mjs';
 
 export function marketArtifacts(pkg,{publicSource}={}) {
@@ -28,7 +29,7 @@ export function marketArtifacts(pkg,{publicSource}={}) {
       support_versions:pkg.dsh.compatibility.dsh,urls:{homepage:pkg.homepage,repository:repo.url,issues:`${repo.url}/issues`}}),
     'cyber-moshen/catalog-entry.json':json({url:repo.url,tags:['ChatGPT','GPT','模型接入'],npm:pkg.name}),
     'radar/PLUGINS-row.md':`| ${repo.name} | [${repo.owner}/${repo.name}](${repo.url}) | ${pkg.dsh.catalog.summary.zh.replaceAll('|','／')}（desktop ${pkg.dsh.compatibility.dsh}；npm ${pkg.name}@${pkg.version}） | 待测 |\n`,
-    'manual-submission.json':json({repository:repo.url,package:pkg.name,version:pkg.version,
+    'manual-submission.json':json({repository:repo.url,package:pkg.name,version:pkg.version,icon:MARKET_ICON.url,iconAlt:MARKET_ICON.alt,
       description:pkg.dsh.catalog.summary,license:pkg.license,compatibility:pkg.dsh.compatibility,
       install:`dsh plugin --profile desktop add ${pkg.name}@${pkg.version} --registry=https://registry.npmjs.org/`,
       tarball,privacy:`${repo.url}/blob/main/docs/PRIVACY.md`,submitted:false,reviewed:false}),
