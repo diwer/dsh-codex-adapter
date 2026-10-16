@@ -19,6 +19,7 @@
 - **图片与工具一起用**：向支持图片的模型提问，使用 Harness 内置工具读取文件、编辑代码、搜索和运行命令。
 - **思考强度可调**：在模型菜单中选择推理等级，档位与默认值自动匹配当前模型。
 - **连接后即可选模型**：自动加载当前账户的可用模型，支持添加和切换多个账户。
+- **插件独立代理**：在订阅设置页选择直连、环境变量或自定义 HTTP(S) 代理，支持测试连接，保存后立即生效。
 - **免费开源**：MIT 许可；插件不额外收费。模型权限与使用额度取决于你的 ChatGPT 账户。
 
 ## 快速开始
@@ -30,7 +31,7 @@
 在 **Plugins → Add plugin** 中填入：
 
 ```text
-dsh-codex-official-adapter@0.1.7
+dsh-codex-official-adapter@0.1.8
 ```
 
 Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。完成后，等当前任务结束，完全退出并重新打开 Harness。
@@ -51,7 +52,7 @@ Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **In
 
 **这个插件支持哪个产品？** 仅支持 DeepSeek Harness。DeepSeek 普通网页版、手机 App 和普通聊天桌面客户端不支持安装本插件。支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；当前实测基线为 0.2.0-rc.2。
 
-**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.7`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
+**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.8`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
 
 **可以直接填 GitHub 地址吗？** 这是源码地址：`https://github.com/diwer/dsh-codex-adapter`。不同宿主与市场的安装器支持有差异，日常安装建议使用上面的明确包名与版本。
 

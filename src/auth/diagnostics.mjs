@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import {AuthError} from './errors.mjs';
 
-const EVENTS=new Set(['runtime_started','login_started','listener_ready','authorization_ready','callback_received','callback_validated','request_started','request_succeeded','request_failed','token_response_received','token_response_validated','id_token_validated','credentials_saved','login_succeeded','login_failed','listener_closed']);
+const EVENTS=new Set(['runtime_started','network_updated','login_started','listener_ready','authorization_ready','callback_received','callback_validated','request_started','request_succeeded','request_failed','token_response_received','token_response_validated','id_token_validated','credentials_saved','login_succeeded','login_failed','listener_closed']);
 const STAGES=new Set(['discovery','token','jwks','revocation','callback','token_response','id_token','credential_store']);
 
 /** Allowlisted metadata only: never serialize provider bodies, URLs, identities or tokens. */

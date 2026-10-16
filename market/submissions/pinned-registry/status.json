@@ -1,5 +1,5 @@
 {
-  "targetVersion": "0.1.7",
+  "targetVersion": "0.1.8",
   "sourceVersion": "0.1.5",
   "ready": false,
   "reason": "本地目标版本尚无匹配的公开 commit 证据；格式适配已实现，发布后重新核对。"
