@@ -117,10 +117,12 @@ export function itemToBlock(item) {
     case 'reasoning': {
       if (!Array.isArray(item.summary)) throw protocol();
       if (typeof item.encrypted_content !== 'string' || !item.encrypted_content) throw protocol('Stateless reasoning is missing replayable encrypted content.');
-      return {type:'reasoning', text:item.summary.map(part => {
+      const summary = item.summary.map(part => {
         if (part.type !== 'summary_text' || typeof part.text !== 'string') throw protocol();
         return part.text;
-      }).join('')};
+      }).join('');
+      if (item.content !== undefined && (!Array.isArray(item.content) || item.content.some(part => part?.type !== 'reasoning_text' || typeof part.text !== 'string'))) throw protocol('Invalid completed reasoning content.');
+      return {type:'reasoning', text:summary || (item.content ?? []).map(part => part.text).join('')};
     }
     case 'function_call':
       if (item.namespace !== TOOL_NAMESPACE || typeof item.call_id !== 'string' || !item.call_id || typeof item.name !== 'string' || !item.name || typeof item.arguments !== 'string') throw protocol('The provider returned an invalid or unexpected tool call.');

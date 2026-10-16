@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/diwer/dsh-codex-adapter",
   "package": "dsh-codex-official-adapter",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "icon": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/b635f282840042560891a6a10317e75d12e29a90/lib/assets/big-fish-codex.png",
   "iconAlt": {
     "zh": "DSH ChatGPT Adapter：大肥鱼指挥 Codex",
@@ -18,8 +18,8 @@
       "desktop"
     ]
   },
-  "install": "dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.5 --registry=https://registry.npmjs.org/",
-  "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.5/dsh-codex-official-adapter-0.1.5.tgz",
+  "install": "dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.6 --registry=https://registry.npmjs.org/",
+  "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.6/dsh-codex-official-adapter-0.1.6.tgz",
   "privacy": "https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md",
   "submitted": false,
   "reviewed": false

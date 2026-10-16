@@ -1,5 +1,5 @@
 import { isDeepStrictEqual } from 'node:util';
-import { protocol, providerError } from './errors.mjs';
+import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
 import { digest, itemToBlock, REPLAY_VERSION, TOOL_NAMESPACE } from './request.mjs';
 
 /** One response stream translated into paired DSH blocks and lossless replay entries. */
@@ -11,6 +11,7 @@ export class ResponseStream {
     this.states = new Map();
     this.maxOutputChars = maxOutputChars;
     this.outputChars = 0;
+    this.reasoningChars = 0;
     this.maxReplayBytes = maxReplayBytes;
     this.replayBytes = 0;
     this.completed = false;
@@ -50,6 +51,7 @@ export class ResponseStream {
     const state = this.states.get(index);
     if (!state || state.closed || item?.id !== state.id || item.type !== state.kind) throw protocol('Output completion did not match the open item.');
     const block = itemToBlock(item);
+    if (state.hasReasoningText && !block.text && block.type === 'reasoning') throw protocol('The completed reasoning item omitted its streamed content.');
     if (block.type === 'tool-call' && (!this.toolNames.has(block.name) || item.call_id !== state.initial.call_id || item.name !== state.initial.name)) throw protocol('The provider changed a tool identity during streaming.');
     const finalText = block.type === 'tool-call' ? block.arguments : block.text;
     if (!finalText.startsWith(state.text)) throw protocol('Completed output did not match streamed output.');
@@ -71,6 +73,24 @@ export class ResponseStream {
       case 'response.output_text.delta':
       case 'response.refusal.delta': return this.delta(event, 'text');
       case 'response.reasoning_summary_text.delta': return this.delta(event, 'reasoning');
+      case 'response.reasoning_text.delta':
+      case 'response.reasoning_text.done': {
+        const state = this.state(event);
+        const text = event.type.endsWith('.delta') ? event.delta : event.text;
+        if (state.kind !== 'reasoning' || typeof text !== 'string' || !Number.isSafeInteger(event.content_index) || event.content_index < 0 || event.content_index < (state.lastReasoningPart ?? -1)) throw protocol('Invalid reasoning text event.');
+        state.lastReasoningPart = event.content_index;
+        state.hasReasoningText ||= text.length > 0;
+        // Summary and full reasoning are distinct tracks. Project the final item
+        // so interleaved tracks never duplicate or corrupt the visible summary.
+        if (event.type.endsWith('.delta')) this.reasoningChars += text.length;
+        if (this.reasoningChars > this.maxOutputChars || text.length > this.maxOutputChars) throw protocol('The response exceeded the configured output size limit.');
+        return [];
+      }
+      case 'response.output_text.annotation.added':
+        if (this.state(event).kind !== 'message') throw protocol('An annotation referenced a non-message item.');
+        // Annotations are retained losslessly in the completed item/replay.
+        return [];
+      case 'rate_limits.updated': return [];
       case 'response.function_call_arguments.delta': return this.delta(event, 'tool-call');
       case 'response.output_item.done': return this.done(event.output_index, event.item);
       case 'response.failed': throw providerError(undefined, event.response, this.headers);
@@ -81,7 +101,10 @@ export class ResponseStream {
       default:
         // Lifecycle and part-completion events carry no additional model-visible content.
         if (/^response\.(created|in_progress|queued)$/.test(event.type) || /^response\.(content_part|reasoning_summary_part)\.(added|done)$/.test(event.type) || /^response\.(output_text|refusal|reasoning_summary_text|function_call_arguments)\.done$/.test(event.type)) return [];
-        throw protocol('An unsupported provider event was received.');
+        {
+          const providerEvent = safeCode(event.type);
+          throw new AdapterError(`An unsupported provider event was received${providerEvent ? ` (${providerEvent})` : ''}.`, 'PROTOCOL_ERROR', {providerEvent,requestId:safeCode(this.headers.get('x-request-id'))});
+        }
     }
   }
   finish(response) {
