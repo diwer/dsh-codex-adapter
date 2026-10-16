@@ -6,6 +6,7 @@
 
 | 渠道 | 实际接入方式 | 核对依据 |
 | --- | --- | --- |
+| Harness 内置插件管理页 | `package.json` 声明本地 `icon`，导出 `./package.json` 与 `./icon`；使用 256×256、低于 256 KiB 的 `lib/assets/plugin-icon.png` | 宿主 `readPluginMeta` 读取包内资源，缺失时显示默认图标；市场投稿图片 URL 不代替这份声明。 |
 | 作者目录 / 官网 | 作者目录已有 icon 字段；通用投稿材料补充公开图片与替代文本 | [作者目录](https://diwer.github.io/dsh-codex-adapter/market/plugins.json) |
 | awesome 社区 | YAML 不添加未支持字段；原 PR 说明展示图片 | [投稿规范](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/contributing.md) |
 | 1024 Store | schema 不允许 icon 字段；保留仓库/npm 身份，通过 README 提供图片 | [schema](https://github.com/imsai-sh/awesome-deepseek-harness-plugins/blob/main/catalog/schema/plugin.schema.json) |
