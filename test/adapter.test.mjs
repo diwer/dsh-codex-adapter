@@ -4,6 +4,27 @@ import {PROVIDER, API_ORIGIN} from '../src/adapter.mjs';
 import {Adapter, options, textItem, toolItem, reasonItem, complete, response, collect, makeAdapter} from './helpers.mjs';
 import {usageFromResponse} from '../src/stream.mjs';
 
+test('subscription metadata can precede and interleave output without changing chunks or replay',async()=>{
+  const baseline=await collect(makeAdapter(events).adapter.stream(options()));
+  const metadata={type:'response.metadata',metadata:{advisory:'PRIVATE_METADATA'},response:{status:'completed',output:[toolItem('undeclared')]}};
+  const {adapter,calls}=makeAdapter(events.flatMap(event=>[metadata,event]));
+  const chunks=await collect(adapter.stream(options()));assert.deepEqual(chunks,baseline);assert.equal(calls.length,1);
+  assert.equal(JSON.stringify(chunks).includes('PRIVATE_METADATA'),false);
+});
+test('subscription metadata alone cannot finish a turn and only retries an empty stream once',async()=>{
+  const {adapter,calls}=makeAdapter([{type:'response.metadata',metadata:{status:'completed'}}]);
+  const seen=[];await assert.rejects(async()=>{for await(const chunk of adapter.stream(options()))seen.push(chunk);},{code:'STREAM_INTERRUPTED'});
+  assert.equal(calls.length,2);assert.deepEqual(seen,[]);
+});
+test('subscription metadata cannot complete or replay a partial tool call or hide provider failure',async()=>{
+  const partial=[{type:'response.output_item.added',output_index:0,item:{...toolItem(),arguments:'',status:'in_progress'}},{type:'response.metadata',metadata:{status:'completed'}}];
+  for(const [last,code] of [[[], 'STREAM_INTERRUPTED'],[[{type:'response.failed',response:{error:{code:'server_error'}}}], 'PROVIDER_HTTP_ERROR']]){
+    const {adapter,calls}=makeAdapter([...partial,...last]);const seen=[];
+    await assert.rejects(async()=>{for await(const chunk of adapter.stream(options({tools:[tool]})))seen.push(chunk);},{code});
+    assert.equal(calls.length,1);assert.equal(seen.some(chunk=>chunk.type==='finish'||chunk.type==='block-end'),false);
+  }
+});
+
 test('reasoning body events coexist with summary without duplicate output',async()=>{
   const item={...reasonItem(),content:[{type:'reasoning_text',text:'Full reasoning.'}]};
   const {adapter}=makeAdapter([

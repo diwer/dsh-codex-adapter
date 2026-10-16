@@ -90,6 +90,9 @@ export class ResponseStream {
         if (this.state(event).kind !== 'message') throw protocol('An annotation referenced a non-message item.');
         // Annotations are retained losslessly in the completed item/replay.
         return [];
+      // Subscription-route sideband metadata is advisory, never a terminal
+      // response or a source of output/tool work. Completion stays mandatory.
+      case 'response.metadata':
       case 'rate_limits.updated': return [];
       case 'response.function_call_arguments.delta': return this.delta(event, 'tool-call');
       case 'response.output_item.done': return this.done(event.output_index, event.item);
