@@ -2,7 +2,11 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布
+## v0.1.8
+
+- 发布日期：2026-10-16。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
+- 版本标记：[`v0.1.8`](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.8)（对应提交以 Tag 为准）。
 
 - 在 ChatGPT 订阅设置中新增独立代理：跟随环境变量、直连、自定义 HTTP(S) 代理。
 - 支持测试未保存的代理配置，分别检查授权和模型服务可达性，不发送账户凭证或消耗模型额度。
