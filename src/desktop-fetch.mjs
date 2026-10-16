@@ -3,8 +3,8 @@ import {EnvHttpProxyAgent,fetch} from 'undici';
 import {AuthError} from './auth/errors.mjs';
 
 /** Per-plugin TLS trust: Node roots plus OS-trusted certificates; no global dispatcher changes. */
-export function createDesktopFetch({proxyUrl='',getCertificates=getCACertificates,AgentClass=EnvHttpProxyAgent,fetchImpl=fetch}={}){
-  if(typeof proxyUrl!=='string')throw new AuthError('invalid_options');
+export function createDesktopFetch({proxyUrl='',proxyMode=proxyUrl?'proxy':'environment',getCertificates=getCACertificates,AgentClass=EnvHttpProxyAgent,fetchImpl=fetch}={}){
+  if(typeof proxyUrl!=='string'||!['environment','direct','proxy'].includes(proxyMode)||(proxyMode==='proxy'&&!proxyUrl)||(proxyMode!=='proxy'&&proxyUrl))throw new AuthError('invalid_options');
   if(proxyUrl){
     try{const proxy=new URL(proxyUrl);if(!['http:','https:'].includes(proxy.protocol)||!proxy.hostname||proxy.pathname!=='/'||proxy.search||proxy.hash)throw new Error();}
     catch{throw new AuthError('invalid_options');}
@@ -16,7 +16,7 @@ export function createDesktopFetch({proxyUrl='',getCertificates=getCACertificate
   const allProxy=process.env.all_proxy??process.env.ALL_PROXY;
   const fallback=/^https?:\/\//i.test(allProxy??'')?allProxy:undefined;
   const dispatcher=new AgentClass({connect:tls,requestTls:tls,proxyTls:tls,
-    ...(proxyUrl?{httpProxy:proxyUrl,httpsProxy:proxyUrl,noProxy:''}:{
+    ...(proxyMode==='direct'?{httpProxy:'',httpsProxy:'',noProxy:'*'}:proxyUrl?{httpProxy:proxyUrl,httpsProxy:proxyUrl,noProxy:''}:{
       httpProxy:process.env.http_proxy??process.env.HTTP_PROXY??fallback,
       httpsProxy:process.env.https_proxy??process.env.HTTPS_PROXY??process.env.http_proxy??process.env.HTTP_PROXY??fallback,
     })});

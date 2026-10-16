@@ -27,11 +27,55 @@ async function mount(initial,handlers={}){
   vm.runInNewContext(source,context,{filename:'lib/client.js'});
   async function flush(){for(let i=0;i<10;i++){if(dirty){cursor=0;dirty=false;tree=Settings();while(effects.length)effects.shift()();}await new Promise(resolve=>setImmediate(resolve));if(!dirty)return;}throw Error('Component did not settle.');}
   await flush();
-  return {get tree(){return tree;},calls,flush,setStatus(value){status=value;},async poll(){await interval();await flush();},async click(node){assert.ok(node,'Control should exist');assert.ok(!node.props.disabled,'Control should be enabled');await node.props.onClick();await flush();},unmount(){for(const hook of hooks)hook?.cleanup?.();}};
+  return {get tree(){return tree;},calls,flush,setStatus(value){status=value;},async poll(){await interval();await flush();},async change(node,value){assert.ok(node);assert.ok(!node.props.disabled);node.props.onChange({target:{value}});await flush();},async click(node){assert.ok(node,'Control should exist');assert.ok(!node.props.disabled,'Control should be enabled');await node.props.onClick();await flush();},unmount(){for(const hook of hooks)hook?.cleanup?.();}};
 }
 function nodes(tree,predicate){if(!tree||typeof tree!=='object')return [];return [...(predicate(tree)?[tree]:[]),...tree.children.flatMap(child=>nodes(child,predicate))];}
 function text(tree){if(typeof tree==='string'||typeof tree==='number')return String(tree);return tree&&tree.type!=='style'?tree.children.map(text).join(''):'';}
 function button(ui,label){return nodes(ui.tree,node=>node.type==='button'&&text(node)===label)[0];}
+function field(ui,id){return nodes(ui.tree,node=>node.props.id===id)[0];}
+
+test('independent proxy drafts survive status polling and save immediately refreshes model discovery',async()=>{
+  const status={...ready(),network:{mode:'environment',proxyUrl:''}};
+  const ui=await mount(status,{network:async value=>{status.network=value;return value;}});
+  try{
+    await ui.change(field(ui,'cgp-network-mode'),'proxy');
+    await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
+    await ui.poll();assert.equal(field(ui,'cgp-proxy-url').props.value,'http://127.0.0.1:8080');
+    await ui.click(button(ui,'保存并应用'));
+    assert.deepEqual(ui.calls.find(call=>call.action==='network').body,{mode:'proxy',proxyUrl:'http://127.0.0.1:8080'});
+    assert.match(text(ui.tree),/已保存并立即生效/);
+    assert.equal(ui.calls.filter(call=>call.action==='models').length,2);
+  }finally{ui.unmount();}
+});
+
+test('proxy connection tests use the current draft without saving it',async()=>{
+  const ui=await mount({phase:'not-signed-in',accounts:[],network:{mode:'environment',proxyUrl:''}},{'network-test':async()=>({ok:true,checks:[{service:'authorization',ok:true,durationMs:10},{service:'models',ok:true,durationMs:20}]})});
+  try{
+    await ui.change(field(ui,'cgp-network-mode'),'proxy');await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
+    await ui.click(button(ui,'测试连接'));
+    assert.deepEqual(ui.calls.find(call=>call.action==='network-test').body,{mode:'proxy',proxyUrl:'http://127.0.0.1:8080'});
+    assert.equal(ui.calls.some(call=>call.action==='network'),false);assert.match(text(ui.tree),/授权服务和模型服务均可连接/);
+  }finally{ui.unmount();}
+});
+
+test('switching to direct mode clears the saved proxy URL',async()=>{
+  const status={...ready(),network:{mode:'proxy',proxyUrl:'http://127.0.0.1:8080'}};
+  const ui=await mount(status,{network:async value=>{status.network=value;return value;}});
+  try{
+    await ui.change(field(ui,'cgp-network-mode'),'direct');assert.equal(field(ui,'cgp-proxy-url'),undefined);
+    await ui.click(button(ui,'保存并应用'));assert.deepEqual(ui.calls.find(call=>call.action==='network').body,{mode:'direct',proxyUrl:''});
+  }finally{ui.unmount();}
+});
+
+test('proxy save and connectivity failures leave a repairable draft',async()=>{
+  const ui=await mount({...ready(),network:{mode:'environment',proxyUrl:''}},{network:async()=>{throw Error('代理地址无效');},'network-test':async()=>({ok:false,checks:[{service:'authorization',ok:false,message:'连接被拒绝'}]})});
+  try{
+    await ui.change(field(ui,'cgp-network-mode'),'proxy');await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
+    await ui.click(button(ui,'保存并应用'));assert.match(text(ui.tree),/代理地址无效/);assert.equal(field(ui,'cgp-proxy-url').props.value,'http://127.0.0.1:8080');
+    await ui.click(button(ui,'测试连接'));assert.match(text(ui.tree),/连接测试未通过/);assert.match(text(ui.tree),/连接被拒绝/);
+    assert.equal(ui.calls.filter(call=>call.action==='models').length,1);
+  }finally{ui.unmount();}
+});
 
 test('settings renders a compact connected account once and keeps privacy collapsed',async()=>{
   const ui=await mount(ready());

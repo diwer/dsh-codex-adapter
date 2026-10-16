@@ -7,7 +7,7 @@ import {ChatGPTPlanAdapter} from './plugin.mjs';
 import {PROVIDER} from './adapter.mjs';
 import {createAuthClient,FileCredentialStore,AuthError} from './auth/index.mjs';
 import {DesktopAccountController} from './desktop-controller.mjs';
-import {createDesktopFetch} from './desktop-fetch.mjs';
+import {createDesktopNetwork,NetworkSettingsError} from './desktop-network.mjs';
 import {DesktopDefaultModel} from './desktop-default-model.mjs';
 import {createDiagnosticLog} from './auth/diagnostics.mjs';
 
@@ -27,11 +27,13 @@ export const Config=Schema.object({
 });
 
 /** Mounted in the desktop Profile with the desktop's authenticated Connection fence. */
-export function apply(ctx,config){
+export async function apply(ctx,config){
   const store=new FileCredentialStore({directory:config.credentialDirectory});
-  const transport=createDesktopFetch({proxyUrl:config.proxyUrl});
   const diagnostics=createDiagnosticLog({directory:config.credentialDirectory});
-  diagnostics.record({event:'runtime_started',version:pluginVersion,proxyMode:config.proxyUrl?'explicit':(process.env.https_proxy??process.env.HTTPS_PROXY??process.env.http_proxy??process.env.HTTP_PROXY??process.env.all_proxy??process.env.ALL_PROXY)?'environment':'direct'});
+  const proxyMode=()=>transport.status().mode==='proxy'?'explicit':transport.status().mode;
+  const transport=await createDesktopNetwork({store,proxyUrl:config.proxyUrl,onChange:()=>{diagnostics.record({event:'network_updated',proxyMode:proxyMode()});ctx.emit('llm/adapters-updated');}});
+  ctx.effect(()=>()=>transport.close());
+  diagnostics.record({event:'runtime_started',version:pluginVersion,proxyMode:proxyMode()});
   const auth=createAuthClient({store,fetchImpl:transport.fetch,authorizationTimeoutMs:config.authorizationTimeoutMs,onDiagnostic:diagnostics.record});
   const controller=new DesktopAccountController({auth,store,onChange:()=>ctx.emit('llm/adapters-updated')});
   const adapter=new ChatGPTPlanAdapter({...config,session:controller,fetchImpl:transport.fetch,attachments:()=>ctx.get('attachments')});
@@ -47,7 +49,9 @@ export function apply(ctx,config){
   const loadIcon=()=>icon??=readFile(new URL('../lib/assets/big-fish-codex.png',import.meta.url));
   ctx.connection.registerFetchRoute(ctx,{path:'/api/dsh-chatgpt-plan/icon',methods:['GET'],requestBody:'buffered',fetch:async()=>new Response(await loadIcon(),{headers:{'content-type':'image/png','cache-control':'private, max-age=3600','x-content-type-options':'nosniff'}})});
   const routes={
-    status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,pluginVersion,diagnostics:diagnostics.status(),...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
+    status:{method:'GET',run:async()=>{const status=await controller.status();if(status.phase==='ready'&&defaults)try{await defaults.initialize();}catch(error){if(error instanceof LlmError)status.modelError={code:error.code,message:error.message};else throw error;}return {...status,pluginVersion,network:transport.status(),diagnostics:diagnostics.status(),...defaults?await defaults.status():{defaultGptEnabled:true,defaultModelUnavailable:true}};}},
+    network:{method:'POST',run:body=>transport.save(body)},
+    'network-test':{method:'POST',run:body=>transport.test(body)},
     preferences:{method:'POST',run:body=>{if(!defaults)throw new AuthError('invalid_options');return defaults.setEnabled(body.enabled);}},
     login:{method:'POST',run:body=>controller.beginLogin(body)},
     restart:{method:'POST',run:()=>controller.restartLogin()},
@@ -65,15 +69,15 @@ export function apply(ctx,config){
           if(request.headers.get('content-type')?.split(';')[0].trim()!=='application/json')return Response.json({error:{message:'请使用 JSON 请求。'}},{status:415,headers});
           const text=await request.text();if(text.length>4096)return Response.json({error:{message:'请求过大。'}},{status:413,headers});
           body=JSON.parse(text);if(!body||typeof body!=='object'||Array.isArray(body))throw new AuthError('invalid_options');
-          const allowed=action==='preferences'?['enabled']:action==='login'?['newAccount']:['select','logout'].includes(action)?['accountId']:[];
+          const allowed=['network','network-test'].includes(action)?['mode','proxyUrl']:action==='preferences'?['enabled']:action==='login'?['newAccount']:['select','logout'].includes(action)?['accountId']:[];
           if(Object.keys(body).some(key=>!allowed.includes(key))||(action==='preferences'&&typeof body.enabled!=='boolean')||(action==='login'&&Object.hasOwn(body,'newAccount')&&typeof body.newAccount!=='boolean'))throw new AuthError('invalid_options');
         }
         return Response.json({value:await run(body)},{headers});
       }catch(error){
-        const safe=error instanceof AuthError||error instanceof LlmError?error:new AuthError('invalid_response');
+        const safe=error instanceof AuthError||error instanceof LlmError||error instanceof NetworkSettingsError?error:new AuthError('invalid_response');
         return Response.json({error:{code:safe.code,message:safe.message,...safe.failure?.status?{status:safe.failure.status}:{}}},{status:400,headers});
       }
     }});
   }
-  ctx.effect(()=>async()=>{adapter.dispose();await controller.dispose();await transport.close();await diagnostics.flush();});
+  ctx.effect(()=>async()=>{adapter.dispose();await controller.dispose();await diagnostics.flush();});
 }
