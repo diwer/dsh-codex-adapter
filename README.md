@@ -8,7 +8,7 @@
 
 无需 API Key，支持 GPT / DeepSeek 切换、图片理解，以及 Harness 的文件、搜索和终端工具。
 
-**仅适用于 DeepSeek Harness。** 本插件不能安装到 DeepSeek 普通网页版、手机 App 或普通聊天桌面客户端中。当前验证范围为 Harness 桌面版 0.2.0-rc.2 / macOS。
+**仅适用于 DeepSeek Harness。** 本插件不能安装到 DeepSeek 普通网页版、手机 App 或普通聊天桌面客户端中。支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；当前实测基线为 0.2.0-rc.2。
 
 [快速开始](#快速开始) · [使用文档](docs/INSTALLATION.md) · [下载安装包](https://github.com/diwer/dsh-codex-adapter/releases/latest) · [English](README.en.md)
 
@@ -23,14 +23,14 @@
 
 ## 快速开始
 
-适用于 **DeepSeek Harness 桌面版 0.2.0-rc.2 / macOS**，需要可使用订阅模型的 ChatGPT 账户。
+适用于 **DeepSeek Harness 桌面版 ≥0.2.0-rc.2 / macOS**，需要可使用订阅模型的 ChatGPT 账户。
 
 ### 1. 安装插件
 
 在 **Plugins → Add plugin** 中填入：
 
 ```text
-dsh-codex-official-adapter@0.1.6
+dsh-codex-official-adapter@0.1.7
 ```
 
 Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。完成后，等当前任务结束，完全退出并重新打开 Harness。
@@ -49,9 +49,9 @@ Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **In
 
 ## 常见问题
 
-**这个插件支持哪个产品？** 仅支持 DeepSeek Harness。DeepSeek 普通网页版、手机 App 和普通聊天桌面客户端不支持安装本插件。当前验证范围为 Harness 桌面版 0.2.0-rc.2 / macOS。
+**这个插件支持哪个产品？** 仅支持 DeepSeek Harness。DeepSeek 普通网页版、手机 App 和普通聊天桌面客户端不支持安装本插件。支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；当前实测基线为 0.2.0-rc.2。
 
-**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.6`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
+**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.7`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
 
 **可以直接填 GitHub 地址吗？** 这是源码地址：`https://github.com/diwer/dsh-codex-adapter`。不同宿主与市场的安装器支持有差异，日常安装建议使用上面的明确包名与版本。
 

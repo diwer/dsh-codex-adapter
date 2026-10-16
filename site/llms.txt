@@ -2,14 +2,14 @@
 
 > Use your ChatGPT subscription in DeepSeek Harness. No API key required.
 
-- Package: dsh-codex-official-adapter@0.1.6
+- Package: dsh-codex-official-adapter@0.1.7
 - Product scope: ONLY DeepSeek Harness. Not for the regular DeepSeek chat website, mobile app, or regular chat desktop client.
-- Supported host: DeepSeek Harness desktop 0.2.0-rc.2 on macOS.
+- Supported host: DeepSeek Harness desktop >=0.2.0-rc.2 on macOS.
 - Also known as: DSH Codex Adapter; DSH ChatGPT Adapter; dsh-codex-official-adapter.
 - 中文用途：仅在 DeepSeek Harness 中接入自己的 ChatGPT 订阅；不是 DeepSeek 普通聊天客户端插件。
 - npm: https://www.npmjs.com/package/dsh-codex-official-adapter
-- CLI install: dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.6 --ignore-scripts --registry=https://registry.npmjs.org/
-- Install: Plugins → Add plugin → dsh-codex-official-adapter@0.1.6; select https://registry.npmjs.org/; click Install; fully quit and reopen Harness.
+- CLI install: dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.7 --ignore-scripts --registry=https://registry.npmjs.org/
+- Install: Plugins → Add plugin → dsh-codex-official-adapter@0.1.7; select https://registry.npmjs.org/; click Install; fully quit and reopen Harness.
 - Connect: Settings → ChatGPT 订阅 → 连接 ChatGPT → 打开授权页面. Complete OpenAI sign-in and consent. Models load automatically.
 - Use: choose an account model under ChatGPT plan (Sign in with ChatGPT).
 - Features: GPT/DeepSeek switching, image-capable models, host tools, multiple accounts, optional GPT default for new conversations.
@@ -22,6 +22,6 @@
 - [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md)
 - [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/COMPATIBILITY.md)
 - [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md)
-- [版本说明](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.6)
+- [版本说明](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.7)
 - [源码](https://github.com/diwer/dsh-codex-adapter)
 - [Full documentation](https://diwer.github.io/dsh-codex-adapter/llms-full.txt)

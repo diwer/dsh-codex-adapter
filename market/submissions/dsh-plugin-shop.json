@@ -15,7 +15,7 @@
       ]
     },
     "compatibility": {
-      "dsh": "0.2.0-rc.2",
+      "dsh": ">=0.2.0-rc.2",
       "profiles": [
         "desktop"
       ]

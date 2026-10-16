@@ -47,15 +47,15 @@ export async function buildDocs(root=process.cwd()){
   if(!readme.includes(installSpec))throw new Error('README 安装版本与 package.json 不一致。');
   const links=[['快速开始',`${repo}#快速开始`],['安装与排错',`${repo}/blob/master/docs/INSTALLATION.md`],['兼容范围',`${repo}/blob/master/docs/COMPATIBILITY.md`],['数据与隐私',`${repo}/blob/master/docs/PRIVACY.md`],['版本说明',release],['源码',repo]];
   const title='DeepSeek Harness 的 ChatGPT 订阅插件 | DSH ChatGPT Adapter';
-  const description='仅适用于 DeepSeek Harness 的 ChatGPT 订阅接入插件。无需 API Key，登录自己的 ChatGPT 账户即可使用 GPT，支持图片、内置工具与模型切换。提供中英文安装说明；当前验证 Harness 桌面版 0.2.0-rc.2 / macOS。';
-  const structured={'@context':'https://schema.org','@type':['SoftwareApplication','SoftwareSourceCode'],name:'DSH ChatGPT Adapter',alternateName:pkg.name,url:base,image:iconUrl,description,applicationCategory:'DeveloperApplication',operatingSystem:'macOS with DeepSeek Harness desktop 0.2.0-rc.2',softwareVersion:pkg.version,license:`${repo}/blob/master/LICENSE`,codeRepository:repo,programmingLanguage:'JavaScript',downloadUrl:download,isAccessibleForFree:true,softwareRequirements:'DeepSeek Harness desktop 0.2.0-rc.2 on macOS; not the regular DeepSeek chat website, mobile app, or chat desktop client.',inLanguage:['zh-CN','en'],sameAs:[repo,'https://www.npmjs.com/package/'+pkg.name],keywords:['DeepSeek Harness','ChatGPT subscription plugin','DSH Codex Adapter',pkg.name]};
+  const description='仅适用于 DeepSeek Harness 的 ChatGPT 订阅接入插件。无需 API Key，登录自己的 ChatGPT 账户即可使用 GPT，支持图片、内置工具与模型切换。提供中英文安装说明；支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；实测基线为 0.2.0-rc.2。';
+  const structured={'@context':'https://schema.org','@type':['SoftwareApplication','SoftwareSourceCode'],name:'DSH ChatGPT Adapter',alternateName:pkg.name,url:base,image:iconUrl,description,applicationCategory:'DeveloperApplication',operatingSystem:'macOS with DeepSeek Harness desktop >=0.2.0-rc.2',softwareVersion:pkg.version,license:`${repo}/blob/master/LICENSE`,codeRepository:repo,programmingLanguage:'JavaScript',downloadUrl:download,isAccessibleForFree:true,softwareRequirements:'DeepSeek Harness desktop >=0.2.0-rc.2 on macOS; not the regular DeepSeek chat website, mobile app, or chat desktop client.',inLanguage:['zh-CN','en'],sameAs:[repo,'https://www.npmjs.com/package/'+pkg.name],keywords:['DeepSeek Harness','ChatGPT subscription plugin','DSH Codex Adapter',pkg.name]};
   const llms=`# DSH ChatGPT Adapter
 
 > Use your ChatGPT subscription in DeepSeek Harness. No API key required.
 
 - Package: ${installSpec}
 - Product scope: ONLY DeepSeek Harness. Not for the regular DeepSeek chat website, mobile app, or regular chat desktop client.
-- Supported host: DeepSeek Harness desktop 0.2.0-rc.2 on macOS.
+- Supported host: DeepSeek Harness desktop >=0.2.0-rc.2 on macOS.
 - Also known as: DSH Codex Adapter; DSH ChatGPT Adapter; dsh-codex-official-adapter.
 - 中文用途：仅在 DeepSeek Harness 中接入自己的 ChatGPT 订阅；不是 DeepSeek 普通聊天客户端插件。
 - npm: https://www.npmjs.com/package/${pkg.name}
@@ -86,7 +86,7 @@ ${links.map(([name,url])=>`- [${name}](${url})`).join('\n')}
   await writeFile(path.join(site,'market/plugins.json'),JSON.stringify({name:'DSH ChatGPT Adapter author catalog',url:base,source:repo,notice:'Author catalog; not a third-party endorsement.',count:1,categories:{model:{en:'Models & Providers',zh:'模型与账号接入'}},plugins:[plugin]},null,2)+'\n');
   const makeHead=(lang)=>{
     const en=lang==='en',url=base+(en?'en.html':''),pageTitle=en?'ChatGPT subscription plugin for DeepSeek Harness | DSH ChatGPT Adapter':title;
-    const desc=en?'A ChatGPT subscription plugin exclusively for DeepSeek Harness. Sign in without an API key, use GPT with images and built-in tools. Bilingual installation guide. Validated for Harness desktop 0.2.0-rc.2 on macOS.':description;
+    const desc=en?'A ChatGPT subscription plugin exclusively for DeepSeek Harness. Sign in without an API key, use GPT with images and built-in tools. Bilingual installation guide. Requires Harness desktop >=0.2.0-rc.2 on macOS; tested on 0.2.0-rc.2.':description;
     const faqMarkdown=en?englishSection('Common questions'):section('常见问题');
     const faqItems=[...faqMarkdown.matchAll(/\*\*([^*]+)\*\*\s*([^\n]+)/g)].map(([,question,answer])=>({'@type':'Question',name:question,acceptedAnswer:{'@type':'Answer',text:answer.replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/`/g,'').replace(/\*\*/g,'')}}));
     const faqData={'@context':'https://schema.org','@type':'FAQPage',inLanguage:en?'en':'zh-CN',mainEntity:faqItems};

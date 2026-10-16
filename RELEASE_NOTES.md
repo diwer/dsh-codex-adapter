@@ -2,7 +2,13 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布
+## v0.1.7
+
+- 发布日期：2026-10-16。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
+- 版本标记：[`v0.1.7`](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.7)（对应提交以 Tag 为准）。
+- 宿主兼容声明与 LLM peer 依赖调整为 `>=0.2.0-rc.2`，保留桌面 Profile 限制；开发依赖仍锁定已验证版本。
+- 同步中英文安装说明、网站与市场材料；当前桌面实测基线为 `0.2.0-rc.2 / macOS`。
 
 - 开发主干由 `main` 调整为 `master`，0.1 系列发布分支统一为 `release/v0.1`。
 - 同步文档发布工作流与源码链接，并在 `AGENTS.md` 中记录分支流向和发布日志维护要求。
@@ -59,4 +65,4 @@
 - 支持图片输入、流式回复和 Harness 内置工具。
 - 适配会话历史、推理状态与中断处理。
 
-兼容 **Harness 桌面版 0.2.0-rc.2 / macOS**。模型可用性及额度由账户决定。社区项目，MIT 许可。
+兼容 **Harness 桌面版 ≥0.2.0-rc.2 / macOS**。模型可用性及额度由账户决定。社区项目，MIT 许可。

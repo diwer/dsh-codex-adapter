@@ -40,7 +40,7 @@ export async function validateMarket(root) {
   for (const language of ['en','zh']) check(typeof manifest.dsh?.catalog?.summary?.[language]==='string' && manifest.dsh.catalog.summary[language].length>0 && manifest.dsh.catalog.summary[language].length<=200,`缺少或超长的 ${language} 简介`);
   const caps=manifest.dsh?.catalog?.capabilities;
   check(Array.isArray(caps) && caps.length<=20 && caps.every(x=>typeof x==='string' && x.length>0 && x.length<=64),'能力说明格式不正确');
-  check(manifest.dsh?.compatibility?.dsh==='0.2.0-rc.2' && manifest.dsh.compatibility.profiles?.includes('desktop'),'兼容声明需限定已验证桌面宿主');
+  check(manifest.dsh?.compatibility?.dsh==='>=0.2.0-rc.2' && manifest.peerDependencies?.['@deepseek-ai/dsh-llm']===manifest.dsh.compatibility.dsh && manifest.dsh.compatibility.profiles?.includes('desktop'),'兼容声明与 LLM peer 需一致使用 >=0.2.0-rc.2，并限定 desktop');
   for (const name of Object.keys({...manifest.dependencies,...manifest.optionalDependencies})) check(!name.startsWith('@deepseek-ai/'),`宿主接口必须为 peerDependency：${name}`);
   for (const field of ['preinstall','install','postinstall','prepare','prepublishOnly']) check(!manifest.scripts?.[field],`不应在安装或打包时执行生命周期脚本：${field}`);
   const files=await publicFiles(root);
