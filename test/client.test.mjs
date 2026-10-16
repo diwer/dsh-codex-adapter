@@ -35,17 +35,25 @@ function text(tree){if(typeof tree==='string'||typeof tree==='number')return Str
 function button(ui,label){return nodes(ui.tree,node=>node.type==='button'&&text(node)===label)[0];}
 function field(ui,id){return nodes(ui.tree,node=>node.props.id===id)[0];}
 
-test('the connected account offers the official subscription usage page without making quota requests',async()=>{
-  const ui=await mount(ready());
+test('the current account offers the official subscription usage page next to its identity without making quota requests',async()=>{
+  const status=ready();
+  status.accounts.push({accountId:'b',email:'other@example.test',signedIn:true,planUsageEnabled:true});
+  const ui=await mount(status);
   try{
     const usageLink=()=>nodes(ui.tree,node=>node.type==='a'&&text(node)==='查看订阅额度与用量 ↗');
     assert.equal(usageLink().length,1);
     assert.equal(usageLink()[0].props.href,'https://chatgpt.com/settings/usage');
     assert.equal(usageLink()[0].props.target,'_blank');assert.equal(usageLink()[0].props.rel,'noreferrer noopener');
     assert.match(usageLink()[0].props.title,/当前登录的账户/);
+    const accountWithLink=()=>nodes(ui.tree,node=>node.props.className==='cgp-account-info'&&nodes(node,item=>item===usageLink()[0]).length)[0];
+    assert.match(text(accountWithLink()),/demo@example.test当前账户 · 订阅已授权/);
+    const footer=nodes(ui.tree,node=>node.props.className==='cgp-card-footer')[0];
+    assert.equal(nodes(footer,node=>node.type==='a').length,0);
     assert.equal(ui.calls.some(call=>/usage|quota/.test(call.action)),false);
     await ui.click(button(ui,'配置代理'));assert.equal(usageLink().length,0);
     await ui.click(button(ui,'获取授权'));assert.equal(usageLink().length,1);
+    ui.setStatus({...status,selectedAccountId:'b'});await ui.poll();
+    assert.equal(usageLink().length,1);assert.match(text(accountWithLink()),/other@example.test当前账户 · 订阅已授权/);
   }finally{ui.unmount();}
 });
 
