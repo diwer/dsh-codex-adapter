@@ -1,51 +1,51 @@
 {
   "repository": "https://github.com/diwer/dsh-codex-adapter",
-  "commit": "2e9935ba8f7879961b1c4c38214cfc1aba629e7f",
-  "checkedAt": "2026-10-15T10:35:03.027069+00:00",
+  "commit": "c0a527e8fe779ea0f8e838b900865d6b6aabe056",
+  "checkedAt": "2026-10-16T02:05:44.324749+00:00",
   "packageName": "dsh-codex-official-adapter",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "bundlePatch": "./cordis.patch.yml",
   "sourceContractValidated": true,
   "scope": "Published source file and bundle contract only; not runtime acceptance or third-party maintainer verification. Local uncommitted changes are not included.",
   "evidence": [
     {
       "path": "package.json",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/package.json",
-      "sha256": "ccfa0bce540caeff0d82e90c1b160ad4bb047fb180fac979aa99cd5687fe6392"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/package.json",
+      "sha256": "596a36ec7135d3bbf1b2c90fd46e1d2e98803598ea2ff514da933120e5851d71"
     },
     {
       "path": "cordis.patch.yml",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/cordis.patch.yml",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/cordis.patch.yml",
       "sha256": "d265534f5f7b69baaaab905a6eedcf17559cfa27fcddc68c9c9134cbe769f24e"
     },
     {
       "path": "src/desktop-plugin.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/desktop-plugin.mjs",
-      "sha256": "5c1a2aad9de0c2b476a91b770fecc57786b0a5ec39cf337146457bf998701d8f"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/src/desktop-plugin.mjs",
+      "sha256": "de4baaa61d78a8b085e2cebca775b1a24969ddf31dd8b25f391b9c848f1f2c46"
     },
     {
       "path": "src/adapter.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/adapter.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/src/adapter.mjs",
       "sha256": "75637f6a7462848c9a1a2e35703175f8c4cd84ef48792e950abe52342cb3fec7"
     },
     {
       "path": "src/model-capabilities.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/model-capabilities.mjs",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/src/model-capabilities.mjs",
       "sha256": "ebfd9c52bac0e53a336adfb295362d00729ffe68ab2876eaee1206a1b0c94fb2"
     },
     {
       "path": "src/auth/index.mjs",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/src/auth/index.mjs",
-      "sha256": "8259b1e497f6bd28bbc0a4268d2e0a63783d6f7c877593ab69559461bab4405b"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/src/auth/index.mjs",
+      "sha256": "a013aa2df4c8055f37c389779c6f47e4f594c77605c9b53ff1def952fbdf45f8"
     },
     {
       "path": "lib/client.js",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/lib/client.js",
-      "sha256": "c2878bf904871d56dff071cf4b7033c047bd83ebcdce0da1aa241463fd020f33"
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/lib/client.js",
+      "sha256": "a5563f3b8e668da39295583e7f70c443569f262ae7adc6a5f415b5fec348d3d9"
     },
     {
       "path": "lib/assets/big-fish-codex.png",
-      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/2e9935ba8f7879961b1c4c38214cfc1aba629e7f/lib/assets/big-fish-codex.png",
+      "url": "https://raw.githubusercontent.com/diwer/dsh-codex-adapter/c0a527e8fe779ea0f8e838b900865d6b6aabe056/lib/assets/big-fish-codex.png",
       "sha256": "c3055b0411a7b67769d2f72b5391db3d7c2803c74591fee12e618b6a9fd5dcd0"
     }
   ]

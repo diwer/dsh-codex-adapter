@@ -2,7 +2,19 @@
 
 核对时间：2026-10-15，北京时间。投稿、上游合并和市场上线分别记录；没有把格式适配视为市场认证。
 
-## v0.1.3 最新版本同步
+## 2026-10-16 核查：v0.1.5 与 icon
+
+- 最新 npm 版本为 v0.1.5；21 个运行文件与公开源码一致，包清单原本只差版本号。已对齐源码版本、安装帮助、安装器和作者目录。
+- [v0.1.5 Release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.5) 已补齐；安装包为 npm 官方原始 tarball，公网下载 SHA-256：`c05d5e4ba29ad851dd70810403a9727c12aab0a2834811826218c46202281266`。
+- 原有 6 个作者可维护 PR 与 6 个收录 Issue 已更新为 v0.1.5，附显示尺寸为 128 像素的项目 icon、公开图片地址与替代文本；未重复创建申请。申请中有图片不代表市场卡片已经支持或展示自定义 icon。
+- icon 与插件包内图片一致，公开地址返回 `image/png`，字节、尺寸和 SHA-256 已核对。新增 `market/icon.json` 与校验，通用材料提供 icon；保留上游 schema，不覆盖作者账号头像。见 [逐市场 icon 说明](MARKET_ICONS.md)。
+- awesome 原 PR 仍为草稿：仓库满一天门槛是北京时间 **2026-10-16 15:16:05**；本轮检查时尚未满足，保留 15:20 定时复核。
+- 1024 原记录已合并，没有独立 version/icon 字段，沿用仓库与 npm 身份；网页缓存是否刷新未独立确认。
+- dsh.pub [线上详情](https://dsh.pub/en/plugins/dsh-codex-official-adapter/)本轮实际仍显示 **v0.1.0 / 3ae9758ac4**，没有新版 README/icon；已更新[原刷新请求](https://github.com/dsh-pub/dsh-pub/pull/137#issuecomment-6190135871)，等待维护者同步，不视为完成上线。
+- dsh.so 的公开投稿追踪仓库本轮仍返回 404；按用户要求跳过异常入口，未重复提交，未声称 v0.1.5 已收录。
+- 协议、完整校验、运行时与市场检查通过；未进行第三方市场独立运行认证。
+
+## v0.1.3 历史版本同步
 
 - [npm v0.1.3](https://www.npmjs.com/package/dsh-codex-official-adapter/v/0.1.3) 与 [GitHub Release v0.1.3](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.3) 均可下载，安装包 SHA-256 一致：`42c7b7ff85315a088de97b52113ab9fb15a2e21850c54fde8fd0b5bb0a3c7caa`。
 - 19 个运行文件与发布源码 `2e9935ba8f7879961b1c4c38214cfc1aba629e7f` 一致；固定源码市场材料已按该版本重新核验、生成。
