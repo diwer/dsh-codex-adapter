@@ -2,7 +2,17 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## 未发布
+
+- 开发主干由 `main` 调整为 `master`，0.1 系列发布分支统一为 `release/v0.1`。
+- 同步文档发布工作流与源码链接，并在 `AGENTS.md` 中记录分支流向和发布日志维护要求。
+
 ## v0.1.6
+
+- 发布日期：2026-10-16。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)（发布后补建）。
+- 版本标记：[`v0.1.6`](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.6)。
+- 发布提交：[`5c9d99a`](https://github.com/diwer/dsh-codex-adapter/commit/5c9d99a1a34d16e74b4b94de9c5098dcac4badd6)。
 
 - 兼容推理正文增量与完成事件、文本注解、订阅路由 `response.metadata` 及额度通知，避免“未识别服务事件”中断。
 - 推理摘要与正文分轨处理，避免重复展示，并保留最终输出项及密文回放。

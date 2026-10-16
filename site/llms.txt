@@ -19,9 +19,9 @@
 ## Documentation
 
 - [快速开始](https://github.com/diwer/dsh-codex-adapter#快速开始)
-- [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md)
-- [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md)
-- [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md)
+- [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md)
+- [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/COMPATIBILITY.md)
+- [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md)
 - [版本说明](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.6)
 - [源码](https://github.com/diwer/dsh-codex-adapter)
 - [Full documentation](https://diwer.github.io/dsh-codex-adapter/llms-full.txt)

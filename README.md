@@ -1,7 +1,7 @@
 # DSH ChatGPT Adapter
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/main/lib/assets/big-fish-codex.png" width="144" height="144" alt="大肥鱼指挥 Codex 插件头像">
+  <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/master/lib/assets/big-fish-codex.png" width="144" height="144" alt="大肥鱼指挥 Codex 插件头像">
 </p>
 
 **把 ChatGPT 订阅带进 DeepSeek Harness。登录账户，选择 GPT，即可开始工作。**

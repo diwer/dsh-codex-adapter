@@ -6,7 +6,7 @@
 
 **仅适用于 DeepSeek Harness。** 本插件不能安装到 DeepSeek 普通网页版、手机 App 或普通聊天桌面客户端中。当前验证范围为 Harness 桌面版 0.2.0-rc.2 / macOS。
 
-[快速开始](#快速开始) · [使用文档](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md) · [下载安装包](https://github.com/diwer/dsh-codex-adapter/releases/latest) · [English](https://github.com/diwer/dsh-codex-adapter/blob/main/README.en.md)
+[快速开始](#快速开始) · [使用文档](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md) · [下载安装包](https://github.com/diwer/dsh-codex-adapter/releases/latest) · [English](https://github.com/diwer/dsh-codex-adapter/blob/master/README.en.md)
 
 ## 为什么使用
 
@@ -31,7 +31,7 @@ dsh-codex-official-adapter@0.1.6
 
 Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。完成后，等当前任务结束，完全退出并重新打开 Harness。
 
-> 若找不到切换源的入口，或安装失败，使用[终端安装或本地包安装](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md#其他安装方式)。
+> 若找不到切换源的入口，或安装失败，使用[终端安装或本地包安装](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md#其他安装方式)。
 
 ### 2. 连接 ChatGPT
 
@@ -55,11 +55,11 @@ Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **In
 
 **如何升级？** 用相同包名安装新版本，然后完全退出并重开 Harness。保留原 Profile 和账户目录即可延续使用。
 
-**如何退出或卸载？** 先在设置页退出账户，再到 Plugins 卸载。[详细说明](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md#断开与卸载)。
+**如何退出或卸载？** 先在设置页退出账户，再到 Plugins 卸载。[详细说明](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md#断开与卸载)。
 
 ## 了解更多
 
-[思考强度](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/REASONING.md) · [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md) · [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md) · [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md) · [版本说明](https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md) · [参与开发](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/DEVELOPMENT.md)
+[思考强度](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/REASONING.md) · [安装与排错](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md) · [兼容范围](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/COMPATIBILITY.md) · [数据与隐私](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md) · [版本说明](https://github.com/diwer/dsh-codex-adapter/blob/master/RELEASE_NOTES.md) · [参与开发](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/DEVELOPMENT.md)
 
 会话文本、所选图片和工具结果会发送至 OpenAI。登录凭证保存在本机未加密文件中，具有仅当前用户可读写的权限。本插件是独立社区项目，不隶属于 OpenAI 或 DeepSeek。
 
@@ -78,7 +78,7 @@ No API key required. Switch between GPT and DeepSeek, ask about images, and use 
 
 **For DeepSeek Harness only.** This plugin cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. The currently validated host is Harness desktop 0.2.0-rc.2 on macOS.
 
-[中文](https://github.com/diwer/dsh-codex-adapter/blob/main/README.md) · [Installation help](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md) · [Download](https://github.com/diwer/dsh-codex-adapter/releases/latest)
+[中文](https://github.com/diwer/dsh-codex-adapter/blob/master/README.md) · [Installation help](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md) · [Download](https://github.com/diwer/dsh-codex-adapter/releases/latest)
 
 ## Why use it
 
@@ -99,7 +99,7 @@ Requires **DeepSeek Harness desktop 0.2.0-rc.2 on macOS** and a ChatGPT account 
    dsh-codex-official-adapter@0.1.6
    ```
 
-   Select the **official npm registry (https://registry.npmjs.org/)** and click **Install**. Once current tasks finish, fully quit and reopen Harness. If installation fails, see [alternative installation methods](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md#其他安装方式).
+   Select the **official npm registry (https://registry.npmjs.org/)** and click **Install**. Once current tasks finish, fully quit and reopen Harness. If installation fails, see [alternative installation methods](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md#其他安装方式).
 
 2. Open **Settings → ChatGPT 订阅 → 连接 ChatGPT**, then **打开授权页面**. Complete sign-in and consent on OpenAI's page. Connection status and available models update automatically.
 
@@ -117,9 +117,9 @@ Requires **DeepSeek Harness desktop 0.2.0-rc.2 on macOS** and a ChatGPT account 
 
 **Upgrading?** Install the newer version using the same package name and restart Harness. Keep your existing Profile and account directory.
 
-**Uninstalling?** Sign out in plugin settings, then uninstall in Plugins. See [privacy and account removal](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md).
+**Uninstalling?** Sign out in plugin settings, then uninstall in Plugins. See [privacy and account removal](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md).
 
-[Compatibility](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/COMPATIBILITY.md) · [Privacy](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md) · [Release notes](https://github.com/diwer/dsh-codex-adapter/blob/main/RELEASE_NOTES.md) · [Development](https://github.com/diwer/dsh-codex-adapter/blob/main/docs/DEVELOPMENT.md)
+[Compatibility](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/COMPATIBILITY.md) · [Privacy](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md) · [Release notes](https://github.com/diwer/dsh-codex-adapter/blob/master/RELEASE_NOTES.md) · [Development](https://github.com/diwer/dsh-codex-adapter/blob/master/docs/DEVELOPMENT.md)
 
 Conversation text, selected images, and tool results are sent to OpenAI. Credentials are stored in unencrypted local files restricted to the current user. This is an independent community project, not affiliated with OpenAI or DeepSeek.
 

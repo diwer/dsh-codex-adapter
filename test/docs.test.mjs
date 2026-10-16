@@ -24,7 +24,7 @@ test('generated installation entries share the package version and readable text
     assert.ok(full.includes('For DeepSeek Harness only'));
     assert.match(await readFile(path.join(root,'site/robots.txt'),'utf8'),/Sitemap: https:\/\/diwer.github.io\/dsh-codex-adapter\/sitemap.xml/);
     assert.ok(llms.includes('\n## Documentation\n'));assert.ok(!llms.includes('\\n'));
-    assert.ok(full.includes('https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md'));
+    assert.ok(full.includes('https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md'));
     assert.equal(catalog.plugins[0].version,version);
     assert.equal(catalog.plugins[0].icon,'https://diwer.github.io/dsh-codex-adapter/assets/big-fish-codex.png');
     for(const file of ['index.html','en.html']){
@@ -63,6 +63,6 @@ test('documentation generation rejects an installation version that drifted from
 test('README rendering escapes raw markup and blocks executable link schemes',()=>{
   const html=renderMarkdown('<img src=x onerror=alert(1)> [unsafe](javascript:alert) [docs](docs/INSTALLATION.md)');
   assert.ok(!html.includes('<img'));assert.ok(!html.includes('href="javascript:'));
-  assert.ok(html.includes('href="https://github.com/diwer/dsh-codex-adapter/blob/main/docs/INSTALLATION.md"'));
+  assert.ok(html.includes('href="https://github.com/diwer/dsh-codex-adapter/blob/master/docs/INSTALLATION.md"'));
   assert.ok(renderMarkdown('```text\n<a>\n```').includes('&lt;a&gt;'));
 });

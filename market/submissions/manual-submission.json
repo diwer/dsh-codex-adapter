@@ -20,7 +20,7 @@
   },
   "install": "dsh plugin --profile desktop add dsh-codex-official-adapter@0.1.6 --registry=https://registry.npmjs.org/",
   "tarball": "https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.6/dsh-codex-official-adapter-0.1.6.tgz",
-  "privacy": "https://github.com/diwer/dsh-codex-adapter/blob/main/docs/PRIVACY.md",
+  "privacy": "https://github.com/diwer/dsh-codex-adapter/blob/master/docs/PRIVACY.md",
   "submitted": false,
   "reviewed": false
 }

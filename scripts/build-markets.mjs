@@ -22,7 +22,7 @@ export function marketArtifacts(pkg,{publicSource}={}) {
       license:pkg.license,category:'integration',tags:pkg.keywords,
       compatibility:{dsh:pkg.dsh.compatibility.dsh,platforms:['macos'],profiles:['desktop']},
       install:{target:'npm',spec:`${pkg.name}@${pkg.version}`,command:`dsh plugin --profile {profile} add ${pkg.name}@${pkg.version} --registry=https://registry.npmjs.org/`},
-      verified:false,repository:repo.url,docs:`${repo.url}/blob/main/docs/INSTALLATION.md`,
+      verified:false,repository:repo.url,docs:`${repo.url}/blob/master/docs/INSTALLATION.md`,
     }),
     [`dsh-plugins/plugins/${pkg.name}.json`]:json({id:pkg.name,name:'DSH ChatGPT Adapter',
       description:[{language:'en-US',content:pkg.dsh.catalog.summary.en},{language:'zh-CN',content:pkg.dsh.catalog.summary.zh}],
@@ -32,7 +32,7 @@ export function marketArtifacts(pkg,{publicSource}={}) {
     'manual-submission.json':json({repository:repo.url,package:pkg.name,version:pkg.version,icon:MARKET_ICON.url,iconAlt:MARKET_ICON.alt,
       description:pkg.dsh.catalog.summary,license:pkg.license,compatibility:pkg.dsh.compatibility,
       install:`dsh plugin --profile desktop add ${pkg.name}@${pkg.version} --registry=https://registry.npmjs.org/`,
-      tarball,privacy:`${repo.url}/blob/main/docs/PRIVACY.md`,submitted:false,reviewed:false}),
+      tarball,privacy:`${repo.url}/blob/master/docs/PRIVACY.md`,submitted:false,reviewed:false}),
     ...(publicSource && publicSource.version===pkg.version?{'pinned-registry/registry-entry.json':json(pinnedEntry(pkg,repo,publicSource))}:{}),
     'pinned-registry/status.json':json({targetVersion:pkg.version,sourceVersion:publicSource?.version??null,ready:publicSource?.version===pkg.version,reason:publicSource?.version===pkg.version?'公开源码契约匹配；仍待市场维护者审核':'本地目标版本尚无匹配的公开 commit 证据；格式适配已实现，发布后重新核对。'}),
   };

@@ -1,7 +1,7 @@
 # DSH ChatGPT Adapter
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/main/lib/assets/big-fish-codex.png" width="144" height="144" alt="Big Fish directing Codex plugin avatar">
+  <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/master/lib/assets/big-fish-codex.png" width="144" height="144" alt="Big Fish directing Codex plugin avatar">
 </p>
 
 **Bring your ChatGPT subscription to DeepSeek Harness. Sign in, choose GPT, and get to work.**
