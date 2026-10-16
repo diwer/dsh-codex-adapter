@@ -2,6 +2,10 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## 未发布
+
+- 补齐 Harness 插件管理页的包内图标声明与资源导出，提供小于 256 KiB 的同款图标，修复显示默认占位图的问题。
+
 ## v0.1.8
 
 - 发布日期：2026-10-16。
