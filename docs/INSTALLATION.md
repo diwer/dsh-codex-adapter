@@ -25,6 +25,8 @@
 
 开发版设置页分为 **获取授权** 和 **配置代理** 两个 Tab，默认显示“获取授权”。账户连接、模型与使用偏好放在授权页；切换到代理页不会取消授权或清空未保存的代理草稿。标题区展示插件图标，两个页面共用。
 
+开发版连接成功后，账户区域提供 **查看订阅额度与用量** 入口，打开 [ChatGPT 官方用量页](https://chatgpt.com/settings/usage)。官方页面以浏览器当前登录的账户为准；本插件不使用本地 Token 数估算订阅剩余额度。当前 SIWC 官方说明见[账户与用量管理](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions#tracking-usage)。
+
 ## 插件独立代理
 
 在 **Settings → ChatGPT 订阅 → 独立代理** 中配置；开发版先切换到 **配置代理** Tab。无需修改系统代理或其他插件：

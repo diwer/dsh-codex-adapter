@@ -35,6 +35,28 @@ function text(tree){if(typeof tree==='string'||typeof tree==='number')return Str
 function button(ui,label){return nodes(ui.tree,node=>node.type==='button'&&text(node)===label)[0];}
 function field(ui,id){return nodes(ui.tree,node=>node.props.id===id)[0];}
 
+test('the connected account offers the official subscription usage page without making quota requests',async()=>{
+  const ui=await mount(ready());
+  try{
+    const usageLink=()=>nodes(ui.tree,node=>node.type==='a'&&text(node)==='查看订阅额度与用量 ↗');
+    assert.equal(usageLink().length,1);
+    assert.equal(usageLink()[0].props.href,'https://chatgpt.com/settings/usage');
+    assert.equal(usageLink()[0].props.target,'_blank');assert.equal(usageLink()[0].props.rel,'noreferrer noopener');
+    assert.match(usageLink()[0].props.title,/当前登录的账户/);
+    assert.equal(ui.calls.some(call=>/usage|quota/.test(call.action)),false);
+    await ui.click(button(ui,'配置代理'));assert.equal(usageLink().length,0);
+    await ui.click(button(ui,'获取授权'));assert.equal(usageLink().length,1);
+  }finally{ui.unmount();}
+});
+
+test('disconnected accounts do not imply that subscription quota has been loaded',async()=>{
+  const ui=await mount({phase:'not-signed-in',accounts:[]});
+  try{
+    assert.equal(nodes(ui.tree,node=>node.type==='a'&&node.props.href==='https://chatgpt.com/settings/usage').length,0);
+    assert.doesNotMatch(text(ui.tree),/剩余|已用.*%|查看订阅额度与用量/);
+  }finally{ui.unmount();}
+});
+
 test('settings default to authorization and keep the plugin icon visible on both tabs',async()=>{
   const ui=await mount(ready());
   try{
