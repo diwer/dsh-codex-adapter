@@ -4,6 +4,43 @@ import {PROVIDER, API_ORIGIN} from '../src/adapter.mjs';
 import {Adapter, options, textItem, toolItem, reasonItem, complete, response, collect, makeAdapter} from './helpers.mjs';
 import {usageFromResponse} from '../src/stream.mjs';
 
+test('keepalive heartbeats before and between output events preserve chunks, usage and replay',async()=>{
+  const baseline=await collect(makeAdapter(events).adapter.stream(options()));
+  const heartbeat={type:'keepalive',response:{status:'completed',output:[toolItem('undeclared')]},delta:'PRIVATE_HEARTBEAT'};
+  const {adapter,calls}=makeAdapter(events.flatMap(event=>[heartbeat,event]));
+  const chunks=await collect(adapter.stream(options()));
+  assert.deepEqual(chunks,baseline);assert.equal(calls.length,1);
+  assert.equal(JSON.stringify(chunks).includes('PRIVATE_HEARTBEAT'),false);
+});
+
+test('keepalive-only streams cannot complete a turn and retry at most once',async()=>{
+  const {adapter,calls}=makeAdapter([{type:'keepalive'},{type:'keepalive'}]);
+  const seen=[];
+  await assert.rejects(async()=>{for await(const chunk of adapter.stream(options()))seen.push(chunk);},{code:'STREAM_INTERRUPTED'});
+  assert.equal(calls.length,2);assert.deepEqual(seen,[]);
+});
+
+test('keepalive cannot finish partial tool work or hide terminal failures and unknown events',async()=>{
+  const partial={type:'response.output_item.added',output_index:0,item:{...toolItem(),arguments:'',status:'in_progress'}};
+  for(const [last,code] of [
+    [[], 'STREAM_INTERRUPTED'],
+    [[{type:'response.failed',response:{error:{code:'server_error'}}}], 'PROVIDER_HTTP_ERROR'],
+    [[{type:'response.incomplete',response:{status:'incomplete'}}], 'PROTOCOL_ERROR'],
+    [[{type:'keepalive.delta',delta:'unexpected'}], 'PROTOCOL_ERROR'],
+  ]){
+    const {adapter,calls}=makeAdapter([partial,{type:'keepalive'},...last]);
+    const seen=[];
+    await assert.rejects(async()=>{for await(const chunk of adapter.stream(options({tools:[tool]})))seen.push(chunk);},{code});
+    assert.equal(calls.length,1);
+    assert.equal(seen.some(chunk=>chunk.type==='finish'||chunk.type==='block-end'),false);
+  }
+});
+
+test('keepalive cannot replace the completed terminal event with a transport sentinel',async()=>{
+  const {adapter}=makeAdapter([],{fetchImpl:async()=>response([],{text:'event: keepalive\ndata: {"type":"keepalive"}\n\ndata: [DONE]\n\n'})});
+  await assert.rejects(()=>collect(adapter.stream(options())),{code:'PROTOCOL_ERROR'});
+});
+
 test('subscription metadata can precede and interleave output without changing chunks or replay',async()=>{
   const baseline=await collect(makeAdapter(events).adapter.stream(options()));
   const metadata={type:'response.metadata',metadata:{advisory:'PRIVATE_METADATA'},response:{status:'completed',output:[toolItem('undeclared')]}};

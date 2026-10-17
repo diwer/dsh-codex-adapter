@@ -1,0 +1,83 @@
+/**
+ * Exact Responses event policy. Baseline: OpenAI Node SDK 7.36.0
+ * ResponseStreamEvent union, plus separately identified subscription sidebands.
+ * Do not replace this with prefix matching: new content must never vanish silently.
+ */
+export const RESPONSE_EVENT_POLICY = Object.freeze({
+  'response.created':'lifecycle',
+  'response.in_progress':'lifecycle',
+  'response.queued':'lifecycle',
+  'response.output_item.added':'output',
+  'response.output_item.done':'output',
+  'response.content_part.added':'part',
+  'response.content_part.done':'part',
+  'response.output_text.delta':'delta',
+  'response.output_text.done':'done',
+  'response.output_text.annotation.added':'annotation',
+  'response.refusal.delta':'delta',
+  'response.refusal.done':'done',
+  'response.reasoning_summary_part.added':'part',
+  'response.reasoning_summary_part.done':'part',
+  'response.reasoning_summary_text.delta':'delta',
+  'response.reasoning_summary_text.done':'done',
+  'response.reasoning_text.delta':'reasoning',
+  'response.reasoning_text.done':'reasoning',
+  'response.function_call_arguments.delta':'delta',
+  'response.function_call_arguments.done':'done',
+  'response.completed':'terminal',
+  'response.failed':'failure',
+  'response.incomplete':'failure',
+  'error':'failure',
+  'response.compaction.compacting':'unsupported',
+  // WebSocket-only steering controls: known, but not requested by this SSE route.
+  'response.steer.accepted':'unsupported',
+  'response.steer.failed':'unsupported',
+  'response.steer.pending':'unsupported',
+  'response.audio.delta':'unsupported',
+  'response.audio.done':'unsupported',
+  'response.audio.transcript.delta':'unsupported',
+  'response.audio.transcript.done':'unsupported',
+  'response.code_interpreter_call_code.delta':'unsupported',
+  'response.code_interpreter_call_code.done':'unsupported',
+  'response.code_interpreter_call.completed':'unsupported',
+  'response.code_interpreter_call.in_progress':'unsupported',
+  'response.code_interpreter_call.interpreting':'unsupported',
+  'response.file_search_call.completed':'unsupported',
+  'response.file_search_call.in_progress':'unsupported',
+  'response.file_search_call.searching':'unsupported',
+  'response.web_search_call.completed':'unsupported',
+  'response.web_search_call.in_progress':'unsupported',
+  'response.web_search_call.searching':'unsupported',
+  'response.image_generation_call.completed':'unsupported',
+  'response.image_generation_call.generating':'unsupported',
+  'response.image_generation_call.in_progress':'unsupported',
+  'response.image_generation_call.partial_image':'unsupported',
+  'response.mcp_call_arguments.delta':'unsupported',
+  'response.mcp_call_arguments.done':'unsupported',
+  'response.mcp_call.completed':'unsupported',
+  'response.mcp_call.failed':'unsupported',
+  'response.mcp_call.in_progress':'unsupported',
+  'response.mcp_list_tools.completed':'unsupported',
+  'response.mcp_list_tools.failed':'unsupported',
+  'response.mcp_list_tools.in_progress':'unsupported',
+  'response.custom_tool_call_input.delta':'unsupported',
+  'response.custom_tool_call_input.done':'unsupported',
+  'response.shell_call_command.added':'unsupported',
+  'response.shell_call_command.delta':'unsupported',
+  'response.shell_call_command.done':'unsupported',
+  'response.shell_call_output_content.delta':'unsupported',
+  'response.shell_call_output_content.done':'unsupported',
+  // Subscription-route notifications, not members of the public SDK union.
+  'response.metadata':'advisory',
+  'rate_limits.updated':'advisory',
+  'keepalive':'advisory',
+  // Codex's public Responses SSE parser identifies these as sideband telemetry.
+  'codex.response.metadata':'advisory',
+  'responsesapi.websocket_timing':'advisory',
+  // Internal representation of the SSE [DONE] sentinel, never successful alone.
+  'transport.done':'transport',
+});
+
+export function eventPolicy(type) {
+  return Object.hasOwn(RESPONSE_EVENT_POLICY,type) ? RESPONSE_EVENT_POLICY[type] : undefined;
+}

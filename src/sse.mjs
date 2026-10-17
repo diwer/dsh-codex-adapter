@@ -63,7 +63,10 @@ export async function* readSse(body, { signal, maxEventBytes = 8 * 1024 * 1024 }
 
 /** Decode JSON wire events without returning malformed or reflected raw data. */
 export function parseEvent(frame) {
-  if (frame.data === '[DONE]') return { type: 'transport.done' };
+  if (frame.data === '[DONE]') {
+    if (frame.event && frame.event !== 'message') throw protocol('The SSE sentinel used an unexpected event name.');
+    return { type: 'transport.done' };
+  }
   let event;
   try { event = JSON.parse(frame.data); } catch { throw protocol('The provider sent malformed event JSON.'); }
   if (!event || typeof event !== 'object' || typeof event.type !== 'string') throw protocol();
