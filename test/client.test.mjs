@@ -57,6 +57,31 @@ test('the current account offers the official subscription usage page next to it
   }finally{ui.unmount();}
 });
 
+test('account cards retain selected identity, usage entry and actions across account changes',async()=>{
+  const status=ready();
+  status.accounts[0].email='a-very-long-account-name@example.test';
+  status.accounts.push({accountId:'b',email:'other@example.test',signedIn:true,planUsageEnabled:true});
+  const ui=await mount(status);
+  try{
+    const accounts=nodes(ui.tree,node=>node.props.className==='cgp-account');
+    assert.equal(accounts.length,2);
+    assert.equal(accounts[0].props['data-selected'],true);
+    assert.equal(accounts[1].props['data-selected'],false);
+    for(const account of accounts){
+      assert.equal(account.children.length,3);
+      assert.equal(account.children[1].props.className,'cgp-account-info');
+      assert.equal(account.children[2].props.className,'cgp-actions');
+    }
+    assert.equal(nodes(accounts[0].children[2],node=>node.type==='button').length,1);
+    assert.equal(nodes(accounts[1].children[2],node=>node.type==='button').length,2);
+    assert.match(text(accounts[0]),/a-very-long-account-name@example.test/);
+    ui.setStatus({...status,selectedAccountId:'b'});await ui.poll();
+    const changed=nodes(ui.tree,node=>node.props.className==='cgp-account');
+    assert.equal(changed[0].props['data-selected'],false);assert.equal(changed[1].props['data-selected'],true);
+    assert.doesNotMatch(text(changed[0]),/查看订阅额度/);assert.match(text(changed[1]),/查看订阅额度/);
+  }finally{ui.unmount();}
+});
+
 test('disconnected accounts do not imply that subscription quota has been loaded',async()=>{
   const ui=await mount({phase:'not-signed-in',accounts:[]});
   try{
