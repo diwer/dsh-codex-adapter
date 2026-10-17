@@ -17,6 +17,10 @@ test('SSE rejects truncated events and malformed JSON',async()=>{
   assert.throws(()=>parseEvent({data:'{secret bad json',event:''}),{code:'PROTOCOL_ERROR'});
 });
 test('SSE rejects event/data type mismatch',()=>assert.throws(()=>parseEvent({data:'{"type":"a"}',event:'b'}),{code:'PROTOCOL_ERROR'}));
+test('SSE sentinel accepts only unnamed or message envelopes and cannot mask an event type',()=>{
+  for(const event of ['',undefined,'message']) assert.deepEqual(parseEvent({event,data:'[DONE]'}),{type:'transport.done'});
+  for(const event of ['keepalive','response.completed','response.failed']) assert.throws(()=>parseEvent({event,data:'[DONE]'}),{code:'PROTOCOL_ERROR'});
+});
 test('SSE limits frame size before buffering arbitrary provider input',async()=>{
   await assert.rejects(()=>collect(readSse(response([],{text:'data: '+'a'.repeat(50)}).body,{maxEventBytes:10})),{code:'PROTOCOL_ERROR'});
 });
