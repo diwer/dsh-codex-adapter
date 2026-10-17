@@ -17,6 +17,8 @@ macOS 已安装目标桌面应用时，可运行 `npm run test:desktop` 验证�
 
 内部协议试跑使用 `npm run test:protocol:diagnostic`。检查 `outputs/test-reports/` 中结果文件的 `passed` 与 `exitCode`；命令成功只表示日志记录完成。原始失败日志与验收记录仅保存在 `outputs/`，不随安装包发布。
 
+事件匹配策略及完整清单见[兼容范围](COMPATIBILITY.md#responses-流事件开发版)。`test/events.test.mjs` 将离线官方事件清单与固定版本 SDK 清单交叉核对，并覆盖转换、拒绝、旁路通知、完成校验与资源上限；协议检查默认包含这些用例。更新上游清单时保留来源、核对日期和 SHA-256，不在离线测试中联网获取可变版本。
+
 ## 主要入口
 
 | 文件 | 用途 |
@@ -24,7 +26,7 @@ macOS 已安装目标桌面应用时，可运行 `npm run test:desktop` 验证�
 | `src/desktop-plugin.mjs` | 桌面服务注册和受认证保护的账户接口 |
 | `lib/client.js` | 账户、授权与模型设置界面 |
 | `src/adapter.mjs` | 模型目录、请求和流式回复 |
-| `src/request.mjs`、`src/stream.mjs`、`src/sse.mjs` | 历史转换、事件解析与输出块 |
+| `src/request.mjs`、`src/events.mjs`、`src/stream.mjs`、`src/sse.mjs` | 历史转换、事件解析与输出块 |
 | `src/auth/` | OAuth、身份校验及本地凭证存储 |
 | `scripts/build-docs.mjs` | 生成静态文档、机器阅读入口和作者目录 |
 
