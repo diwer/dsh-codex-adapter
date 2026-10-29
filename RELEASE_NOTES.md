@@ -2,6 +2,11 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## 未发布
+
+- 修复订阅响应中 `keepalive` 心跳被误判为未知事件而中断本轮的问题；心跳不生成输出、不改变工具或回放状态，仍必须收到 `response.completed`。
+- 增加文本、推理和工具流穿插心跳、仅心跳后 EOF、部分工具后中断、服务失败及未知事件的回归测试。
+
 ## v0.1.7
 
 - 发布日期：2026-10-16。

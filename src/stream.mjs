@@ -93,7 +93,9 @@ export class ResponseStream {
       // Subscription-route sideband metadata is advisory, never a terminal
       // response or a source of output/tool work. Completion stays mandatory.
       case 'response.metadata':
-      case 'rate_limits.updated': return [];
+      case 'rate_limits.updated':
+      // Transport heartbeat: no content, tool execution, replay or completion.
+      case 'keepalive': return [];
       case 'response.function_call_arguments.delta': return this.delta(event, 'tool-call');
       case 'response.output_item.done': return this.done(event.output_index, event.item);
       case 'response.failed': throw providerError(undefined, event.response, this.headers);

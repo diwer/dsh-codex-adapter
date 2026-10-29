@@ -317,3 +317,69 @@ test('reasoning validation rechecks the current account instead of reusing anoth
 test('configured effort overrides cannot enable values rejected by Responses',()=>{
   assert.throws(()=>new Adapter({session:{accessToken:async()=>'fake'},modelCapabilities:{model:{reasoningEfforts:['low','ultra']}}}),{code:'INVALID_CONFIG'});
 });
+
+test('keepalive before and between text events does not alter output or replay',async()=>{
+  const baseline=makeAdapter(events);
+  const heartbeat=makeAdapter(events.flatMap(event=>[{type:'keepalive'},event,{type:'keepalive'}]));
+  assert.deepEqual(await collect(heartbeat.adapter.stream(options())),await collect(baseline.adapter.stream(options())));
+  assert.equal(heartbeat.calls.length,1);
+});
+test('keepalive between reasoning and tool events preserves execution identity',async()=>{
+  const output=[reasonItem(),toolItem()];
+  const wire=output.flatMap((item,index)=>[
+    {type:'response.output_item.added',output_index:index,item:{...item,status:'in_progress'}},
+    {type:'keepalive'},
+    {type:'response.output_item.done',output_index:index,item},
+  ]);
+  const {adapter}=makeAdapter([...wire,{type:'keepalive'},complete(output)]);
+  const chunks=await collect(adapter.stream(options({tools:[tool]})));
+  assert.equal(chunks.at(-1).reason.kind,'tool-calls');
+  assert.deepEqual(chunks.at(-1).replayState.blocks.map(entry=>entry.item),output);
+  assert.equal(chunks.filter(chunk=>chunk.type==='block-start').length,2);
+});
+test('keepalive is sideband only and cannot finish or modify stream state',async()=>{
+  const {ResponseStream}=await import('../src/stream.mjs');
+  const stream=new ResponseStream({model:'test-model'});
+  assert.deepEqual(stream.accept({type:'keepalive'}),[]);
+  assert.equal(stream.completed,false);assert.equal(stream.states.size,0);
+  assert.equal(stream.outputChars,0);assert.equal(stream.replayBytes,0);
+  stream.accept(complete([]));
+  assert.throws(()=>stream.accept({type:'keepalive'}),{code:'PROTOCOL_ERROR'});
+});
+test('keepalive-only EOF remains an interruption after one bounded retry',async()=>{
+  const {adapter,calls}=makeAdapter([{type:'keepalive'},{type:'keepalive'}]);
+  await assert.rejects(()=>collect(adapter.stream(options())),error=>error.code==='STREAM_INTERRUPTED'&&error.bodyKind==='sse_no_output');
+  assert.equal(calls.length,2);
+});
+test('keepalive after partial tool output never makes EOF successful or replayable',async()=>{
+  const {adapter,calls}=makeAdapter([
+    {type:'response.output_item.added',output_index:0,item:{...toolItem(),arguments:'',status:'in_progress'}},
+    {type:'keepalive'},
+  ]);
+  const seen=[];
+  await assert.rejects(async()=>{for await(const chunk of adapter.stream(options({tools:[tool]})))seen.push(chunk);},{code:'STREAM_INTERRUPTED'});
+  assert.equal(calls.length,1);assert.equal(seen.some(chunk=>chunk.type==='finish'),false);
+});
+test('provider failure after keepalive still fails and is never retried',async()=>{
+  const {adapter,calls}=makeAdapter([{type:'keepalive'},{type:'response.failed',response:{error:{code:'subscription_sharing_usage_limit_exceeded'}}}]);
+  await assert.rejects(()=>collect(adapter.stream(options())),{code:'SUBSCRIPTION_LIMIT'});
+  assert.equal(calls.length,1);
+});
+for(const mode of ['cancel','timeout'])test(`keepalive does not bypass ${mode} or leak a pending reader`,async()=>{
+  const controller=new AbortController();let cancelled=false,heartbeat;
+  const bytes=new TextEncoder().encode('event: keepalive\ndata: {"type":"keepalive"}\n\n');
+  const body=new ReadableStream({start(c){c.enqueue(bytes);heartbeat=setInterval(()=>c.enqueue(bytes),5);},cancel(){cancelled=true;clearInterval(heartbeat);}});
+  const {adapter,calls}=makeAdapter([],{requestTimeoutMs:mode==='timeout'?20:1000,fetchImpl:async()=>new Response(body,{headers:{'content-type':'text/event-stream'}})});
+  const pending=collect(adapter.stream(options({signal:controller.signal})));
+  if(mode==='cancel')setImmediate(()=>controller.abort());
+  await assert.rejects(()=>pending,{code:mode==='timeout'?'TIMEOUT':'ABORTED'});
+  assert.equal(cancelled,true);assert.equal(body.locked,false);
+});
+test('keepalive payloads remain subject to the SSE size limit',async()=>{
+  const {adapter}=makeAdapter([{type:'keepalive',padding:'x'.repeat(1000)},complete()],{maxEventBytes:100});
+  await assert.rejects(()=>collect(adapter.stream(options())),{code:'PROTOCOL_ERROR'});
+});
+test('keepalive support does not silently accept unknown events',async()=>{
+  const {adapter}=makeAdapter([{type:'keepalive'},{type:'keepalive.unknown'},complete()]);
+  await assert.rejects(()=>collect(adapter.stream(options())),error=>error.code==='PROTOCOL_ERROR'&&error.providerEvent==='keepalive.unknown');
+});
