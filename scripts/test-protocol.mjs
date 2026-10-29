@@ -7,7 +7,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const args=process.argv.slice(2);
 const diagnostic=args.includes('--diagnostic');
 const files=args.filter(value=>value!=='--diagnostic');
-const selected=files.length?files:['test/adapter.test.mjs','test/request.test.mjs','test/sse.test.mjs'];
+const selected=files.length?files:['test/adapter.test.mjs','test/request.test.mjs','test/sse.test.mjs','test/events.test.mjs'];
 const result=spawnSync(process.execPath,['--test','--test-reporter=tap',...selected],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024});
 const output=(result.stdout??'')+(result.stderr??'')+(result.error?`\n${result.error.message}\n`:'');
 const directory=path.join(root,'outputs','test-reports');
