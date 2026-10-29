@@ -22,22 +22,129 @@ async function mount(initial,handlers={}){
   const context={window:{__ModuleLoader__:{load({factory}){const plugin=factory(id=>{assert.equal(id,'react');return React;});plugin.apply({slots:{inject(slot,register){assert.ok(['settings.section','shell.overlay'].includes(slot));register();},register(metadata,component){if(metadata.name==='settings.section'){assert.equal(metadata.id,'chatgpt-plan');Settings=component;}}}});}}},
     fetch:async(url,init)=>{const action=url.split('/').at(-1);const body=init.body?JSON.parse(init.body):undefined;calls.push({action,body,init});const value=handlers[action]?await handlers[action](body):action==='status'?status:action==='models'?[]:undefined;return {ok:true,json:async()=>({value})};},
     navigator:{clipboard:{writeText:async value=>{calls.push({action:'clipboard',value});}}},
+    document:{getElementById:id=>({focus(){calls.push({action:'focus',id});}})},
     setInterval(fn){interval=fn;return 1;},clearInterval(){interval=undefined;},
   };
   vm.runInNewContext(source,context,{filename:'lib/client.js'});
   async function flush(){for(let i=0;i<10;i++){if(dirty){cursor=0;dirty=false;tree=Settings();while(effects.length)effects.shift()();}await new Promise(resolve=>setImmediate(resolve));if(!dirty)return;}throw Error('Component did not settle.');}
   await flush();
-  return {get tree(){return tree;},calls,flush,setStatus(value){status=value;},async poll(){await interval();await flush();},async change(node,value){assert.ok(node);assert.ok(!node.props.disabled);node.props.onChange({target:{value}});await flush();},async click(node){assert.ok(node,'Control should exist');assert.ok(!node.props.disabled,'Control should be enabled');await node.props.onClick();await flush();},unmount(){for(const hook of hooks)hook?.cleanup?.();}};
+  return {get tree(){return tree;},calls,flush,setStatus(value){status=value;},async poll(){await interval();await flush();},async key(node,key){let prevented=false;node.props.onKeyDown({key,preventDefault(){prevented=true;}});await flush();return prevented;},async change(node,value){assert.ok(node);assert.ok(!node.props.disabled);node.props.onChange({target:{value}});await flush();},async click(node){assert.ok(node,'Control should exist');assert.ok(!node.props.disabled,'Control should be enabled');await node.props.onClick();await flush();},unmount(){for(const hook of hooks)hook?.cleanup?.();}};
 }
-function nodes(tree,predicate){if(!tree||typeof tree!=='object')return [];return [...(predicate(tree)?[tree]:[]),...tree.children.flatMap(child=>nodes(child,predicate))];}
-function text(tree){if(typeof tree==='string'||typeof tree==='number')return String(tree);return tree&&tree.type!=='style'?tree.children.map(text).join(''):'';}
+function nodes(tree,predicate,includeHidden=false){if(!tree||typeof tree!=='object'||(tree.props.hidden&&!includeHidden))return [];return [...(predicate(tree)?[tree]:[]),...tree.children.flatMap(child=>nodes(child,predicate,includeHidden))];}
+function text(tree){if(typeof tree==='string'||typeof tree==='number')return String(tree);return tree&&tree.type!=='style'&&!tree.props.hidden?tree.children.map(text).join(''):'';}
 function button(ui,label){return nodes(ui.tree,node=>node.type==='button'&&text(node)===label)[0];}
 function field(ui,id){return nodes(ui.tree,node=>node.props.id===id)[0];}
+
+test('the current account offers the official subscription usage page next to its identity without making quota requests',async()=>{
+  const status=ready();
+  status.accounts.push({accountId:'b',email:'other@example.test',signedIn:true,planUsageEnabled:true});
+  const ui=await mount(status);
+  try{
+    const usageLink=()=>nodes(ui.tree,node=>node.type==='a'&&text(node)==='查看订阅额度与用量 ↗');
+    assert.equal(usageLink().length,1);
+    assert.equal(usageLink()[0].props.href,'https://chatgpt.com/settings/usage');
+    assert.equal(usageLink()[0].props.target,'_blank');assert.equal(usageLink()[0].props.rel,'noreferrer noopener');
+    assert.match(usageLink()[0].props.title,/当前登录的账户/);
+    const accountWithLink=()=>nodes(ui.tree,node=>node.props.className==='cgp-account-info'&&nodes(node,item=>item===usageLink()[0]).length)[0];
+    assert.match(text(accountWithLink()),/demo@example.test当前账户 · 订阅已授权/);
+    const footer=nodes(ui.tree,node=>node.props.className==='cgp-card-footer')[0];
+    assert.equal(nodes(footer,node=>node.type==='a').length,0);
+    assert.equal(ui.calls.some(call=>/usage|quota/.test(call.action)),false);
+    await ui.click(button(ui,'配置代理'));assert.equal(usageLink().length,0);
+    await ui.click(button(ui,'获取授权'));assert.equal(usageLink().length,1);
+    ui.setStatus({...status,selectedAccountId:'b'});await ui.poll();
+    assert.equal(usageLink().length,1);assert.match(text(accountWithLink()),/other@example.test当前账户 · 订阅已授权/);
+  }finally{ui.unmount();}
+});
+
+test('account cards retain selected identity, usage entry and actions across account changes',async()=>{
+  const status=ready();
+  status.accounts[0].email='a-very-long-account-name@example.test';
+  status.accounts.push({accountId:'b',email:'other@example.test',signedIn:true,planUsageEnabled:true});
+  const ui=await mount(status);
+  try{
+    const accounts=nodes(ui.tree,node=>node.props.className==='cgp-account');
+    assert.equal(accounts.length,2);
+    assert.equal(accounts[0].props['data-selected'],true);
+    assert.equal(accounts[1].props['data-selected'],false);
+    for(const account of accounts){
+      assert.equal(account.children.length,3);
+      assert.equal(account.children[1].props.className,'cgp-account-info');
+      assert.equal(account.children[2].props.className,'cgp-actions');
+    }
+    assert.equal(nodes(accounts[0].children[2],node=>node.type==='button').length,1);
+    assert.equal(nodes(accounts[1].children[2],node=>node.type==='button').length,2);
+    assert.match(text(accounts[0]),/a-very-long-account-name@example.test/);
+    ui.setStatus({...status,selectedAccountId:'b'});await ui.poll();
+    const changed=nodes(ui.tree,node=>node.props.className==='cgp-account');
+    assert.equal(changed[0].props['data-selected'],false);assert.equal(changed[1].props['data-selected'],true);
+    assert.doesNotMatch(text(changed[0]),/查看订阅额度/);assert.match(text(changed[1]),/查看订阅额度/);
+  }finally{ui.unmount();}
+});
+
+test('disconnected accounts do not imply that subscription quota has been loaded',async()=>{
+  const ui=await mount({phase:'not-signed-in',accounts:[]});
+  try{
+    assert.equal(nodes(ui.tree,node=>node.type==='a'&&node.props.href==='https://chatgpt.com/settings/usage').length,0);
+    assert.doesNotMatch(text(ui.tree),/剩余|已用.*%|查看订阅额度与用量/);
+  }finally{ui.unmount();}
+});
+
+test('settings default to authorization and keep the plugin icon visible on both tabs',async()=>{
+  const ui=await mount(ready());
+  try{
+    assert.equal(button(ui,'获取授权').props['aria-selected'],true);assert.equal(button(ui,'配置代理').props.tabIndex,-1);
+    assert.ok(button(ui,'退出'));assert.equal(field(ui,'cgp-network-mode'),undefined);
+    const icon=()=>nodes(ui.tree,node=>node.type==='header')[0].children.find(child=>child.type==='img');
+    assert.equal(icon().props.src,'/api/dsh-chatgpt-plan/icon');
+    await ui.click(button(ui,'配置代理'));
+    assert.ok(field(ui,'cgp-network-mode'));assert.equal(button(ui,'退出'),undefined);assert.equal(icon().props.src,'/api/dsh-chatgpt-plan/icon');
+    const panels=nodes(ui.tree,node=>node.props.role==='tabpanel');assert.equal(panels.length,1);assert.equal(panels[0].props['aria-labelledby'],button(ui,'配置代理').props.id);assert.equal(button(ui,'配置代理').props['aria-controls'],panels[0].props.id);
+  }finally{ui.unmount();}
+});
+
+test('settings tabs support arrow keys, Home and End with matching keyboard focus',async()=>{
+  const ui=await mount(ready());
+  try{
+    assert.equal(await ui.key(button(ui,'获取授权'),'ArrowRight'),true);assert.equal(button(ui,'配置代理').props['aria-selected'],true);
+    assert.equal(ui.calls.at(-1).id,'cgp-tab-proxy');
+    await ui.key(button(ui,'配置代理'),'ArrowRight');assert.equal(button(ui,'获取授权').props['aria-selected'],true);
+    await ui.key(button(ui,'获取授权'),'ArrowLeft');assert.equal(button(ui,'配置代理').props['aria-selected'],true);
+    await ui.key(button(ui,'配置代理'),'Home');assert.equal(button(ui,'获取授权').props['aria-selected'],true);
+    await ui.key(button(ui,'获取授权'),'End');assert.equal(button(ui,'配置代理').props['aria-selected'],true);
+    assert.equal(await ui.key(button(ui,'配置代理'),'ArrowDown'),false);
+  }finally{ui.unmount();}
+});
+
+test('switching tabs preserves a proxy draft and an in-flight connectivity test',async()=>{
+  let finish;const result=new Promise(resolve=>{finish=resolve;});
+  const ui=await mount({...ready(),network:{mode:'environment',proxyUrl:''}},{'network-test':()=>result});
+  try{
+    await ui.click(button(ui,'配置代理'));await ui.change(field(ui,'cgp-network-mode'),'proxy');await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
+    const checking=ui.click(button(ui,'测试连接'));await ui.flush();
+    await ui.click(button(ui,'获取授权'));await ui.poll();assert.ok(button(ui,'退出'));
+    finish({ok:true,checks:[{service:'authorization',ok:true,durationMs:1},{service:'models',ok:true,durationMs:2}]});await checking;
+    await ui.click(button(ui,'配置代理'));assert.equal(field(ui,'cgp-proxy-url').props.value,'http://127.0.0.1:8080');assert.match(text(ui.tree),/均可连接/);
+    assert.equal(ui.calls.filter(call=>call.action==='network-test').length,1);assert.equal(ui.calls.some(call=>call.action==='network'),false);
+  }finally{ui.unmount();}
+});
+
+test('authorization continues in the background without switching the selected proxy tab',async()=>{
+  const authorizationUrl='https://auth.openai.com/api/accounts/authorize?test=1';
+  const ui=await mount({phase:'signing-in',accounts:[],authorizationUrl,expiresAt:Date.now()+60000});
+  try{
+    await ui.click(button(ui,'配置代理'));ui.setStatus(ready());await ui.poll();
+    assert.equal(button(ui,'配置代理').props['aria-selected'],true);assert.equal(button(ui,'退出'),undefined);
+    await ui.click(button(ui,'获取授权'));assert.ok(button(ui,'退出'));assert.match(text(ui.tree),/当前账户 · 订阅已授权/);assert.equal(button(ui,'重新授权'),undefined);
+    assert.equal(ui.calls.some(call=>['login','restart','cancel'].includes(call.action)),false);
+  }finally{ui.unmount();}
+});
 
 test('independent proxy drafts survive status polling and save immediately refreshes model discovery',async()=>{
   const status={...ready(),network:{mode:'environment',proxyUrl:''}};
   const ui=await mount(status,{network:async value=>{status.network=value;return value;}});
   try{
+    await ui.click(button(ui,'配置代理'));
     await ui.change(field(ui,'cgp-network-mode'),'proxy');
     await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
     await ui.poll();assert.equal(field(ui,'cgp-proxy-url').props.value,'http://127.0.0.1:8080');
@@ -51,6 +158,7 @@ test('independent proxy drafts survive status polling and save immediately refre
 test('proxy connection tests use the current draft without saving it',async()=>{
   const ui=await mount({phase:'not-signed-in',accounts:[],network:{mode:'environment',proxyUrl:''}},{'network-test':async()=>({ok:true,checks:[{service:'authorization',ok:true,durationMs:10},{service:'models',ok:true,durationMs:20}]})});
   try{
+    await ui.click(button(ui,'配置代理'));
     await ui.change(field(ui,'cgp-network-mode'),'proxy');await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
     await ui.click(button(ui,'测试连接'));
     assert.deepEqual(ui.calls.find(call=>call.action==='network-test').body,{mode:'proxy',proxyUrl:'http://127.0.0.1:8080'});
@@ -62,6 +170,7 @@ test('switching to direct mode clears the saved proxy URL',async()=>{
   const status={...ready(),network:{mode:'proxy',proxyUrl:'http://127.0.0.1:8080'}};
   const ui=await mount(status,{network:async value=>{status.network=value;return value;}});
   try{
+    await ui.click(button(ui,'配置代理'));
     await ui.change(field(ui,'cgp-network-mode'),'direct');assert.equal(field(ui,'cgp-proxy-url'),undefined);
     await ui.click(button(ui,'保存并应用'));assert.deepEqual(ui.calls.find(call=>call.action==='network').body,{mode:'direct',proxyUrl:''});
   }finally{ui.unmount();}
@@ -70,6 +179,7 @@ test('switching to direct mode clears the saved proxy URL',async()=>{
 test('proxy save and connectivity failures leave a repairable draft',async()=>{
   const ui=await mount({...ready(),network:{mode:'environment',proxyUrl:''}},{network:async()=>{throw Error('代理地址无效');},'network-test':async()=>({ok:false,checks:[{service:'authorization',ok:false,message:'连接被拒绝'}]})});
   try{
+    await ui.click(button(ui,'配置代理'));
     await ui.change(field(ui,'cgp-network-mode'),'proxy');await ui.change(field(ui,'cgp-proxy-url'),'http://127.0.0.1:8080');
     await ui.click(button(ui,'保存并应用'));assert.match(text(ui.tree),/代理地址无效/);assert.equal(field(ui,'cgp-proxy-url').props.value,'http://127.0.0.1:8080');
     await ui.click(button(ui,'测试连接'));assert.match(text(ui.tree),/连接测试未通过/);assert.match(text(ui.tree),/连接被拒绝/);
