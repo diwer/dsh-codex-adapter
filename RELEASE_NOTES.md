@@ -2,7 +2,12 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布
+## 未发布（0.1.9）
+
+- 准备日期：2026-10-29（Asia/Shanghai）。
+- 目标发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
+- 本地 0.1.9 安装包已完成验收和安装；npm 发布尚未完成，正在等待账户认证恢复。
+- 正式发布时再创建不可变的 `v0.1.9` Tag，并记录实际发布日期及完整发布提交 SHA；当前没有创建该 Tag。
 
 - 修复订阅流中的 `keepalive` 心跳被误判为协议错误；逐项匹配 59 种公开 Responses 事件，补齐内容完成、注解、身份与资源限额校验，保留严格完成和未支持能力的明确报错。
 - 增加文本、推理和工具流穿插心跳、仅心跳后 EOF、部分工具后中断、服务失败、超时、取消、大小限制及未知事件的回归测试。

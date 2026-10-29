@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-official-adapter",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Use your ChatGPT subscription in DeepSeek Harness. Sign in, choose GPT, and work with images and built-in tools.",
   "icon": "./lib/assets/plugin-icon.png",
   "type": "module",

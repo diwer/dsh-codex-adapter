@@ -6,10 +6,10 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 
 export const RELEASE = Object.freeze({
-  version:'0.1.8',
-  filename:'dsh-codex-official-adapter-0.1.8.tgz',
-  url:'https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.8/dsh-codex-official-adapter-0.1.8.tgz',
-  checksumUrl:'https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.8/SHA256SUMS',
+  version:'0.1.9',
+  filename:'dsh-codex-official-adapter-0.1.9.tgz',
+  url:'https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.9/dsh-codex-official-adapter-0.1.9.tgz',
+  checksumUrl:'https://github.com/diwer/dsh-codex-adapter/releases/download/v0.1.9/SHA256SUMS',
 });
 
 export function verifyDigest(bytes, expected) {
@@ -95,7 +95,7 @@ export async function installRelease(options,{executor,fetchImpl}={}) {
 if(process.argv[1] && import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
     const options=parseArgs(process.argv.slice(2));
-    if(options.help) console.log('用法：node scripts/install-release.mjs [--dsh 官方CLI路径] [--profile desktop] [--cache-dir 缓存目录] [--archive 已下载的tgz] [--sha256 已核实的SHA256]\n下载 v0.1.8、按发行页 SHA-256 校验，再通过官方 CLI 安装本地包。需要 Node >=22.19。不会重启应用或读取登录凭证。');
+    if(options.help) console.log('用法：node scripts/install-release.mjs [--dsh 官方CLI路径] [--profile desktop] [--cache-dir 缓存目录] [--archive 已下载的tgz] [--sha256 已核实的SHA256]\n下载 v0.1.9、按发行页 SHA-256 校验，再通过官方 CLI 安装本地包。需要 Node >=22.19。不会重启应用或读取登录凭证。');
     else await installRelease(options);
   } catch(error) { console.error(error.message); process.exitCode=1; }
 }

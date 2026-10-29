@@ -1,1 +1,1 @@
-| dsh-codex-adapter | [diwer/dsh-codex-adapter](https://github.com/diwer/dsh-codex-adapter) | 登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。（desktop >=0.2.0-rc.2；npm dsh-codex-official-adapter@0.1.8） | 待测 |
+| dsh-codex-adapter | [diwer/dsh-codex-adapter](https://github.com/diwer/dsh-codex-adapter) | 登录 ChatGPT 即可在 Harness 使用订阅模型，无需 API Key。支持 GPT / DeepSeek 切换、图片理解与内置工具。（desktop >=0.2.0-rc.2；npm dsh-codex-official-adapter@0.1.9） | 待测 |
