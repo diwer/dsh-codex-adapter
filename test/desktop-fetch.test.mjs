@@ -24,6 +24,14 @@ test('desktop explicit proxy overrides environment bypass and keeps TLS validati
   for(const proxyUrl of ['socks5://127.0.0.1:1080','https://proxy.invalid/path','http://proxy.invalid?secret=1','http://proxy.invalid/#fragment',42])assert.throws(()=>createDesktopFetch({proxyUrl}),error=>error.code==='invalid_options');
 });
 
+test('desktop direct mode bypasses all proxy and bypass environment configuration',async()=>{
+  let options;
+  class Agent{constructor(value){options=value;}async close(){}}
+  const transport=createDesktopFetch({proxyMode:'direct',getCertificates:()=>[],AgentClass:Agent});
+  assert.equal(options.httpProxy,'');assert.equal(options.httpsProxy,'');assert.equal(options.noProxy,'*');
+  assert.equal(options.connect.rejectUnauthorized,true);await transport.close();
+});
+
 test('desktop HTTPS requests actually reach an environment proxy',async t=>{
   const proxy=createServer();const targets=[];
   proxy.on('connect',(request,socket)=>{targets.push(request.url);socket.end('HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 0\r\n\r\n');});

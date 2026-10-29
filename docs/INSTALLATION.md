@@ -7,7 +7,7 @@
 ## 在界面中安装
 
 1. 打开 **Plugins → Add plugin**。
-2. 输入 `dsh-codex-official-adapter@0.1.7`。
+2. 输入 `dsh-codex-official-adapter@0.1.8`。
 3. Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。
 4. 等当前任务结束，完全退出并重开 Harness。仅关闭窗口可能不会退出应用。
 5. 在插件列表确认 `dsh-codex-official-adapter` 已启用。
@@ -23,6 +23,22 @@
 
 账户列表只展示已登录账户。退出后再次点击“连接 ChatGPT”会复用原注册；要更换账号，点击“使用其他账户”。已连接时可通过“添加账户”连接另一个账号。
 
+## 插件独立代理
+
+在 **Settings → ChatGPT 订阅 → 独立代理** 中配置，无需修改系统代理或其他插件：
+
+| 连接方式 | 行为 |
+| --- | --- |
+| 跟随环境变量 | 读取 HTTP(S)_PROXY、NO_PROXY；HTTP(S) 类型的 ALL_PROXY 作为后备，不自动读取系统或浏览器代理。 |
+| 直连（不使用代理） | 此插件忽略代理环境变量，直接连接 OpenAI。 |
+| 自定义代理 | 填写完整 HTTP(S) 代理地址，例如 `http://127.0.0.1:7890`，使用代理软件实际的 HTTP 或混合端口。暂不支持 SOCKS 地址。 |
+
+先点击 **测试连接** 检查当前填写的配置，再点击 **保存并应用**。测试不会保存设置、发送账户凭证或消耗模型额度，只检查授权服务与模型服务是否可达，不验证账户权限或额度。
+
+保存后，新的授权、刷新、模型目录与对话请求立即使用新配置；原生模型菜单会重新加载。正在进行的请求沿用原连接，无需重启 Harness。配置保存在插件私有目录中，重新打开应用后仍然生效。
+
+设置页保存的配置优先于插件高级配置 `proxyUrl`；尚未在此页保存时，继续使用既有 `proxyUrl` 或环境变量。代理配置不随退出 ChatGPT 账户而删除。
+
 ## 其他安装方式
 
 ### 终端安装
@@ -31,7 +47,7 @@ macOS 正式版可直接复制：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add dsh-codex-official-adapter@0.1.7 \
+  plugin --profile desktop add dsh-codex-official-adapter@0.1.8 \
   --ignore-scripts --registry=https://registry.npmjs.org/
 ```
 
@@ -39,19 +55,19 @@ macOS 正式版可直接复制：
 
 ### 本地包安装
 
-从 [v0.1.7 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.7)下载 `dsh-codex-official-adapter-0.1.7.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
+从 [v0.1.8 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.8)下载 `dsh-codex-official-adapter-0.1.8.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add \
-  "$HOME/Downloads/dsh-codex-official-adapter-0.1.7.tgz" --ignore-scripts
+  "$HOME/Downloads/dsh-codex-official-adapter-0.1.8.tgz" --ignore-scripts
 ```
 
 文件不在“下载”目录时，替换最后一行的路径。保留安装时使用的本地包，避免影响后续依赖解析。
 
 ### 自动下载并校验
 
-已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.7、校验发行页的 SHA-256，再调用目标应用的官方安装器：
+已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.8、校验发行页的 SHA-256，再调用目标应用的官方安装器：
 
 ```sh
 node scripts/install-release.mjs \
@@ -65,9 +81,9 @@ node scripts/install-release.mjs \
 
 ### 浏览器授权成功，但回调登录失败
 
-升级到 v0.1.7 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
+升级到 v0.1.8 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
 
-浏览器和插件的网络设置可能不同。插件读取 `HTTPS_PROXY` / `HTTP_PROXY`（含小写）、`NO_PROXY`，并支持 HTTP(S) 类型的 `ALL_PROXY` 作为后备。通过图标启动 Harness 时可能没有这些环境变量；可在插件配置中将 `proxyUrl` 设置为实际 HTTP(S) 代理地址，例如 `http://127.0.0.1:7890`，保存并重启插件后重新授权。示例端口需替换成代理软件的 HTTP 或混合端口。显式 `proxyUrl` 优先于代理环境变量，包括 `NO_PROXY`；留空恢复环境变量配置。插件不自动读取操作系统或浏览器的代理设置。
+浏览器和插件的网络设置可能不同。请先在上方的 **独立代理** 中选择合适的方式并测试连接；图标启动的 Harness 可能没有代理环境变量。保存成功后再重试模型菜单或重新授权，不要刷新旧的回调链接。高级配置 `proxyUrl` 仍可作为尚未保存独立代理时的初始值。
 
 新版错误会包含阶段（`discovery` 身份配置、`token` 令牌交换、`jwks` 签名公钥）、错误码和 HTTP 状态。例如 `http_error; discovery; HTTP 403` 表示回调已到达，但身份配置请求被拒绝，应先检查网络出口与代理。提交问题时只附这些诊断字段，不附完整回调 URL。
 
@@ -75,7 +91,7 @@ node scripts/install-release.mjs \
 
 | 现象 | 处理方式 |
 | --- | --- |
-| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.7`。 |
+| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.8`。 |
 | `ERR_PNPM_MISSING_TARBALL_INTEGRITY` | 下载发行包后使用本地路径安装，或运行上面的校验脚本。无需删除锁文件或关闭完整性检查。 |
 | GitHub 仓库地址安装失败 | 改用明确的 npm 包名与版本，或下载本地包。仓库名 `dsh-codex-adapter` 与实际 npm 包名不同。 |
 | 设置中没有“ChatGPT 订阅” | 确认安装目标应用、desktop Profile 和宿主版本，启用插件后完全退出并重开。 |
