@@ -20,6 +20,7 @@
 - 支持图片的模型接收 Harness 会话附件；单张默认最多 8 MiB、最多 20 张、编码后合计最多 20 MiB。
 - Harness 的工具调用和结果回传，工具执行与审批由宿主负责。
 - 推理密文及 assistant phase 的历史回放；中断时保留明确的失败状态。
+- 兼容 `response.reasoning_text.delta/done`、`response.output_text.annotation.added` 和订阅路由的 `response.metadata`、`rate_limits.updated` 通知。推理摘要保持流式展示；推理正文在输出项完成后投影，仅在没有摘要文本时展示，避免两条轨道重复输出。注解保存在最终输出项及回放中。
 
 ## 使用限制
 
@@ -28,5 +29,6 @@
 - 图片仅通过宿主附件服务读取，不从任意本地路径或远程 URL 加载图片。
 - 思考强度与默认档位自动读取当前账户模型目录，并过滤 Responses 接口不支持的值。选择模型后，可在 Harness 原生模型菜单中调节；仅目录声明缺失或需限制档位时使用 `modelCapabilities.reasoningEfforts`。上下文窗口仍需显式配置已核实的值，实际上下文管理由 Harness 负责。
 - 响应在尚未输出任何内容时提前断开，会等待 500 ms 后最多重试一次。已有文字、思考或工具输出时不自动重放。
+- 未支持的内容或工具事件仍会终止本轮，错误消息和 `providerEvent` 提供经过长度及字符检查的事件名，并保留可用的请求 ID；不记录原始事件正文或凭证。新增事件的兼容依据见 [OpenAI 官方流式事件定义](https://developers.openai.com/api/reference/resources/responses/streaming-events)。
 
 [安装与排错](INSTALLATION.md) · [数据与隐私](PRIVACY.md) · [协议说明](AUTH.md) · [开发指南](DEVELOPMENT.md)

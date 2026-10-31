@@ -4,6 +4,90 @@ import {PROVIDER, API_ORIGIN} from '../src/adapter.mjs';
 import {Adapter, options, textItem, toolItem, reasonItem, complete, response, collect, makeAdapter} from './helpers.mjs';
 import {usageFromResponse} from '../src/stream.mjs';
 
+test('subscription metadata can precede and interleave output without changing chunks or replay',async()=>{
+  const baseline=await collect(makeAdapter(events).adapter.stream(options()));
+  const metadata={type:'response.metadata',metadata:{advisory:'PRIVATE_METADATA'},response:{status:'completed',output:[toolItem('undeclared')]}};
+  const {adapter,calls}=makeAdapter(events.flatMap(event=>[metadata,event]));
+  const chunks=await collect(adapter.stream(options()));assert.deepEqual(chunks,baseline);assert.equal(calls.length,1);
+  assert.equal(JSON.stringify(chunks).includes('PRIVATE_METADATA'),false);
+});
+test('subscription metadata alone cannot finish a turn and only retries an empty stream once',async()=>{
+  const {adapter,calls}=makeAdapter([{type:'response.metadata',metadata:{status:'completed'}}]);
+  const seen=[];await assert.rejects(async()=>{for await(const chunk of adapter.stream(options()))seen.push(chunk);},{code:'STREAM_INTERRUPTED'});
+  assert.equal(calls.length,2);assert.deepEqual(seen,[]);
+});
+test('subscription metadata cannot complete or replay a partial tool call or hide provider failure',async()=>{
+  const partial=[{type:'response.output_item.added',output_index:0,item:{...toolItem(),arguments:'',status:'in_progress'}},{type:'response.metadata',metadata:{status:'completed'}}];
+  for(const [last,code] of [[[], 'STREAM_INTERRUPTED'],[[{type:'response.failed',response:{error:{code:'server_error'}}}], 'PROVIDER_HTTP_ERROR']]){
+    const {adapter,calls}=makeAdapter([...partial,...last]);const seen=[];
+    await assert.rejects(async()=>{for await(const chunk of adapter.stream(options({tools:[tool]})))seen.push(chunk);},{code});
+    assert.equal(calls.length,1);assert.equal(seen.some(chunk=>chunk.type==='finish'||chunk.type==='block-end'),false);
+  }
+});
+
+test('reasoning body events coexist with summary without duplicate output',async()=>{
+  const item={...reasonItem(),content:[{type:'reasoning_text',text:'Full reasoning.'}]};
+  const {adapter}=makeAdapter([
+    {type:'rate_limits.updated',rate_limits:[]},
+    {type:'response.output_item.added',output_index:0,item:{...item,summary:[],content:[],status:'in_progress'}},
+    {type:'response.reasoning_text.delta',output_index:0,item_id:item.id,content_index:0,delta:'Full reasoning.'},
+    {type:'response.reasoning_summary_text.delta',output_index:0,item_id:item.id,summary_index:0,delta:'Checking'},
+    {type:'response.reasoning_text.done',output_index:0,item_id:item.id,content_index:0,text:'Full reasoning.'},
+    {type:'response.output_item.done',output_index:0,item},complete([item]),
+  ]);
+  const chunks=await collect(adapter.stream(options()));
+  assert.equal(chunks.filter(x=>x.type==='reasoning-delta').map(x=>x.text).join(''),item.summary[0].text);
+  assert.deepEqual(chunks.at(-1).replayState.blocks[0].item,item);
+});
+test('reasoning without summary uses completed full text and preserves replay',async()=>{
+  const item={...reasonItem(),summary:[],content:[{type:'reasoning_text',text:'Full reasoning.'}]};
+  const {adapter}=makeAdapter([
+    {type:'response.output_item.added',output_index:0,item:{...item,content:[],status:'in_progress'}},
+    {type:'response.reasoning_text.delta',output_index:0,item_id:item.id,content_index:0,delta:'Full'},
+    {type:'response.reasoning_text.done',output_index:0,item_id:item.id,content_index:0,text:'Full reasoning.'},
+    {type:'response.output_item.done',output_index:0,item},complete([item]),
+  ]);
+  const chunks=await collect(adapter.stream(options()));
+  assert.equal(chunks.filter(x=>x.type==='reasoning-delta').map(x=>x.text).join(''),'Full reasoning.');
+  assert.deepEqual(chunks.at(-1).replayState.blocks[0].item,item);
+});
+test('annotation events preserve final annotations without duplicating text',async()=>{
+  const item=textItem();const annotation={type:'url_citation',url:'https://example.com',title:'Example',start_index:0,end_index:5};item.content[0].annotations=[annotation];
+  const {adapter}=makeAdapter([
+    {type:'response.output_item.added',output_index:0,item:{...item,content:[],status:'in_progress'}},
+    {type:'response.output_text.delta',output_index:0,item_id:item.id,content_index:0,delta:'Hello'},
+    {type:'response.output_text.annotation.added',output_index:0,item_id:item.id,content_index:0,annotation_index:0,annotation},
+    {type:'response.output_item.done',output_index:0,item},complete([item]),
+  ]);
+  const chunks=await collect(adapter.stream(options()));assert.equal(chunks.filter(x=>x.type==='text-delta').map(x=>x.text).join(''),'Hello');
+  assert.deepEqual(chunks.at(-1).replayState.blocks[0].item.content[0].annotations,[annotation]);
+});
+for (const type of ['response.future_content.delta','response.audio.delta','response.custom_tool_call_input.delta','response.shell_call_command.added']) test(`unsupported ${type} remains a diagnosed failure without retry`,async()=>{
+  const {adapter,calls}=makeAdapter([{type,delta:'PRIVATE_PAYLOAD',command:'PRIVATE_PAYLOAD'}]);
+  await assert.rejects(()=>collect(adapter.stream(options())),error=>error.code==='PROTOCOL_ERROR'&&error.providerEvent===type&&!JSON.stringify(error).includes('PRIVATE_PAYLOAD'));
+  assert.equal(calls.length,1);
+});
+for (const type of ['bad event\nPRIVATE_PAYLOAD','x'.repeat(200),'FAKE_ACCESS_TOKEN']) test('unknown event diagnostics redact unsafe names and credentials',async()=>{
+  const {adapter}=makeAdapter([{type}]);await assert.rejects(()=>collect(adapter.stream(options())),error=>error.code==='PROTOCOL_ERROR'&&error.providerEvent===undefined&&!JSON.stringify(error).includes('PRIVATE_PAYLOAD')&&!JSON.stringify(error).includes('FAKE_ACCESS_TOKEN'));
+});
+test('unknown event diagnostics retain safe HTTP request ID',async()=>{
+  const {adapter}=makeAdapter([],{fetchImpl:async()=>response([{type:'response.future.delta'}],{headers:{'x-request-id':'req_unknown'}})});
+  await assert.rejects(()=>collect(adapter.stream(options())),error=>error.providerEvent==='response.future.delta'&&error.requestId==='req_unknown');
+});
+test('new event compatibility preserves item identity, output limits and completion checks',async()=>{
+  const added={type:'response.output_item.added',output_index:0,item:{...reasonItem(),summary:[],status:'in_progress'}};
+  const delta={type:'response.reasoning_text.delta',output_index:0,item_id:'rs_1',content_index:0,delta:'Full reasoning'};
+  for(const sequence of [
+    [delta], [added,{...delta,item_id:'wrong'}], [added,{...delta,content_index:-1}],
+    [added,{...delta,delta:123}], [added,delta,complete([{...reasonItem(),summary:[]}])],
+    [added,delta,{type:'response.failed',response:{error:{code:'server_error'}}}],
+  ]) {
+    const {adapter}=makeAdapter(sequence);await assert.rejects(()=>collect(adapter.stream(options())));
+  }
+  const {adapter}=makeAdapter([added,delta],{maxOutputChars:3});await assert.rejects(()=>collect(adapter.stream(options())),{code:'PROTOCOL_ERROR'});
+  const unfinished=makeAdapter([added,delta]);await assert.rejects(()=>collect(unfinished.adapter.stream(options())),{code:'STREAM_INTERRUPTED'});assert.equal(unfinished.calls.length,1);
+});
+
 const tool={name:'read_file',description:'Read file',parameters:{type:'object',properties:{path:{type:'string'}}}};
 const events=[
   {type:'response.created'},

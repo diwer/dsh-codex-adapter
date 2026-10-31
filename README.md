@@ -1,8 +1,14 @@
 # DSH ChatGPT Adapter
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/main/lib/assets/big-fish-codex.png" width="144" height="144" alt="大肥鱼指挥 Codex 插件头像">
+</p>
+
 **把 ChatGPT 订阅带进 DeepSeek Harness。登录账户，选择 GPT，即可开始工作。**
 
 无需 API Key，支持 GPT / DeepSeek 切换、图片理解，以及 Harness 的文件、搜索和终端工具。
+
+**仅适用于 DeepSeek Harness。** 本插件不能安装到 DeepSeek 普通网页版、手机 App 或普通聊天桌面客户端中。当前验证范围为 Harness 桌面版 0.2.0-rc.2 / macOS。
 
 [快速开始](#快速开始) · [使用文档](docs/INSTALLATION.md) · [下载安装包](https://github.com/diwer/dsh-codex-adapter/releases/latest) · [English](README.en.md)
 
@@ -42,6 +48,10 @@ Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **In
 试着输入：`帮我阅读当前项目，说明它的用途。` 支持图片的模型也可以直接接收会话中添加的图片。
 
 ## 常见问题
+
+**这个插件支持哪个产品？** 仅支持 DeepSeek Harness。DeepSeek 普通网页版、手机 App 和普通聊天桌面客户端不支持安装本插件。当前验证范围为 Harness 桌面版 0.2.0-rc.2 / macOS。
+
+**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.3`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
 
 **可以直接填 GitHub 地址吗？** 这是源码地址：`https://github.com/diwer/dsh-codex-adapter`。不同宿主与市场的安装器支持有差异，日常安装建议使用上面的明确包名与版本。
 

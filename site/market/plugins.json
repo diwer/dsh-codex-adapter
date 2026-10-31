@@ -15,6 +15,7 @@
       "name": "dsh-codex-official-adapter",
       "owner": "diwer",
       "url": "https://github.com/diwer/dsh-codex-adapter",
+      "icon": "https://diwer.github.io/dsh-codex-adapter/assets/big-fish-codex.png",
       "category": "model",
       "description": {
         "en": "Use your ChatGPT subscription in Harness: sign in without an API key, switch GPT/DeepSeek, and work with images and built-in tools.",

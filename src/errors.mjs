@@ -4,7 +4,7 @@ export class AdapterError extends Error {
     super(message);
     this.name = 'AdapterError';
     this.code = code;
-    for (const key of ['status', 'providerCode', 'providerParam', 'requestId', 'providerRetryAfterMs', 'bodyKind']) {
+    for (const key of ['status', 'providerCode', 'providerParam', 'providerEvent', 'requestId', 'providerRetryAfterMs', 'bodyKind']) {
       if (facts[key] !== undefined) this[key] = facts[key];
     }
   }

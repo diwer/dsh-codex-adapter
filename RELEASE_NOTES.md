@@ -2,6 +2,37 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## 未发布
+
+- 开发主干由 `main` 调整为 `master`，0.1 系列发布分支统一为 `release/v0.1`。
+- 同步文档发布工作流与源码链接，并在 `AGENTS.md` 中记录分支流向和发布日志维护要求。
+
+## v0.1.6
+
+- 发布日期：2026-10-16。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)（发布后补建）。
+- 版本标记：[`v0.1.6`](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.6)。
+- 发布提交：[`5c9d99a`](https://github.com/diwer/dsh-codex-adapter/commit/5c9d99a1a34d16e74b4b94de9c5098dcac4badd6)。
+
+- 兼容推理正文增量与完成事件、文本注解、订阅路由 `response.metadata` 及额度通知，避免“未识别服务事件”中断。
+- 推理摘要与正文分轨处理，避免重复展示，并保留最终输出项及密文回放。
+- 未支持的事件提供安全事件名和请求 ID，保持内容、工具调用及完整结束校验。
+
+## v0.1.5
+
+- 对齐 npm 官方源最新已发布版本，保持授权回调、代理与账户重连修复。
+- 同步市场安装入口与项目 icon 的公开引用。
+
+## v0.1.4
+
+- 退出后重新连接复用原账户注册，已退出的历史记录不再占用账户列表；支持单独选择“使用其他账户”。
+- 授权回调成功后自动打开 DeepSeek Harness；浏览器拦截时可点击回调页按钮打开。
+- 修复授权回调后的网络请求忽略代理环境变量，导致身份校验或令牌交换失败的问题。
+- 支持 HTTP(S)_PROXY、NO_PROXY 和 HTTP(S) 类型的 ALL_PROXY；桌面无环境变量时可配置 proxyUrl。
+- 保留系统与 Node 证书信任和 TLS 校验，代理连接与目标连接均验证证书。
+- 登录失败页与设置页显示安全的错误码、失败阶段和 HTTP 状态，便于定位；不显示授权码、令牌或服务原始响应。
+- 增加仅当前用户可读的本地诊断日志，覆盖监听、回调、网络请求、令牌与身份校验；设置页显示实际运行版本。
+
 ## v0.1.3
 
 - 插件启用后在窗口右下角展示「大肥鱼指挥 Codex」头像，停用时自动移除。

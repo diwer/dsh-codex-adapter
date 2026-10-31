@@ -80,8 +80,8 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       else if (['UNABLE_TO_GET_ISSUER_CERT_LOCALLY','UNABLE_TO_VERIFY_LEAF_SIGNATURE','CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN'].includes(error?.cause?.code)) failure = new AdapterError(`TLS certificate validation failed (${error.cause.code}).`, 'TLS_ERROR');
       else failure = new AdapterError('The provider request could not be completed.', 'TRANSPORT_ERROR');
       const safeFact = value => typeof value === 'string' && secret && value.includes(secret) ? undefined : value;
-      const result = new LlmError(failure.message, failure.code, {status:failure.status, requestId:safeFact(failure.requestId), providerRetryAfterMs:failure.providerRetryAfterMs});
-      for (const key of ['providerCode','providerParam','bodyKind']) if (safeFact(failure[key]) !== undefined) result[key] = safeFact(failure[key]);
+      const result = new LlmError(safeFact(failure.message) ?? 'The provider request could not be completed.', failure.code, {status:failure.status, requestId:safeFact(failure.requestId), providerRetryAfterMs:failure.providerRetryAfterMs});
+      for (const key of ['providerCode','providerParam','providerEvent','bodyKind']) if (safeFact(failure[key]) !== undefined) result[key] = safeFact(failure[key]);
       return result;
     }
     async catalog(signal) {
