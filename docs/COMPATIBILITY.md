@@ -60,7 +60,11 @@
 
 ## 提示缓存
 
+逐次诊断位于插件私有目录的 `auth-diagnostics.jsonl`：`inference_request` 用摘要及 `samePreviousInputPrefix` / `samePreviousTools` / `samePreviousInstructions` / `samePreviousSettings` 表示同会话、同用途上一次尝试与本次请求的关系；首次请求或重载后没有比较字段。它们为真只证明可见请求对应部分稳定，不能证明服务端缓存一定可用。`inference_usage` 记录服务端输入总量和缓存读写计数，用 `cachedTokens / inputTokens` 逐次比较；`inference_failed` 记录固定失败码。该诊断不包含正文，不自动重试或安装新包。
+
 插件按工具名称稳定排序，并递归稳定参数 Schema 的对象字段顺序；数组顺序、字段值、工具增删、提示词、历史消息及推理回放保持原样。宿主提供 `sessionId` 时，用会话、模型及调用用途的 SHA-256 摘要生成稳定的 `prompt_cache_key`，不发送原始会话 ID；未提供时不生成随机 key。实现不依赖模型名称白名单。
+
+ChatGPT 订阅通道还在推理请求的 `session-id` 和 `thread-id` 头中发送相同的摘要化标识，保持同一会话的传输路由稳定；不向授权或模型目录请求添加这些头。此兼容策略参考 [OpenCode 的 Token Sharing 排查](https://github.com/anomalyco/opencode/issues/53765)与 [OpenHands 的修复](https://github.com/OpenHands/software-agent-sdk/pull/6364)，并已在本插件的 `api.openai.com/v1/responses` 订阅通道做合成请求对照验证；它不是普通 API 文档对所有通道的统一要求。缓存写入报告为 0 不等同于未建立缓存，应结合后续请求的实际缓存读取计数判断。
 
 按 [OpenAI 缓存说明](https://developers.openai.com/api/docs/guides/prompt-caching)，稳定 key 可帮助较早模型优化路由；GPT-5.6 及之后自动处理缓存路由，key 主要用于缓存统计隔离。工具、系统提示或历史内容的真实变化仍可能影响命中，插件不能保证命中率；不强制设置保留时长、显式缓存断点或发起预热请求。离线回归验证请求稳定性，实际命中收益须在同一账户、模型和会话的连续调用中观察 `cached_tokens / input_tokens`；累计用量面板不能替代逐次对比。
 

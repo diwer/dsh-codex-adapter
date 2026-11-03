@@ -36,7 +36,7 @@ export async function apply(ctx,config){
   diagnostics.record({event:'runtime_started',version:pluginVersion,proxyMode:proxyMode()});
   const auth=createAuthClient({store,fetchImpl:transport.fetch,authorizationTimeoutMs:config.authorizationTimeoutMs,onDiagnostic:diagnostics.record});
   const controller=new DesktopAccountController({auth,store,onChange:()=>ctx.emit('llm/adapters-updated')});
-  const adapter=new ChatGPTPlanAdapter({...config,session:controller,fetchImpl:transport.fetch,attachments:()=>ctx.get('attachments')});
+  const adapter=new ChatGPTPlanAdapter({...config,session:controller,fetchImpl:transport.fetch,attachments:()=>ctx.get('attachments'),onDiagnostic:diagnostics.record});
   const listModels=adapter.listModels.bind(adapter);
   adapter.listModels=async provider=>{
     try{return await listModels(provider);}catch(error){if(['not_signed_in','account_mismatch','plan_permission_missing','reauthentication_required'].includes(error.code))return [];throw error;}
