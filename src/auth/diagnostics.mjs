@@ -5,11 +5,20 @@ import {AuthError} from './errors.mjs';
 
 const EVENTS=new Set(['runtime_started','network_updated','login_started','listener_ready','authorization_ready','callback_received','callback_validated','request_started','request_succeeded','request_failed','token_response_received','token_response_validated','id_token_validated','credentials_saved','login_succeeded','login_failed','listener_closed']);
 const STAGES=new Set(['discovery','token','jwks','revocation','callback','token_response','id_token','credential_store']);
+const INFERENCE_EVENTS=new Set(['inference_request','inference_usage','inference_failed']);
 
 /** Allowlisted metadata only: never serialize provider bodies, URLs, identities or tokens. */
 export function diagnosticRecord(value){
-  if(!EVENTS.has(value?.event))return null;
+  if(!EVENTS.has(value?.event)&&!INFERENCE_EVENTS.has(value?.event))return null;
   const record={time:new Date().toISOString(),event:value.event};
+  if(INFERENCE_EVENTS.has(value.event)){
+    if(typeof value.flow==='string'&&/^[a-f0-9]{16}$/.test(value.flow))record.flow=value.flow;
+    for(const key of ['toolsHash','instructionsHash','inputHash','settingsHash','cacheKeyHash'])if(typeof value[key]==='string'&&/^[a-f0-9]{64}$/.test(value[key]))record[key]=value[key];
+    for(const key of ['inputItems','inputTokens','cachedTokens','cacheWriteTokens','outputTokens'])if(Number.isSafeInteger(value[key])&&value[key]>=0)record[key]=value[key];
+    for(const key of ['samePreviousInputPrefix','samePreviousTools','samePreviousInstructions','samePreviousSettings'])if(typeof value[key]==='boolean')record[key]=value[key];
+    if(['ABORTED','ADAPTER_DISPOSED','TIMEOUT','AUTH','PERMISSION_DENIED','RATE_LIMIT','PROVIDER_HTTP_ERROR','TRANSPORT_ERROR','STREAM_INTERRUPTED','PROTOCOL_ERROR'].includes(value.failureCode))record.failureCode=value.failureCode;
+    return record;
+  }
   if(STAGES.has(value.stage))record.stage=value.stage;
   if(typeof value.flow==='string'&&/^[a-f0-9]{16}$/.test(value.flow))record.flow=value.flow;
   if(typeof value.code==='string')record.code=new AuthError(value.code).code;

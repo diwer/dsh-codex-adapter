@@ -5,6 +5,7 @@ import { AdapterError, protocol, providerError, safeCode } from './errors.mjs';
 import { buildRequest } from './request.mjs';
 import { readSse, parseEvent } from './sse.mjs';
 import { ResponseStream } from './stream.mjs';
+import {createRequestDiagnostics} from './request-diagnostics.mjs';
 
 export const PROVIDER = 'openai-chatgpt-plan';
 export const API_ORIGIN = 'https://api.openai.com/v1';
@@ -39,7 +40,7 @@ function limits(value, fallback, name) {
 export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
   if (typeof LlmAdapter !== 'function' || typeof LlmError !== 'function' || typeof attributionHeaders !== 'function') throw new TypeError('DSH runtime exports are required.');
   return class ChatGPTPlanAdapter extends LlmAdapter {
-    constructor({session, fetchImpl = globalThis.fetch, requestTimeoutMs, maxEventBytes, maxOutputChars, maxReplayBytes, modelCapabilities = {}, attachments}) {
+    constructor({session, fetchImpl = globalThis.fetch, requestTimeoutMs, maxEventBytes, maxOutputChars, maxReplayBytes, modelCapabilities = {}, attachments, onDiagnostic}) {
       super();
       if (typeof session?.accessToken !== 'function') throw new AdapterError('An authenticated account session is required.', 'INVALID_CONFIG');
       this.lifetime = new AbortController();
@@ -51,6 +52,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
       this.maxReplayBytes = limits(maxReplayBytes, 32 * 1024 * 1024, 'maxReplayBytes');
       this.capabilities = structuredClone(modelCapabilities);
       this.attachments = attachments;
+      this.requestDiagnostics = typeof onDiagnostic==='function'?createRequestDiagnostics(onDiagnostic):null;
       for (const value of Object.values(this.capabilities)) {
         if (value.contextWindow !== undefined) limits(value.contextWindow, undefined, 'contextWindow');
         if (value.reasoningEfforts !== undefined && (!Array.isArray(value.reasoningEfforts) || !value.reasoningEfforts.length || value.reasoningEfforts.some(e => !isResponsesEffort(e)) || new Set(value.reasoningEfforts).size !== value.reasoningEfforts.length)) throw new AdapterError('reasoningEfforts must be unique supported Responses effort identifiers.', 'INVALID_CONFIG');
@@ -59,7 +61,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
     providerInfo(provider) { this.route(provider); return {id:PROVIDER, name:'ChatGPT plan (Sign in with ChatGPT)'}; }
     route(provider) { if (provider !== PROVIDER) throw new AdapterError('This adapter does not own the requested provider route.', 'NO_ADAPTER'); }
     scope(signal) { return AbortSignal.any([this.lifetime.signal, ...(signal ? [signal] : []), AbortSignal.timeout(this.requestTimeoutMs)]); }
-    dispose() { this.lifetime.abort(); }
+    dispose() { this.lifetime.abort(new AdapterError('ChatGPT 插件已停用或重新加载，当前请求已中断。请在插件恢复后重试未完成的轮次。', 'ADAPTER_DISPOSED')); }
     providerRetryPolicy(provider) { this.route(provider); return {mode:'normal', maxRetries:0, retryableCodes:['TRANSPORT_ERROR','TIMEOUT'], initialDelayMs:500, maxDelayMs:10000, jitterRatio:0.1}; }
     async headers(signal) {
       signal.throwIfAborted();
@@ -74,7 +76,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
     }
     wrap(error, signal, secret) {
       let failure;
-      if (signal?.aborted) failure = new AdapterError(signal.reason?.name === 'TimeoutError' ? 'The provider request timed out.' : 'The request was cancelled.', signal.reason?.name === 'TimeoutError' ? 'TIMEOUT' : 'ABORTED');
+      if (signal?.aborted) failure = signal.reason===this.lifetime.signal.reason&&this.lifetime.signal.aborted?this.lifetime.signal.reason:new AdapterError(signal.reason?.name === 'TimeoutError' ? 'The provider request timed out.' : 'The request was cancelled.', signal.reason?.name === 'TimeoutError' ? 'TIMEOUT' : 'ABORTED');
       else if (error instanceof AdapterError) failure = error;
       else if (error?.name === 'AuthError') failure = new AdapterError('The selected ChatGPT account needs attention. Check its sign-in status.', safeCode(error.code) ?? 'AUTH');
       else if (['UNABLE_TO_GET_ISSUER_CERT_LOCALLY','UNABLE_TO_VERIFY_LEAF_SIGNATURE','CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN'].includes(error?.cause?.code)) failure = new AdapterError(`TLS certificate validation failed (${error.cause.code}).`, 'TLS_ERROR');
@@ -121,7 +123,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
     }
     async *stream(options) {
       const signal = this.scope(options.signal);
-      let secret;
+      let secret,diagnostic;
       try {
         this.route(options.provider);
         if (options.reasoningEffort !== undefined) {
@@ -135,9 +137,16 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
         secret = headers.get('authorization').slice(7);
         headers.set('content-type','application/json');
         headers.set('accept','text/event-stream');
+        // ChatGPT subscription routing needs stable transport affinity as well
+        // as the body cache key. Reuse its opaque digest, never the host ID.
+        if(body.prompt_cache_key){
+          headers.set('session-id',body.prompt_cache_key);
+          headers.set('thread-id',body.prompt_cache_key);
+        }
         // A stateless request can be repeated only before any chunk reaches Harness.
         // Keep the host retry policy disabled so partial tool work is never replayed.
         for(let attempt=0;attempt<2;attempt++){
+          diagnostic=this.requestDiagnostics?.(body,options);
           const response = await this.fetchImpl(`${API_ORIGIN}/responses`, {method:'POST', headers, body:JSON.stringify(body), signal, redirect:'error'});
           if (!response.ok) throw providerError(response.status, await readJson(response, signal), response.headers);
           const contentType=response.headers.get('content-type');
@@ -150,6 +159,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
             for (const chunk of stream.accept(parseEvent(frame))) {
               signal.throwIfAborted();
               emitted=true;
+              if(chunk.type==='usage')diagnostic?.usage(chunk.usage);
               yield chunk;
             }
             signal.throwIfAborted();
@@ -158,7 +168,7 @@ export function createAdapterClass({LlmAdapter, LlmError, attributionHeaders}) {
           if(!emitted&&attempt===0){await sleep(500,undefined,{signal});continue;}
           throw new AdapterError('OpenAI 响应连接提前结束，未收到完整结束事件。请重试本轮；已收到的片段不视为完整回复。','STREAM_INTERRUPTED',{status:response.status,requestId:safeCode(response.headers.get('x-request-id')),bodyKind:emitted?'sse_partial_output':'sse_no_output'});
         }
-      } catch (error) { throw this.wrap(error, signal, secret); }
+      } catch (error) { const failure=this.wrap(error, signal, secret);diagnostic?.failure(failure.code);throw failure; }
     }
   };
 }

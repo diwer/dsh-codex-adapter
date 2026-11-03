@@ -11,6 +11,21 @@ const catalog={models:[{slug:'test-model',display_name:'Test model',visibility:'
 const transport=async url=>url.endsWith('/models')?Response.json(catalog):response([complete([textItem()])]);
 const session={async accessToken(){return 'FAKE_ACCESS_TOKEN';}};
 
+for(const cause of ['dispose','caller'])test(`real DSH runtime distinguishes ${cause} during a partial response`,async()=>{
+  const ctx=new Context(),runtime=ctx.plugin(LlmRuntime),controller=new AbortController();
+  const adapter=new ChatGPTPlanAdapter({session,fetchImpl:transport});
+  try{
+    await runtime.await();ctx.llm.registerAdapter([PROVIDER],adapter);
+    let finish;
+    for await(const chunk of ctx.llm.stream(options({signal:controller.signal}))){
+      if(chunk.type==='block-start'){if(cause==='dispose')adapter.dispose();else controller.abort();}
+      if(chunk.type==='finish')finish=chunk.reason;
+    }
+    assert.equal(finish.kind,cause==='dispose'?'error':'aborted');
+    assert.equal(finish.failure.code,cause==='dispose'?'ADAPTER_DISPOSED':'ABORTED');
+  }finally{adapter.dispose();await runtime.dispose();}
+});
+
 test('real Cordis plugin disposal aborts the adapter and withdraws its route',async()=>{
   const ctx=new Context();const runtime=ctx.plugin(LlmRuntime);
   await runtime.await();

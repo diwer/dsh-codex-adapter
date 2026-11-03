@@ -252,7 +252,7 @@ test('disposing an adapter cancels stalled model discovery',async()=>{
   let cancelled=false;
   const adapter=new Adapter({session:{async accessToken(){return 'fake';}},fetchImpl:async()=>new Response(new ReadableStream({cancel(){cancelled=true;}}))});
   const pending=adapter.listModels(PROVIDER);await new Promise(resolve=>setImmediate(resolve));adapter.dispose();
-  await assert.rejects(()=>pending,{code:'ABORTED'});assert.equal(cancelled,true);
+  await assert.rejects(()=>pending,{code:'ADAPTER_DISPOSED'});assert.equal(cancelled,true);
 });
 test('provider retry policy disables host automatic replay',()=>{
   const {adapter}=makeAdapter([]);assert.equal(adapter.providerRetryPolicy(PROVIDER).maxRetries,0);
@@ -262,7 +262,7 @@ for (const how of ['dispose','caller']) test(`cancellation by ${how} between chu
   const iterator=adapter.stream(options({signal:controller.signal}));
   assert.equal((await iterator.next()).value.type,'block-start');
   if (how==='dispose') adapter.dispose(); else controller.abort();
-  await assert.rejects(()=>iterator.next(),{code:'ABORTED'});
+  await assert.rejects(()=>iterator.next(),{code:how==='dispose'?'ADAPTER_DISPOSED':'ABORTED'});
 });
 test('encrypted replay is bounded independently of visible output length',async()=>{
   const item={...reasonItem(),summary:[],encrypted_content:'x'.repeat(1000)};
