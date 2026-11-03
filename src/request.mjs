@@ -6,6 +6,13 @@ export const REPLAY_VERSION = 'dsh-siwc-responses-v1';
 export const digest = block => createHash('sha256').update(JSON.stringify(block)).digest('hex');
 
 function unsupported(message) { throw new AdapterError(message, 'UNSUPPORTED_CAPABILITY'); }
+// Tool registration and schema object insertion order can vary between host
+// calls. Stabilize their wire representation without changing array semantics.
+function stableSchema(value) {
+  if (Array.isArray(value)) return value.map(stableSchema);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(key => [key,stableSchema(value[key])]));
+  return value;
+}
 function textOnly(blocks) {
   if (!Array.isArray(blocks)) throw protocol('The message content is not an array.');
   return blocks.map(block => {
@@ -86,6 +93,11 @@ export function buildRequest(options,{images=new Map()}={}) {
   }
   // Stateless reasoning must return the ciphertext required by itemToBlock/replay.
   const body = {model:options.model, input, store:false, stream:true, include:['reasoning.encrypted_content']};
+  // Never send the raw host session ID. Keep routing/accounting stable as the
+  // history grows, including after an adapter restart; no model-name allowlist.
+  if (typeof options.sessionId === 'string' && options.sessionId.length) {
+    body.prompt_cache_key = `dsh-v1-${digest({provider:options.provider,model:options.model,sessionId:options.sessionId,purpose:options.purpose ?? 'conversation'})}`;
+  }
   if (instructions.length) body.instructions = instructions.join('\n\n');
   if (options.reasoningEffort !== undefined) body.reasoning = {effort:options.reasoningEffort};
   if (options.tools?.length) {
@@ -94,8 +106,8 @@ export function buildRequest(options,{images=new Map()}={}) {
       if (tool.deferLoading) unsupported('Deferred tool loading is not supported on the subscription route.');
       if (typeof tool.name !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(tool.name) || names.has(tool.name)) throw new AdapterError('Tool names must be unique and use 1–64 letters, digits, underscores or hyphens.', 'INVALID_TOOL');
       names.add(tool.name);
-      return {type:'function', name:tool.name, description:tool.description, parameters:structuredClone(tool.parameters), strict:false};
-    })}];
+      return {type:'function', name:tool.name, description:tool.description, parameters:stableSchema(tool.parameters), strict:false};
+    }).sort((a,b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)}];
   }
   return body;
 }

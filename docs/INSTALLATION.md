@@ -4,10 +4,12 @@
 
 支持 **DeepSeek Harness 桌面版 ≥0.2.0-rc.2 / macOS**。准备好具有订阅模型使用权限的 ChatGPT 账户，无需 API Key。
 
+> 当前 v0.1.10 仅通过 GitHub Release 分发，npm 尚未同步；请使用下方的[本地包安装](#本地包安装)或[自动下载并校验](#自动下载并校验)，暂勿使用 npm 包名安装本版本。
+
 ## 在界面中安装
 
 1. 打开 **Plugins → Add plugin**。
-2. 输入 `dsh-codex-official-adapter@0.1.9`。
+2. 输入 `dsh-codex-official-adapter@0.1.10`。
 3. Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。
 4. 等当前任务结束，完全退出并重开 Harness。仅关闭窗口可能不会退出应用。
 5. 在插件列表确认 `dsh-codex-official-adapter` 已启用。
@@ -23,9 +25,13 @@
 
 账户列表只展示已登录账户。退出后再次点击“连接 ChatGPT”会复用原注册；要更换账号，点击“使用其他账户”。已连接时可通过“添加账户”连接另一个账号。
 
+设置页分为 **获取授权** 和 **配置代理** 两个 Tab，默认显示“获取授权”。账户连接、模型与使用偏好放在授权页；切换到代理页不会取消授权或清空未保存的代理草稿。标题区展示插件图标，两个页面共用。
+
+连接成功后，当前账户的邮箱与授权状态下方提供 **查看订阅额度与用量** 入口，打开 [ChatGPT 官方用量页](https://chatgpt.com/settings/usage)。切换当前账户后，入口随账户信息一起移动。官方页面以浏览器当前登录的账户为准；本插件不使用本地 Token 数估算订阅剩余额度。当前 SIWC 官方说明见[账户与用量管理](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions#tracking-usage)。
+
 ## 插件独立代理
 
-在 **Settings → ChatGPT 订阅 → 独立代理** 中配置，无需修改系统代理或其他插件：
+在 **Settings → ChatGPT 订阅 → 独立代理** 中配置；先切换到 **配置代理** Tab。无需修改系统代理或其他插件：
 
 | 连接方式 | 行为 |
 | --- | --- |
@@ -47,7 +53,7 @@ macOS 正式版可直接复制：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
-  plugin --profile desktop add dsh-codex-official-adapter@0.1.9 \
+  plugin --profile desktop add dsh-codex-official-adapter@0.1.10 \
   --ignore-scripts --registry=https://registry.npmjs.org/
 ```
 
@@ -55,19 +61,19 @@ macOS 正式版可直接复制：
 
 ### 本地包安装
 
-从 [v0.1.9 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.9)下载 `dsh-codex-official-adapter-0.1.9.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
+从 [v0.1.10 下载页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.10)下载 `dsh-codex-official-adapter-0.1.10.tgz`，保持原样，无需解压。将文件的**完整本地路径**填入 Add plugin，或运行：
 
 ```sh
 "/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" \
   plugin --profile desktop add \
-  "$HOME/Downloads/dsh-codex-official-adapter-0.1.9.tgz" --ignore-scripts
+  "$HOME/Downloads/dsh-codex-official-adapter-0.1.10.tgz" --ignore-scripts
 ```
 
 文件不在“下载”目录时，替换最后一行的路径。保留安装时使用的本地包，避免影响后续依赖解析。
 
 ### 自动下载并校验
 
-已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.9、校验发行页的 SHA-256，再调用目标应用的官方安装器：
+已有本仓库和 **Node.js ≥22.19** 时，可使用辅助脚本。脚本下载 v0.1.10、校验发行页的 SHA-256，再调用目标应用的官方安装器：
 
 ```sh
 node scripts/install-release.mjs \
@@ -81,7 +87,7 @@ node scripts/install-release.mjs \
 
 ### 浏览器授权成功，但回调登录失败
 
-升级到 v0.1.9 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
+升级到 v0.1.10 后完全退出并重开 Harness，重新点击“连接 ChatGPT”。旧回调中的授权码只能使用一次，不要刷新旧页面。
 
 浏览器和插件的网络设置可能不同。请先在上方的 **独立代理** 中选择合适的方式并测试连接；图标启动的 Harness 可能没有代理环境变量。保存成功后再重试模型菜单或重新授权，不要刷新旧的回调链接。高级配置 `proxyUrl` 仍可作为尚未保存独立代理时的初始值。
 
@@ -91,7 +97,7 @@ node scripts/install-release.mjs \
 
 | 现象 | 处理方式 |
 | --- | --- |
-| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.9`。 |
+| `declares no dsh.bundle` 或版本为 `0.0.0-stage` | 改用 npm 官方源，并填写完整包名 `dsh-codex-official-adapter@0.1.10`。 |
 | `ERR_PNPM_MISSING_TARBALL_INTEGRITY` | 下载发行包后使用本地路径安装，或运行上面的校验脚本。无需删除锁文件或关闭完整性检查。 |
 | GitHub 仓库地址安装失败 | 改用明确的 npm 包名与版本，或下载本地包。仓库名 `dsh-codex-adapter` 与实际 npm 包名不同。 |
 | 设置中没有“ChatGPT 订阅” | 确认安装目标应用、desktop Profile 和宿主版本，启用插件后完全退出并重开。 |
