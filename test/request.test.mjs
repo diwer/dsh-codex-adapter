@@ -23,6 +23,47 @@ test('deferred and duplicate tools fail',()=>{
   assert.throws(()=>buildRequest(options({tools:[{...tool,deferLoading:true}]})),{code:'UNSUPPORTED_CAPABILITY'});
   assert.throws(()=>buildRequest(options({tools:[tool,tool]})),{code:'INVALID_TOOL'});
 });
+test('tool registration and schema object order produce identical wire prefixes',()=>{
+  const first={name:'write_file',description:'Write',parameters:{type:'object',properties:{path:{type:'string'},content:{type:'string'}},required:['path','content']}};
+  const second={name:'read_file',description:'Read',parameters:{type:'object',properties:{path:{type:'string'}}}};
+  const reordered={...first,parameters:{required:['path','content'],properties:{content:{type:'string'},path:{type:'string'}},type:'object'}};
+  const original=structuredClone([first,second]);
+  const a=buildRequest(options({tools:[first,second]}));
+  const b=buildRequest(options({tools:[second,reordered]}));
+  assert.equal(JSON.stringify(a),JSON.stringify(b));
+  assert.deepEqual([first,second],original);
+  assert.deepEqual(a.tools[0].tools.map(tool=>tool.name),['read_file','write_file']);
+  assert.deepEqual(a.tools[0].tools[1].parameters.required,['path','content']);
+});
+test('schema normalization preserves nested arrays, special keys and real tool changes',()=>{
+  const parameters=JSON.parse('{"type":"object","properties":{"__proto__":{"type":"string"},"mode":{"enum":["z","a"],"default":"z"}},"anyOf":[{"required":["mode"]},{"required":["__proto__"]}]}');
+  const tool={name:'choose',description:'Choose',parameters};
+  const body=buildRequest(options({tools:[tool]}));
+  assert.deepEqual(body.tools[0].tools[0].parameters,parameters);
+  const changed=buildRequest(options({tools:[{...tool,description:'Changed'}]}));
+  assert.notEqual(JSON.stringify(body.tools),JSON.stringify(changed.tools));
+  assert.equal(body.tools[0].tools[0].parameters.properties.mode.default,'z');
+});
+for(const model of ['gpt-6.1-sol','gpt-5.1-codex','future-catalog-model']) test(`${model} uses a private stable session cache key as history grows`,()=>{
+  const base=options({model,sessionId:'private-host-session-id',system:'Stable instructions'});
+  const snapshot=structuredClone(base);
+  const first=buildRequest(base);
+  const next=buildRequest({...base,messages:[...base.messages,{role:'user',content:[{type:'text',text:'Next turn'}]}]});
+  assert.match(first.prompt_cache_key,/^dsh-v1-[a-f0-9]{64}$/);
+  assert.equal(next.prompt_cache_key,first.prompt_cache_key);
+  assert.deepEqual(next.input.slice(0,first.input.length),first.input);
+  assert.equal(next.instructions,first.instructions);
+  assert.equal(JSON.stringify(first).includes(base.sessionId),false);
+  assert.deepEqual(base,snapshot);
+  for(const extra of [{sessionId:'other-session'},{model:'other-model'},{purpose:'compaction'},{purpose:'session-title'}]) {
+    assert.notEqual(buildRequest({...base,...extra}).prompt_cache_key,first.prompt_cache_key);
+  }
+});
+test('requests without a valid session ID do not invent changing cache keys',()=>{
+  for(const sessionId of [undefined,null,'',42]) {
+    assert.equal('prompt_cache_key' in buildRequest(options({sessionId})),false);
+  }
+});
 test('tool results preserve call IDs and failed tool text',()=>{
   const request=buildRequest(options({messages:[{role:'tool',toolCallId:'call_1',isError:true,content:[{type:'text',text:'File not found'}]}]}));
   assert.deepEqual(request.input,[{type:'function_call_output',call_id:'call_1',output:'File not found'}]);

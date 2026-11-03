@@ -2,16 +2,25 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布（仅开发主干）
+## v0.1.10
 
-以下界面改动仅在 `master`，不属于当前已验收的 0.1.9 本地安装包：
+- 发布日期：2026-11-03（Asia/Shanghai）。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
+- Tag / 对应发布提交：[`v0.1.10`](https://github.com/diwer/dsh-codex-adapter/tree/v0.1.10)；完整 SHA 同时记录于 GitHub Release。
+- 分发渠道：GitHub Release 安装包及 SHA-256 校验文件；本次未发布 npm，请下载本地包安装。
+- 包含 0.1.9 本地版本的 keepalive / SSE 兼容和插件图标修复。
+
+- 稳定 GPT 请求中的工具声明顺序与参数 Schema 对象字段顺序，减少仅注册顺序变化造成的缓存前缀变化；保留数组顺序、工具内容及完整会话历史。
+- 宿主提供会话 ID 时生成摘要化的稳定缓存 key，覆盖目录中的模型；不发送原始会话 ID，不改变模型缓存保留策略。实际缓存收益需通过宿主连续调用验证。
+
+同步包含此前仅在开发主干的设置页改进：
 
 - 优化订阅账户卡片：头像、身份与操作三列对齐，当前账户使用主题强调色；移除窄屏强制独占一行的退出按钮，改善长邮箱和底部操作区的自适应布局。
 - 在当前已连接账户的邮箱与授权状态下方展示“查看订阅额度与用量”入口，打开 ChatGPT 官方用量页。
 - 设置页拆分为“获取授权”和“配置代理”两个 Tab，默认显示授权页；切换保留授权进度、代理草稿和测试结果，支持方向键及 Home / End 导航。
 - 在设置页标题区展示包内插件图标，两个 Tab 共用。
 
-## 未发布（0.1.9）
+## 历史准备记录（0.1.9，未独立正式发布）
 
 - 准备日期：2026-10-29（Asia/Shanghai）。
 - 目标发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
