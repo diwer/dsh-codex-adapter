@@ -58,4 +58,10 @@
 
 实现见 [src/events.mjs](../src/events.mjs) 与 [src/stream.mjs](../src/stream.mjs)，离线清单及来源摘要见 [官方事件快照](../test/fixtures/responses-events-official.json)和 [SDK 快照](../test/fixtures/responses-events-7.36.0.json)。修改策略时必须同步 [事件矩阵测试](../test/events.test.mjs)，不能用前缀通配符放行新内容。
 
+## 提示缓存
+
+插件按工具名称稳定排序，并递归稳定参数 Schema 的对象字段顺序；数组顺序、字段值、工具增删、提示词、历史消息及推理回放保持原样。宿主提供 `sessionId` 时，用会话、模型及调用用途的 SHA-256 摘要生成稳定的 `prompt_cache_key`，不发送原始会话 ID；未提供时不生成随机 key。实现不依赖模型名称白名单。
+
+按 [OpenAI 缓存说明](https://developers.openai.com/api/docs/guides/prompt-caching)，稳定 key 可帮助较早模型优化路由；GPT-5.6 及之后自动处理缓存路由，key 主要用于缓存统计隔离。工具、系统提示或历史内容的真实变化仍可能影响命中，插件不能保证命中率；不强制设置保留时长、显式缓存断点或发起预热请求。离线回归验证请求稳定性，实际命中收益须在同一账户、模型和会话的连续调用中观察 `cached_tokens / input_tokens`；累计用量面板不能替代逐次对比。
+
 [安装与排错](INSTALLATION.md) · [数据与隐私](PRIVACY.md) · [协议说明](AUTH.md) · [开发指南](DEVELOPMENT.md)
