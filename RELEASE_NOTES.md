@@ -2,7 +2,12 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布
+## v0.1.11
+
+- 发布日期：2026-11-04（Asia/Shanghai）。
+- 发布分支：[`release/v0.1`](https://github.com/diwer/dsh-codex-adapter/tree/release/v0.1)。
+- Tag / 对应发布提交：[`v0.1.11`](https://github.com/diwer/dsh-codex-adapter/tree/v0.1.11)；完整 SHA 同时记录于 GitHub Release。
+- 分发渠道：GitHub Release 安装包及 SHA-256 校验文件；本次未发布 npm，请下载本地包安装。
 
 - 修复 ChatGPT 订阅推理请求缺少稳定 `session-id` / `thread-id` 请求头的问题：与现有 `prompt_cache_key` 共用摘要化会话标识；不发送原始会话 ID，无宿主会话时不生成随机标识。独立 GPT-6.1-Sol 对照中，未加头时 5 次相同请求均为 0 缓存；加头后预热一次，3 次后续请求均为 2,176 / 2,323 tokens 命中（约 93.7%）。此结果不保证所有真实工作负载的命中率。
 - 区分插件停用 / 重载中断（`ADAPTER_DISPOSED`）、调用方取消（`ABORTED`）与请求超时（`TIMEOUT`），避免将插件生命周期中断笼统显示成请求取消；不自动重放工具工作。
