@@ -47,7 +47,7 @@ export async function buildDocs(root=process.cwd()){
   if(!readme.includes(installSpec))throw new Error('README 安装版本与 package.json 不一致。');
   const links=[['快速开始',`${repo}#快速开始`],['安装与排错',`${repo}/blob/master/docs/INSTALLATION.md`],['兼容范围',`${repo}/blob/master/docs/COMPATIBILITY.md`],['数据与隐私',`${repo}/blob/master/docs/PRIVACY.md`],['版本说明',release],['源码',repo]];
   const title='DeepSeek Harness 的 ChatGPT 订阅插件 | DSH ChatGPT Adapter';
-  const description='仅适用于 DeepSeek Harness 的 ChatGPT 订阅接入插件。无需 API Key，登录自己的 ChatGPT 账户即可使用 GPT，支持图片、内置工具与模型切换。提供中英文安装说明；支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；实测基线为 0.2.0-rc.2。';
+  const description='仅适用于 DeepSeek Harness 的 ChatGPT 订阅接入插件。无需 API Key，登录自己的 ChatGPT 账户即可使用 GPT，支持图片、内置工具与模型切换。提供中英文安装说明；支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；实测基线为 0.2.2-rc.2。';
   const structured={'@context':'https://schema.org','@type':['SoftwareApplication','SoftwareSourceCode'],name:'DSH ChatGPT Adapter',alternateName:pkg.name,url:base,image:iconUrl,description,applicationCategory:'DeveloperApplication',operatingSystem:'macOS with DeepSeek Harness desktop >=0.2.0-rc.2',softwareVersion:pkg.version,license:`${repo}/blob/master/LICENSE`,codeRepository:repo,programmingLanguage:'JavaScript',downloadUrl:download,isAccessibleForFree:true,softwareRequirements:'DeepSeek Harness desktop >=0.2.0-rc.2 on macOS; not the regular DeepSeek chat website, mobile app, or chat desktop client.',inLanguage:['zh-CN','en'],sameAs:[repo,'https://www.npmjs.com/package/'+pkg.name],keywords:['DeepSeek Harness','ChatGPT subscription plugin','DSH Codex Adapter',pkg.name]};
   const llms=`# DSH ChatGPT Adapter
 

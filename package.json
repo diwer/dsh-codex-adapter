@@ -33,14 +33,14 @@
     "market:report": "node scripts/report-markets.mjs"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/cordis": "~4.0.4 || ~4.1.0",
     "@deepseek-ai/dsh-llm": ">=0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "~3.18.4"
+    "@deepseek-ai/schemastery": "~3.18.4 || ~3.19.0"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.4",
-    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.4",
+    "@deepseek-ai/cordis": "4.1.0",
+    "@deepseek-ai/dsh-llm": "0.2.2-rc.2",
+    "@deepseek-ai/schemastery": "3.19.0",
     "ajv": "^8.17.1"
   },
   "main": "./src/desktop-plugin.mjs",
@@ -71,7 +71,7 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-ui-slots"
+        "@deepseek-ai/dsh-client-ui-renderer"
       ],
       "platform": "web"
     },
