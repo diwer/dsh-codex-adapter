@@ -33,6 +33,6 @@ Source was inspected read-only in a separate ignored reference directory. No ups
 
 ## Installed desktop target
 
-Desktop adaptation was inspected against `/Applications/DeepSeek Harness.app` 0.2.0-rc.2 and its shipped ASAR modules, not inferred from the newer pinned upstream revision above. The package’s LLM/Cordis/Schemastery peers match the shipped versions. `npm run test:desktop` resolves those modules from the actual application and executes with its Electron Node 24.18.1.
+Desktop compatibility was rechecked on 2026-11-13 against the installed Harness 0.2.2-rc.2 and its shipped ASAR modules: LLM 0.2.2-rc.2, Cordis 4.1.0 and Schemastery 3.19.0. The official npm `next` tag also points to LLM 0.2.2-rc.2; `latest` is an older release and is not the desktop compatibility target. The browser slot provider is now `@deepseek-ai/dsh-client-ui-renderer`, replacing the removed standalone slots plugin. `npm run test:desktop` resolves modules from the selected application and tests real Connection routes as well as LLM behavior, without reading existing credentials. The prior 0.2.0-rc.2 baseline is retained in the peer ranges.
 
 The installed app's `Contents/Info.plist` registers the `dsh` URL scheme. Its `app.asar/lib/main.js` handles exactly `dsh://open` and `dsh://open/` by focusing the primary window; the desktop OAuth success page uses the former without parameters.

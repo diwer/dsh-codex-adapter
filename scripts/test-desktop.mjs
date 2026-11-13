@@ -6,5 +6,6 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const application=process.env.DSH_DESKTOP_EXECUTABLE??'/Applications/DeepSeek Harness.app/Contents/MacOS/DeepSeek Harness';
 const loader=path.join(root,'scripts/desktop-runtime-loader.mjs');
 if(!fs.existsSync(application))throw new Error('Set DSH_DESKTOP_EXECUTABLE to the installed DeepSeek Harness executable.');
-const result=spawnSync(application,['--expose-internals','--import',loader,'--test','test-runtime/desktop.test.mjs','test-runtime/runtime.test.mjs'],{cwd:root,env:{...process.env,ELECTRON_RUN_AS_NODE:'1'},stdio:'inherit'});
+const resources=path.resolve(path.dirname(fs.realpathSync(application)),'../Resources');
+const result=spawnSync(application,['--expose-internals','--import',loader,'--test','test-runtime/desktop.test.mjs','test-runtime/runtime.test.mjs','test-runtime/desktop-compatibility.mjs'],{cwd:root,env:{...process.env,ELECTRON_RUN_AS_NODE:'1',DSH_DESKTOP_RESOURCES:resources},stdio:'inherit'});
 process.exitCode=result.status??1;

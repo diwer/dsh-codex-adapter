@@ -2,6 +2,11 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
+## 未发布
+
+- 适配 Harness 0.2.2-rc.2：兼容 Cordis 4.1 与 Schemastery 3.19，将浏览器插槽依赖切换为新版 UI Renderer，修复设置界面无法加载。
+- 开发依赖固定到 0.2.2-rc.2；桌面验收新增真实宿主依赖、前端模块和 Connection 路由检查，不依赖账户凭证。
+
 ## v0.1.11
 
 - 发布日期：2026-11-04（Asia/Shanghai）。
