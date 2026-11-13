@@ -10,7 +10,7 @@
 
 No API key required. Switch between GPT and DeepSeek, ask about images, and use Harness tools to read files, edit code, search, and run commands.
 
-**For DeepSeek Harness only.** This plugin cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. Requires Harness desktop >=0.2.0-rc.2 on macOS; the tested baseline is 0.2.0-rc.2.
+**For DeepSeek Harness only.** This plugin cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. Requires Harness desktop >=0.2.0-rc.2 on macOS; the tested baseline is 0.2.2-rc.2.
 
 [中文](README.md) · [Installation help](docs/INSTALLATION.md) · [Download](https://github.com/diwer/dsh-codex-adapter/releases/latest)
 
@@ -42,7 +42,7 @@ Requires **DeepSeek Harness desktop >=0.2.0-rc.2 on macOS** and a ChatGPT accoun
 
 ## Common questions
 
-**Which product does this plugin support?** DeepSeek Harness only. It cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. Requires Harness desktop >=0.2.0-rc.2 on macOS; the tested baseline is 0.2.0-rc.2.
+**Which product does this plugin support?** DeepSeek Harness only. It cannot be installed in the regular DeepSeek chat website, mobile app, or regular chat desktop client. Requires Harness desktop >=0.2.0-rc.2 on macOS; the tested baseline is 0.2.2-rc.2.
 
 **How do I use my ChatGPT subscription in DeepSeek Harness?** Install `dsh-codex-official-adapter@0.1.11`, connect your own ChatGPT account in settings, and choose a model under ChatGPT plan. No API key is required. Your account determines model access and usage limits.
 
