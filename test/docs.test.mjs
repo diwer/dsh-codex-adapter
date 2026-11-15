@@ -45,7 +45,10 @@ test('generated installation entries share the package version and readable text
 
     }
     assert.ok(catalog.plugins[0].install.includes(installSpec));
-    assert.ok(catalog.plugins[0].install.includes('--registry=https://registry.npmjs.org/'));
+    assert.ok(catalog.plugins[0].install.includes('/absolute/path/'));
+    assert.ok(!catalog.plugins[0].install.includes('@'+version));
+    assert.ok(llms.includes('GitHub Release only'));
+    assert.ok(llms.includes('absolute local tarball path'));
     assert.ok(html.includes(`download/v${version}/`));
     assert.doesNotMatch(html,/172 项|验收|逐项台账|待发布|开发与证据/);
   }finally{await rm(root,{recursive:true,force:true});}
@@ -56,7 +59,7 @@ test('documentation generation rejects an installation version that drifted from
     await writeFile(path.join(root,'package.json'),await readFile(new URL('package.json',project)));
     await writeFile(path.join(root,'README.en.md'),await readFile(new URL('README.en.md',project)));
     const readme=await readFile(new URL('README.md',project),'utf8');
-    await writeFile(path.join(root,'README.md'),readme.replace(/dsh-codex-official-adapter@[\d.]+/g,'dsh-codex-official-adapter@0.0.0'));
+    await writeFile(path.join(root,'README.md'),readme.replace(/dsh-codex-official-adapter-[\d.]+\.tgz/g,'dsh-codex-official-adapter-0.0.0.tgz'));
     await assert.rejects(buildDocs(root),/版本/);
   }finally{await rm(root,{recursive:true,force:true});}
 });

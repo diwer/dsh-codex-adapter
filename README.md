@@ -1,6 +1,6 @@
 # DSH ChatGPT Adapter
 
-> v0.1.11 本次通过 [GitHub Release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.11) 分发，npm 尚未同步。请下载发行页安装包，按[本地包安装步骤](docs/INSTALLATION.md#本地包安装)升级。
+> v0.1.12 本次通过 [GitHub Release](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.12) 分发，npm 尚未同步。请下载发行页安装包，按[本地包安装步骤](docs/INSTALLATION.md#本地包安装)升级。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/diwer/dsh-codex-adapter/master/lib/assets/big-fish-codex.png" width="144" height="144" alt="大肥鱼指挥 Codex 插件头像">
@@ -30,15 +30,11 @@
 
 ### 1. 安装插件
 
-在 **Plugins → Add plugin** 中填入：
+从 [v0.1.12 发行页](https://github.com/diwer/dsh-codex-adapter/releases/tag/v0.1.12)下载 `dsh-codex-official-adapter-0.1.12.tgz`，无需解压。
 
-```text
-dsh-codex-official-adapter@0.1.11
-```
+在 **Plugins → Add plugin** 的本地文件安装入口选择该文件；如果界面只提供输入框，填入文件的完整本地路径（不要填 npm 包名或 GitHub 仓库地址）。完成后，等当前任务结束，完全退出并重新打开 Harness。
 
-Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **Install**。完成后，等当前任务结束，完全退出并重新打开 Harness。
-
-> 若找不到切换源的入口，或安装失败，使用[终端安装或本地包安装](docs/INSTALLATION.md#其他安装方式)。
+> 本版本只发布到 GitHub，不发布 npm。也可使用[本地包 CLI 安装与校验脚本](docs/INSTALLATION.md#本地包安装)。保留下载的安装包及现有 Profile、会话和授权目录。
 
 ### 2. 连接 ChatGPT
 
@@ -54,7 +50,7 @@ Registry 选择 **npm 官方源（https://registry.npmjs.org/）**，点击 **In
 
 **这个插件支持哪个产品？** 仅支持 DeepSeek Harness。DeepSeek 普通网页版、手机 App 和普通聊天桌面客户端不支持安装本插件。支持 Harness 桌面版 ≥0.2.0-rc.2 / macOS；当前实测基线为 0.2.2-rc.2。
 
-**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 安装 `dsh-codex-official-adapter@0.1.11`，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
+**如何在 DeepSeek Harness 中使用 ChatGPT 订阅？** 下载并安装 v0.1.12 的本地 `.tgz` 包，在设置中连接自己的 ChatGPT 账户，再从 ChatGPT plan 中选择模型。无需 API Key，模型权限与额度由账户决定。
 
 **可以直接填 GitHub 地址吗？** 这是源码地址：`https://github.com/diwer/dsh-codex-adapter`。不同宿主与市场的安装器支持有差异，日常安装建议使用上面的明确包名与版本。
 
