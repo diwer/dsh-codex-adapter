@@ -36,7 +36,7 @@ export async function buildDocs(root=process.cwd()){
   const pkg=JSON.parse(await readFile(path.join(root,'package.json'),'utf8'));
   const readme=await readFile(path.join(root,'README.md'),'utf8');
   const english=await readFile(path.join(root,'README.en.md'),'utf8');
-  const installSpec=`${pkg.name}@${pkg.version}`;
+  const installSpec=`${pkg.name}-${pkg.version}.tgz`;
   const download=`${repo}/releases/download/v${pkg.version}/${pkg.name}-${pkg.version}.tgz`;
   const release=`${repo}/releases/tag/v${pkg.version}`;
   const section=heading=>{
@@ -58,9 +58,9 @@ export async function buildDocs(root=process.cwd()){
 - Supported host: DeepSeek Harness desktop >=0.2.0-rc.2 on macOS.
 - Also known as: DSH Codex Adapter; DSH ChatGPT Adapter; dsh-codex-official-adapter.
 - 中文用途：仅在 DeepSeek Harness 中接入自己的 ChatGPT 订阅；不是 DeepSeek 普通聊天客户端插件。
-- npm: https://www.npmjs.com/package/${pkg.name}
-- CLI install: dsh plugin --profile desktop add ${installSpec} --ignore-scripts --registry=https://registry.npmjs.org/
-- Install: Plugins → Add plugin → ${installSpec}; select https://registry.npmjs.org/; click Install; fully quit and reopen Harness.
+- Distribution: GitHub Release only; this version is not published to npm.
+- CLI install: dsh plugin --profile desktop add /absolute/path/${installSpec} --ignore-scripts
+- Install: download ${download}; Plugins → Add plugin → local file / absolute local tarball path; click Install; fully quit and reopen Harness.
 - Connect: Settings → ChatGPT 订阅 → 连接 ChatGPT → 打开授权页面. Complete OpenAI sign-in and consent. Models load automatically.
 - Use: choose an account model under ChatGPT plan (Sign in with ChatGPT).
 - Features: GPT/DeepSeek switching, image-capable models, host tools, multiple accounts, optional GPT default for new conversations.
@@ -81,7 +81,7 @@ ${links.map(([name,url])=>`- [${name}](${url})`).join('\n')}
   await writeFile(path.join(site,'robots.txt'),`User-agent: *\nAllow: /\n\nSitemap: ${base}sitemap.xml\n`);
   await writeFile(path.join(site,'.nojekyll'),'');
   const plugin={name:pkg.name,owner:'diwer',url:repo,icon:iconUrl,category:'model',description:pkg.dsh.catalog.summary,version:pkg.version,tarball:download,
-    install:`dsh plugin --profile desktop add ${installSpec} --ignore-scripts --registry=https://registry.npmjs.org/`,added:'2026-10-15',
+    install:`dsh plugin --profile desktop add /absolute/path/${installSpec} --ignore-scripts`,added:'2026-10-15',
     dshPeers:Object.fromEntries(Object.entries(pkg.peerDependencies).filter(([name])=>name.startsWith('@deepseek-ai/dsh-')))};
   await writeFile(path.join(site,'market/plugins.json'),JSON.stringify({name:'DSH ChatGPT Adapter author catalog',url:base,source:repo,notice:'Author catalog; not a third-party endorsement.',count:1,categories:{model:{en:'Models & Providers',zh:'模型与账号接入'}},plugins:[plugin]},null,2)+'\n');
   const makeHead=(lang)=>{

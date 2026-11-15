@@ -2,7 +2,14 @@
 
 安装步骤见[快速开始](README.md#快速开始)，下载见 [GitHub Releases](https://github.com/diwer/dsh-codex-adapter/releases)。
 
-## 未发布
+## v0.1.12
+
+- 发布日期：2026-11-15（Asia/Shanghai）。
+- 发布分支：`release/v0.1`。
+- Tag / 对应发布提交：[`v0.1.12`](https://github.com/diwer/dsh-codex-adapter/tree/v0.1.12)；完整 SHA 记录于 GitHub Release 的 manifest。
+- 分发渠道：仅 GitHub Release 本地 `.tgz` 安装包、manifest 和 SHA-256；不发布 npm。
+- 中英文快速开始和安装排错统一为本地文件安装，移除无法从 npm 安装该版本的误导步骤；辅助校验安装器固定到本版本。
+- 本次不改动用户现有 Profile、插件配置、会话或授权；离线/协议验证不代表真实账户推理或用户当前桌面 Profile 已验收。
 
 - 适配 Harness 0.2.2-rc.2：兼容 Cordis 4.1 与 Schemastery 3.19，将浏览器插槽依赖切换为新版 UI Renderer，修复设置界面无法加载。
 - 开发依赖固定到 0.2.2-rc.2；桌面验收新增真实宿主依赖、前端模块和 Connection 路由检查，不依赖账户凭证。
